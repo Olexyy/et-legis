@@ -1,17 +1,15 @@
-uuid: e35d8226-0c87-4e1d-8b08-ffe186dcee23
+uuid: 536c7ac0-712e-4a26-9cb7-d105ae0f32e5
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
-id: bartik_powered
-theme: bartik
-region: footer_fifth
-weight: 10
+    - bootstrap4
+id: poweredbydrupal
+theme: bootstrap4
+region: footer_first
+weight: 0
 provider: null
 plugin: system_powered_by_block
 settings:

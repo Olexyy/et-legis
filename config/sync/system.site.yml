@@ -1,14 +1,14 @@
 uuid: ee6b591a-6eec-44fc-a2b4-f50c4b8c92e4
-name: Et-legis
+name: 'Узагальнення, огляд та аналіз судової практики та правових позицій'
 mail: admin@example.com
-slogan: ''
+slogan: 'Узагальнення, огляд та аналіз судової практики та правових позицій'
 page:
   403: ''
   404: ''
   front: /node
 admin_compact_mode: false
 weight_select_max: 100
-langcode: en
+langcode: uk
 default_langcode: uk
 _core:
   default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

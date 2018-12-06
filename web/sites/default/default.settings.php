@@ -280,7 +280,7 @@ $config_directories = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'XjyNOQYNOHsLvlJUohcs6Wy0vWOfVNR8RsmvaUqGcyh4KdNeH6o-JViWhKN5ol4hwYBAmqoHRw';
+$settings['hash_salt'] = '';
 
 /**
  * Deployment identifier.
@@ -519,7 +519,7 @@ if ($settings['hash_salt']) {
  * must exist and be writable by Drupal. This directory must be relative to
  * the Drupal installation directory and be accessible over the web.
  */
- $settings['file_public_path'] = 'sites/default/files';
+# $settings['file_public_path'] = 'sites/default/files';
 
 /**
  * Private file path:
@@ -534,7 +534,7 @@ if ($settings['hash_salt']) {
  * See https://www.drupal.org/documentation/modules/file for more information
  * about securing private files.
  */
- $settings['file_private_path'] = 'sites/default/files/private';
+# $settings['file_private_path'] = '';
 
 /**
  * Session write interval:
@@ -764,27 +764,7 @@ $settings['entity_update_batch_size'] = 50;
  *
  * Keep this code block at the end of this file to take full effect.
  */
-
-$settings['trusted_host_patterns'] = [
-  '^et-legis\.loc$',
-  '^et-legis\.local$',
-  '.*',
-];
-
-$config_directories['sync'] = '../config/sync';
-$databases['default']['default'] = [
-  'database' => getenv('DB_NAME'),
-  'driver' => 'mysql',
-  'host' => getenv('DB_HOST'),
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'password' => getenv('DB_PASSWORD'),
-  'port' => '3306',
-  'prefix' => '',
-  'username' => getenv('DB_USER'),
-];
-
-$config['config_split.config_split.dev']['status'] = getenv('CS_DEV_STATUS');
-
-if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-  include $app_root . '/' . $site_path . '/settings.local.php';
-}
+#
+# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+#   include $app_root . '/' . $site_path . '/settings.local.php';
+# }

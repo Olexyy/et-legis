@@ -1,0 +1,25 @@
+
+#navbar-top {
+  padding: 0;
+
+  .region-top-header {
+    width: 100%;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.3);
+    margin: 0;
+    text-align: center;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    height: content-box;
+    .navbar-brand {
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 20px;
+      color: rgba(255,255,255,0.7);
+      word-wrap:break-word;
+      display: inline;
+    }
+  }
+
+}

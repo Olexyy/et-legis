@@ -1,0 +1,18 @@
+palette:
+  top: '#273444'
+  bottom: '#1b3650'
+  bg: '#ffffff'
+  sidebar: '#f6f6f2'
+  sidebarborders: '#f9f9f9'
+  footer: '#292929'
+  button: '#20c0ff'
+  buttonhover: '#0071b3'
+  titleslogan: '#1b3650'
+  text: '#3b3b3b'
+  link: '#0071b3'
+logo: 'public://color/bootstrap4-4332865c/logo.svg'
+stylesheets:
+  - 'public://color/bootstrap4-4332865c/colors.css'
+files:
+  - 'public://color/bootstrap4-4332865c/logo.svg'
+  - 'public://color/bootstrap4-4332865c/colors.css'

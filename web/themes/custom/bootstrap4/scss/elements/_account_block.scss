@@ -1,3 +1,10 @@
 .form-inline.navbar-form.float-right {
-   flex-grow: 10;
+  flex-grow: 10 !important;
+  justify-content: flex-end;
+  .nav-link {
+    color: rgba(255,255,255,.5);
+    &:hover, &:focus {
+      color: rgba(255,255,255,.8);
+    }
+  }
 }

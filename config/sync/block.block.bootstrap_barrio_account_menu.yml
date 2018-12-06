@@ -1,4 +1,4 @@
-uuid: 6c426be9-42f9-439a-be23-37c777a461fa
+uuid: 622969e2-a76a-4684-be05-a774620d2dc3
 langcode: en
 status: true
 dependencies:
@@ -7,20 +7,20 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - bootstrap_barrio
 _core:
-  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
-id: bartik_account_menu
-theme: bartik
-region: secondary_menu
-weight: 0
+  default_config_hash: Rt7Mt_h_9Sno49WSTqAK14DerNpqYBu14SCs4tAtuwE
+id: bootstrap_barrio_account_menu
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -4
 provider: null
 plugin: 'system_menu_block:account'
 settings:
   id: 'system_menu_block:account'
   label: 'User account menu'
   provider: system
-  label_display: '0'
+  label_display: visible
   level: 1
   depth: 1
 visibility: {  }
