@@ -1,0 +1,16 @@
+{
+  "name": "oos",
+  "version": "1.0.0",
+  "description": "SASS compile and uglify.",
+  "scripts": {
+    "compile": "npm run styles && npm run uglify",
+    "styles": "npm-sass scss/style.scss > css/style.raw.css",
+    "uglify": "uglifycss css/style.raw.css > css/style.css"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "npm-sass": "~2.2.1",
+    "uglifycss": "~0.0.27"
+  },
+  "repository": {}
+}
