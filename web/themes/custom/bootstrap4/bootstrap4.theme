@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SASS Starterkit subtheme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_system_theme_settings_alter() for settings form.
+ *
+ * Replace Barrio setting options with subtheme ones.
+ * 
+ * Example on how to alter theme settings form
+ * 
+ */
+function bootstrap4_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+
+  $form['components']['navbar']['bootstrap4_navbar_inline_style'] = [
+    '#type' => 'textarea',
+    '#title' => t('Navbar inline style'),
+    '#description' => t('Navbar inline style'),
+    '#default_value' => theme_get_setting('bootstrap4_navbar_inline_style'),
+  ];
+  $form['#submit'][] = 'bootstrap4_form_system_theme_settings_submit';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function bootstrap4_preprocess_page(&$variables) {
+
+  $inlineStyle = theme_get_setting('bootstrap4_navbar_inline_style');
+  $variables['navbar_inline_style'] = $inlineStyle;
+}
+
+function bootstrap4_form_system_theme_settings_submit(array &$form, FormStateInterface $form_state) {
+
+  $theme = \Drupal::theme()->getActiveTheme()->getName();
+  \Drupal::configFactory()->getEditable($theme . '.settings')
+    ->set('bootstrap4_navbar_inline_style', $form_state->getValue('bootstrap4_navbar_inline_style'))
+    ->save(TRUE);
+}
