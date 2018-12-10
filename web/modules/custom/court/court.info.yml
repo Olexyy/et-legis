@@ -1,0 +1,5 @@
+name: Court
+description: 'Court functionality integration.'
+type: module
+package: system
+core: 8.x

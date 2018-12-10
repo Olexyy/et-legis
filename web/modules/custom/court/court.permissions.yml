@@ -1,0 +1,19 @@
+add decision entities:
+  title: 'Create new Decision entities'
+
+administer decision entities:
+  title: 'Administer Decision entities'
+  description: 'Allow to access the administration form to configure Decision entities.'
+  restrict access: true
+
+delete decision entities:
+  title: 'Delete Decision entities'
+
+edit decision entities:
+  title: 'Edit Decision entities'
+
+view published decision entities:
+  title: 'View published Decision entities'
+
+view unpublished decision entities:
+  title: 'View unpublished Decision entities'

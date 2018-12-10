@@ -1,0 +1,14 @@
+
+# Decision menu items definition
+entity.decision.collection:
+  title: 'Decision list'
+  route_name: entity.decision.collection
+  description: 'List Decision entities'
+  parent: system.admin_structure
+  weight: 100
+
+decision.admin.structure.settings:
+  title: 'Decision settings'
+  description: 'Configure Decision entities'
+  route_name: decision.settings
+  parent: system.admin_structure

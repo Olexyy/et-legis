@@ -6,7 +6,6 @@ module:
   breakpoint: 0
   ckeditor: 0
   color: 0
-  comment: 0
   config: 0
   config_filter: 0
   config_split: 0
@@ -15,12 +14,11 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
+  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
   entity_browser: 0
   entity_browser_entity_form: 0
-  inline_entity_form: 0
-  media: 0
   field: 0
   field_ui: 0
   file: 0
@@ -28,9 +26,11 @@ module:
   help: 0
   history: 0
   image: 0
+  inline_entity_form: 0
   language: 0
   link: 0
   locale: 0
+  media: 0
   menu_ui: 0
   node: 0
   options: 0

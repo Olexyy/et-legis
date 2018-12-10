@@ -1,0 +1,22 @@
+# Decision routing definition
+decision.settings_tab:
+  route_name: decision.settings
+  title: 'Settings'
+  base_route: decision.settings
+
+entity.decision.canonical:
+  route_name: entity.decision.canonical
+  base_route: entity.decision.canonical
+  title: 'View'
+
+entity.decision.edit_form:
+  route_name: entity.decision.edit_form
+  base_route: entity.decision.canonical
+  title: 'Edit'
+
+entity.decision.delete_form:
+  route_name:  entity.decision.delete_form
+  base_route:  entity.decision.canonical
+  title: Delete
+  weight: 10
+

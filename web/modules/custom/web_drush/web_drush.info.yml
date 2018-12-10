@@ -1,0 +1,5 @@
+name: Web drush
+description: 'Web drush.'
+type: module
+package: system
+core: 8.x

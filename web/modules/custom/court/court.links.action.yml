@@ -1,0 +1,5 @@
+entity.decision.add_form:
+  route_name: entity.decision.add_form
+  title: 'Add Decision'
+  appears_on:
+    - entity.decision.collection
