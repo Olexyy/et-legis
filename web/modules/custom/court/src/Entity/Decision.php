@@ -40,7 +40,7 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer decision entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
+ *     "label" = "number",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
@@ -73,15 +73,15 @@ class Decision extends ContentEntityBase implements DecisionInterface {
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return $this->get('name')->value;
+  public function getNumber() {
+    return $this->get('number')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setName($name) {
-    $this->set('name', $name);
+  public function setNumber($name) {
+    $this->set('number', $name);
     return $this;
   }
 
@@ -175,10 +175,10 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Decision entity.'))
+    // Set index unique.
+    $fields['number'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Number'))
+      ->setDescription(t('Unique number Decision entity.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -187,15 +187,71 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
+    // Set index not unique.
+    $fields['case_number'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Number'))
+      ->setDescription(t('Unique number Decision entity.'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setRequired(TRUE);
+    $fields['form'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Form'))
+      ->setDefaultValue('Europe/Copenhagen')
+      ->setDescription(t('Form of decision.'))
+      ->setSetting('max_length', 50)
+      ->setSetting('allowed_values_function', static::class . '::getOptionsForms')
+      ->addPropertyConstraints('value', [
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesForms'],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+    $fields['jurisdiction'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Form'))
+      ->setDefaultValue('Europe/Copenhagen')
+      ->setDescription(t('Form of decision.'))
+      ->setSetting('max_length', 50)
+      ->setSetting('allowed_values_function', static::class . '::getOptionsJurisdictions')
+      ->addPropertyConstraints('value', [
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesJurisdictions'],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+
+    // category
+    // registered
+    // publicised
+
+    // resolved
+    // validated
+    // jurisdiction
+    // court
+    // judge
+
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
@@ -215,6 +271,54 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getOptionsForms() {
+
+    $options = array_values(DecisionOptions::instance()->forms());
+
+    return array_combine($options, $options);
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getAllowedValuesForm() {
+
+    return array_values(DecisionOptions::instance()->forms());
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getOptionsJurisdictions() {
+
+    $options = array_values(DecisionOptions::instance()->jurisdictions());
+
+    return array_combine($options, $options);
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getAllowedValuesJurisdictions() {
+
+    return array_values(DecisionOptions::instance()->jurisdictions());
   }
 
 }

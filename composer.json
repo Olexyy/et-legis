@@ -37,6 +37,7 @@
         "drupal/restui": "^1.16",
         "drupal/ultimate_cron": "^2.0@alpha",
         "drush/drush": "^9.0.0",
+        "symfony/dom-crawler": "~3.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"

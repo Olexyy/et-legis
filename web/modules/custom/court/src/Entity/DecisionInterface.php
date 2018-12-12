@@ -21,7 +21,7 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
    * @return string
    *   Name of the Decision.
    */
-  public function getName();
+  public function getNumber();
 
   /**
    * Sets the Decision name.
@@ -32,7 +32,7 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
    * @return \Drupal\court\Entity\DecisionInterface
    *   The called Decision entity.
    */
-  public function setName($name);
+  public function setNumber($name);
 
   /**
    * Gets the Decision creation timestamp.
