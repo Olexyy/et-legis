@@ -1,0 +1,8 @@
+langcode: uk
+status: true
+dependencies: {  }
+name: Categories
+vid: categories
+description: 'Categories of decisions.'
+hierarchy: 0
+weight: 0

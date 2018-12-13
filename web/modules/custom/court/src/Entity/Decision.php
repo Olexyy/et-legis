@@ -241,18 +241,79 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-
-    // category
-    // registered
-    // publicised
-
-    // resolved
-    // validated
-    // jurisdiction
-    // court
-    // judge
-
-
+    $fields['category'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Category'))
+      ->setDescription(t('Decision category.'))
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['categories' => 'categories'],
+        'auto_create' => TRUE,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['court'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Court'))
+      ->setDescription(t('Court name.'))
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['courts' => 'courts'],
+        'auto_create' => TRUE,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['judge'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Judge'))
+      ->setDescription(t('Judge name.'))
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['resolved'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Resolved'))
+      ->setDescription(t('Time when this decision was resolved.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['validated'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Validated'))
+      ->setDescription(t('Time when this decision was validated.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['registered'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Registered'))
+      ->setDescription(t('Time when this decision was registered.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['publicised'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Publicised'))
+      ->setDescription(t('Time when this decision was publicised.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the Decision is published.'))
@@ -261,11 +322,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
         'type' => 'boolean_checkbox',
         'weight' => -3,
       ]);
-
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the entity was created.'));
-
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
