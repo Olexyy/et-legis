@@ -149,8 +149,8 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
-    $fields = parent::baseFieldDefinitions($entity_type);
 
+    $fields = parent::baseFieldDefinitions($entity_type);
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The user ID of author of the Decision entity.'))
@@ -165,7 +165,6 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
         'settings' => [
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -177,8 +176,8 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDisplayConfigurable('view', TRUE);
     // Set index unique.
     $fields['number'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Number'))
-      ->setDescription(t('Unique number Decision entity.'))
+      ->setLabel(t('Decision number'))
+      ->setDescription(t('Unique number of Decision.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -196,8 +195,8 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setRequired(TRUE);
     // Set index not unique.
     $fields['case_number'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Number'))
-      ->setDescription(t('Unique number Decision entity.'))
+      ->setLabel(t('Case number'))
+      ->setDescription(t('Case number.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -211,12 +210,11 @@ class Decision extends ContentEntityBase implements DecisionInterface {
         'type' => 'string_textfield',
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setRequired(TRUE);
+      ->setDisplayConfigurable('view', TRUE);
     $fields['type'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(t('Form'))
+      ->setLabel(t('Type'))
       ->setDefaultValue('Europe/Copenhagen')
-      ->setDescription(t('Form of decision.'))
+      ->setDescription(t('Type of decision.'))
       ->setSetting('max_length', 50)
       ->setSetting('allowed_values_function', static::class . '::getOptionsForms')
       ->addPropertyConstraints('value', [
@@ -264,6 +262,18 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['instance'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Instance'))
+      ->setDescription(t('Court instance.'))
+      ->setSetting('allowed_values_function', static::class . '::getOptionsInstances')
+      ->addPropertyConstraints('value', [
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesInstances'],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
     $fields['judge'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Judge'))
       ->setDescription(t('Judge name.'))
@@ -292,9 +302,28 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDescription(t('Time when this decision was registered.'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['publicised'] = BaseFieldDefinition::create('timestamp')
-      ->setLabel(t('Publicised'))
+    $fields['publication'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Publication'))
       ->setDescription(t('Time when this decision was publicised.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['text'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Text'))
+      ->setDescription(t('Decision text.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['resume'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Resume'))
+      ->setDescription(t('Short resume.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['related'] = BaseFieldDefinition::create('entity_reference')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setLabel(t('Related decisions'))
+      ->setDescription(t('Related Decisions from another instances.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'decision')
+      ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['status'] = BaseFieldDefinition::create('boolean')
@@ -303,7 +332,6 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDefaultValue(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
-        'weight' => -3,
       ]);
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
@@ -411,6 +439,28 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     return array_values(DecisionOptions::instance()->courts());
   }
 
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getOptionsInstances() {
 
+    $options = array_values(DecisionOptions::instance()->instances());
+
+    return array_combine($options, $options);
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getAllowedValuesInstances() {
+
+    return array_values(DecisionOptions::instance()->instances());
+  }
 
 }

@@ -4,6 +4,7 @@ namespace Drupal\court\Entity;
 
 use Drupal\court\Categorization\CaseCategory1;
 use Drupal\court\Categorization\CourtName;
+use Drupal\court\Categorization\InstType;
 
 /**
  * Class DecisionOptions.
@@ -99,6 +100,17 @@ class DecisionOptions {
     }
 
     return $courts;
+  }
+
+  /**
+   * Court instances.
+   *
+   * @return array
+   *   Array of values.
+   */
+  public function instances() {
+
+    return InstType::getList();
   }
 
 }
