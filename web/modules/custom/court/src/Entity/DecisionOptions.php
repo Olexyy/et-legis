@@ -2,6 +2,9 @@
 
 namespace Drupal\court\Entity;
 
+use Drupal\court\Categorization\CaseCategory1;
+use Drupal\court\Categorization\CourtName;
+
 /**
  * Class DecisionOptions.
  *
@@ -53,7 +56,7 @@ class DecisionOptions {
   }
 
   /**
-   * Decision forms options.
+   * Decision types options.
    *
    * @return array
    *   Array of values.
@@ -68,4 +71,34 @@ class DecisionOptions {
       5 => 'Справи про адміністративні правопорушення',
     ];
   }
+
+  /**
+   * Decision categories.
+   *
+   * @return array
+   *   Array of values.
+   */
+  public function categories() {
+
+    return CaseCategory1::getList();
+  }
+
+  /**
+   * Decision categories.
+   *
+   * @return array
+   *   Array of values.
+   */
+  public function courts() {
+
+    $courts = [];
+    foreach (CourtName::getList() as $courtRegion) {
+      foreach ($courtRegion as $courtCode => $courtName) {
+        $courts[$courtCode] = $courtName;
+      }
+    }
+
+    return $courts;
+  }
+
 }

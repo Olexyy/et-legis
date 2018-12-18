@@ -213,7 +213,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
-    $fields['form'] = BaseFieldDefinition::create('list_string')
+    $fields['type'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Form'))
       ->setDefaultValue('Europe/Copenhagen')
       ->setDescription(t('Form of decision.'))
@@ -228,9 +228,8 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
     $fields['jurisdiction'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(t('Form'))
-      ->setDefaultValue('Europe/Copenhagen')
-      ->setDescription(t('Form of decision.'))
+      ->setLabel(t('Jurisdiction'))
+      ->setDescription(t('Decision jurisdiction.'))
       ->setSetting('max_length', 50)
       ->setSetting('allowed_values_function', static::class . '::getOptionsJurisdictions')
       ->addPropertyConstraints('value', [
@@ -241,46 +240,30 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-    $fields['category'] = BaseFieldDefinition::create('entity_reference')
+    $fields['category']  = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Category'))
       ->setDescription(t('Decision category.'))
-      ->setSetting('target_type', 'taxonomy_term')
-      ->setSetting('handler', 'default:taxonomy_term')
-      ->setSetting('handler_settings', [
-        'target_bundles' => ['categories' => 'categories'],
-        'auto_create' => TRUE,
+      ->setSetting('allowed_values_function', static::class . '::getOptionsCategories')
+      ->addPropertyConstraints('value', [
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesCategories'],
       ])
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
+        'type' => 'options_select',
       ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-    $fields['court'] = BaseFieldDefinition::create('entity_reference')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+    $fields['court'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Court'))
       ->setDescription(t('Court name.'))
-      ->setSetting('target_type', 'taxonomy_term')
-      ->setSetting('handler', 'default:taxonomy_term')
-      ->setSetting('handler_settings', [
-        'target_bundles' => ['courts' => 'courts'],
-        'auto_create' => TRUE,
+      ->setSetting('allowed_values_function', static::class . '::getOptionsCourts')
+      ->addPropertyConstraints('value', [
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesCourts'],
       ])
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
+        'type' => 'options_select',
       ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
     $fields['judge'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Judge'))
       ->setDescription(t('Judge name.'))
@@ -379,5 +362,55 @@ class Decision extends ContentEntityBase implements DecisionInterface {
 
     return array_values(DecisionOptions::instance()->jurisdictions());
   }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getOptionsCategories() {
+
+    $options = array_values(DecisionOptions::instance()->categories());
+
+    return array_combine($options, $options);
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getAllowedValuesCategories() {
+
+    return array_values(DecisionOptions::instance()->categories());
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getOptionsCourts() {
+
+    $options = array_values(DecisionOptions::instance()->courts());
+
+    return array_combine($options, $options);
+  }
+
+  /**
+   * Getter for options.
+   *
+   * @return array
+   *   Options.
+   */
+  public function getAllowedValuesCourts() {
+
+    return array_values(DecisionOptions::instance()->courts());
+  }
+
+
 
 }
