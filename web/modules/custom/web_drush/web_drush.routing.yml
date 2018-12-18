@@ -1,7 +1,0 @@
-web_drush.command:
-  path: '/admin/config/development/web_drush'
-  defaults:
-    _form: '\Drupal\web_drush\Form\WebDrushForm'
-  requirements:
-    _permission: 'administer site configuration'
-

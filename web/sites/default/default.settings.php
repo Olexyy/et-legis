@@ -774,6 +774,7 @@ $databases['default']['default'] = [
   'port' => getenv('DB_PORT'),
   'prefix' => '',
   'username' => getenv('DB_USER'),
+  'collation' => getenv('DB_COLLATION'),
 ];
 
 #
