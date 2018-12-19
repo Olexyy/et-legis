@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Decision tags
+vid: decision_tags
+description: 'Decision tags.'
+hierarchy: 0
+weight: 0

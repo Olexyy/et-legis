@@ -1,0 +1,11 @@
+{
+  "name": "drupal/court",
+  "description": "Integration for court register.",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "symfony/css-selector": "^3.4",
+    "symfony/dom-crawler": "^3.4"
+  }
+}

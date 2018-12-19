@@ -1,0 +1,4 @@
+services:
+  court.api:
+    class: Drupal\court\Service\CourtApiService
+    arguments: ['@http_client']
