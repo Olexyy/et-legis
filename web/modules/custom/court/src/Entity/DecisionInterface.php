@@ -74,4 +74,8 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
    */
   public function setPublished($published);
 
+  public function setText($text);
+
+  public function getText();
+
 }

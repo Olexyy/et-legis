@@ -488,4 +488,16 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     return array_values(DecisionOptions::instance()->instances());
   }
 
+  public function setText($text) {
+
+    $this->set('text', $text);
+
+    return $this;
+  }
+
+  public function getText() {
+
+    return $this->get('text')->value;
+  }
+
 }

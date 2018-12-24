@@ -2,8 +2,13 @@
 
 namespace Drupal\court\Service;
 
-use Drupal\court\Utils\RequestDataInterface;
+use Drupal\court\Entity\Decision;
+use Drupal\court\Utils\ReviewRequestDataInterface;
+use Drupal\court\Utils\ReviewResponseData;
+use Drupal\court\Utils\ReviewResponseDataInterface;
+use Drupal\court\Utils\SearchRequestDataInterface;
 use Drupal\court\Utils\SearchResponseData;
+use Drupal\court\Utils\SearchResponseDataInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DomCrawler\Crawler;
@@ -35,10 +40,18 @@ class CourtApiService implements CourtApiServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function getReviewUrl($number) {
+
+    return implode('/', [static::BASE_URL, static::REVIEW_PREFIX, $number]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCasesCount() {
 
     try {
-      $response = $this->client->get(new Uri('http://reyestr.court.gov.ua/'));
+      $response = $this->client->get(new Uri(static::BASE_URL));
       $code = $response->getStatusCode();
       $body = $response->getBody()->getContents();
       $crawler = new Crawler($body);
@@ -57,10 +70,55 @@ class CourtApiService implements CourtApiServiceInterface {
     }
   }
 
+  public function fetch(ReviewRequestDataInterface $requestData) {
+
+
+  }
+
   /**
    * {@inheritdoc}
    */
-  public function request(RequestDataInterface $searchRequestData) {
+  public function review(ReviewRequestDataInterface $requestData) {
+
+    try {
+      $number = $requestData->getRegNumber();
+      $response = $this->client->get($this->getReviewUrl($number));
+      $html = $response->getBody()->getContents();
+      $html = $this->processHtml($html);
+      $crawler = new Crawler();
+      $crawler->addHtmlContent($html);
+      $text = '';
+      if ($crawler->filter('#txtdepository')->count()) {
+        $text = $crawler->filter('#txtdepository')->first()->html();
+      }
+
+      return ReviewResponseData::create()
+        ->setText($text)
+        ->setNumber($number);
+    }
+    catch (\Exception $exception) {
+
+      return ReviewResponseData::createEmpty();
+    }
+  }
+
+  public function sync(Decision $decision, ReviewResponseDataInterface $searchResponseData) {
+
+    $decision->setText($searchResponseData->getText());
+    $decision->setNumber($searchResponseData->getNumber());
+  }
+
+  protected function processHtml($html) {
+
+    $html = str_replace('&nbsp;', ' ', $html);
+
+    return $html;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function search(SearchRequestDataInterface $searchRequestData) {
     /*$results = [];
     $category1ID = 5139;
     $categories2 = CaseCategory2::getList();

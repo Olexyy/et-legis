@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\stamkort_admin\Plugin\Field\FieldWidget;
+namespace Drupal\court\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Datetime\Element\Datetime;

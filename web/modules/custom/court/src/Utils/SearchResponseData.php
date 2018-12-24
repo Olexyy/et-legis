@@ -7,12 +7,24 @@ namespace Drupal\court\Utils;
  *
  * @package Drupal\court\Utils
  */
-class SearchResponseData implements ResponseDataInterface {
+class SearchResponseData implements SearchResponseDataInterface {
+
+  protected $empty;
 
   protected $summary;
 
+  public function __construct($empty) {
+    $this->empty = $empty;
+  }
+
   public static function create() {
-    return new static();
+
+    return new static(FALSE);
+  }
+
+  public static function createEmpty() {
+
+    return new static(TRUE);
   }
 
   /**

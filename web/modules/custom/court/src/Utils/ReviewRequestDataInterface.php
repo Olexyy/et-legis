@@ -3,11 +3,11 @@
 namespace Drupal\court\Utils;
 
 /**
- * Class RequestDataInterface.
+ * Class ReviewRequestDataInterface.
  *
  * @package Drupal\court\Utils
  */
-interface RequestDataInterface {
+interface ReviewRequestDataInterface {
 
   /**
    * Getter for request api params.
@@ -35,5 +35,10 @@ interface RequestDataInterface {
    * @return static
    */
   public static function create();
+
+  /**
+   * @return mixed
+   */
+  public function getRegNumber();
 
 }

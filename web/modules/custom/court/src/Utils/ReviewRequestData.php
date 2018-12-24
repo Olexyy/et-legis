@@ -7,7 +7,7 @@ namespace Drupal\court\Utils;
  *
  * @package Drupal\court\Utils
  */
-class SearchRequestData implements SearchRequestDataInterface {
+class ReviewRequestData implements ReviewRequestDataInterface {
 
   // Пошук за контекстом
   protected $searchExpression = '';
