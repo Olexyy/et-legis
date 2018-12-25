@@ -61,7 +61,7 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
    * @return bool
    *   TRUE if the Decision is published.
    */
-  public function isPublished();
+  public function isActive();
 
   /**
    * Sets the published status of a Decision.
@@ -72,10 +72,62 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
    * @return \Drupal\court\Entity\DecisionInterface
    *   The called Decision entity.
    */
-  public function setPublished($published);
+  public function setStatus($published);
 
   public function setText($text);
 
   public function getText();
+
+  public function getCaseNumber();
+
+  public function setCaseNumber($value);
+
+  public function getType();
+
+  public function setType($value);
+
+  public function getJurisdiction();
+
+  public function setJurisdiction($value);
+
+  public function getCategory();
+
+  public function setCategory($value);
+
+  public function getCourt();
+
+  public function setCourt($value);
+
+  public function getInstance();
+
+  public function setInstance($value);
+
+  public function getJudge();
+
+  public function setJudge($value);
+
+  public function getResolved();
+
+  public function setResolved($value);
+
+  public function getValidated();
+
+  public function setValidated($value);
+
+  public function getRegistered();
+
+  public function setRegistered($value);
+
+  public function getPublished();
+
+  public function setPublished($value);
+
+  public function getResume();
+
+  public function setResume($value);
+
+  public function getLegalPosition();
+
+  public function setLegalPosition($value);
 
 }

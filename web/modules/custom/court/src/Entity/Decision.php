@@ -133,14 +133,14 @@ class Decision extends ContentEntityBase implements DecisionInterface {
   /**
    * {@inheritdoc}
    */
-  public function isPublished() {
+  public function isActive() {
     return (bool) $this->getEntityKey('status');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setPublished($published) {
+  public function setStatus($published) {
     $this->set('status', $published ? TRUE : FALSE);
     return $this;
   }
@@ -216,7 +216,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDefaultValue('')
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-    $fields['category']  = BaseFieldDefinition::create('list_string')
+    $fields['category'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Category'))
       ->setSetting('max_length', 50)
       ->setDescription(t('Decision category.'))
@@ -488,9 +488,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     return array_values(DecisionOptions::instance()->instances());
   }
 
-  public function setText($text) {
+  public function setText($value) {
 
-    $this->set('text', $text);
+    $this->set('text', $value);
 
     return $this;
   }
@@ -498,6 +498,162 @@ class Decision extends ContentEntityBase implements DecisionInterface {
   public function getText() {
 
     return $this->get('text')->value;
+  }
+
+  public function getCaseNumber() {
+
+    return $this->get('case_number')->value;
+  }
+
+  public function setCaseNumber($value) {
+
+    $this->set('case_number', $value);
+
+    return $this;
+  }
+
+  public function getType() {
+
+    return $this->get('type')->value;
+  }
+
+  public function setType($value) {
+
+    $this->set('type', $value);
+
+    return $this;
+  }
+
+  public function getJurisdiction() {
+
+    return $this->get('jurisdiction')->value;
+  }
+
+  public function setJurisdiction($value) {
+
+    $this->set('jurisdiction', $value);
+
+    return $this;
+  }
+
+  public function getCategory() {
+
+    return $this->get('category')->value;
+  }
+
+  public function setCategory($value) {
+
+    $this->set('category', $value);
+
+    return $this;
+  }
+
+  public function getCourt() {
+
+    return $this->get('court')->value;
+  }
+
+  public function setCourt($value) {
+
+    $this->set('court', $value);
+
+    return $this;
+  }
+
+  public function getInstance() {
+
+    return $this->get('instance')->value;
+  }
+
+  public function setInstance($value) {
+
+    $this->set('instance', $value);
+
+    return $this;
+  }
+
+  public function getJudge() {
+
+    return $this->get('judge')->value;
+  }
+
+  public function setJudge($value) {
+
+    $this->set('judge', $value);
+
+    return $this;
+  }
+
+  public function getResolved() {
+
+    return $this->get('resolved')->value;
+  }
+
+  public function setResolved($value) {
+
+    $this->set('resolved', $value);
+
+    return $this;
+  }
+
+  public function getValidated() {
+
+    return $this->get('validated')->value;
+  }
+
+  public function setValidated($value) {
+
+    $this->set('validated', $value);
+
+    return $this;
+  }
+
+  public function getRegistered() {
+
+    return $this->get('registered')->value;
+  }
+
+  public function setRegistered($value) {
+
+    $this->set('registered', $value);
+
+    return $this;
+  }
+
+  public function getPublished() {
+
+    return $this->get('published')->value;
+  }
+
+  public function setPublished($value) {
+
+    $this->set('published', $value);
+
+    return $this;
+  }
+
+  public function getResume() {
+
+    return $this->get('resume')->value;
+  }
+
+  public function setResume($value) {
+
+    $this->set('resume', $value);
+
+    return $this;
+  }
+
+  public function getLegalPosition() {
+
+    return $this->get('legal_position')->value;
+  }
+
+  public function setLegalPosition($value) {
+
+    $this->set('legal_position', $value);
+
+    return $this;
   }
 
 }
