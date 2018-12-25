@@ -2,13 +2,9 @@
 
 namespace Drupal\court\Service;
 
-use Drupal\court\Entity\Decision;
-use Drupal\court\Utils\ReviewRequestDataInterface;
-use Drupal\court\Utils\ReviewResponseData;
-use Drupal\court\Utils\ReviewResponseDataInterface;
-use Drupal\court\Utils\SearchRequestDataInterface;
-use Drupal\court\Utils\SearchResponseData;
-use Drupal\court\Utils\SearchResponseDataInterface;
+use Drupal\court\Utils\Parser;
+use Drupal\court\Utils\RequestDataInterface;
+use Drupal\court\Utils\ResponseData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DomCrawler\Crawler;
@@ -70,55 +66,35 @@ class CourtApiService implements CourtApiServiceInterface {
     }
   }
 
-  public function fetch(ReviewRequestDataInterface $requestData) {
-
-
-  }
-
   /**
    * {@inheritdoc}
    */
-  public function review(ReviewRequestDataInterface $requestData) {
+  public function review(RequestDataInterface $requestData) {
 
-    try {
-      $number = $requestData->getRegNumber();
-      $response = $this->client->get($this->getReviewUrl($number));
-      $html = $response->getBody()->getContents();
-      $html = $this->processHtml($html);
-      $crawler = new Crawler();
-      $crawler->addHtmlContent($html);
-      $text = '';
-      if ($crawler->filter('#txtdepository')->count()) {
-        $text = $crawler->filter('#txtdepository')->first()->html();
+    $response = $this->search($requestData);
+    // Get review only if connection is ok and any results.
+    if (!$response->isEmpty() && $response->getParser()->hasResults()) {
+      try {
+        $number = $requestData->getRegNumber();
+        $rawResponse = $this->client->get($this->getReviewUrl($number));
+        $html = $rawResponse->getBody()->getContents();
+        $response->addParser(Parser::create($html));
+
+        return $response;
       }
+      catch (\Exception $exception) {
 
-      return ReviewResponseData::create()
-        ->setText($text)
-        ->setNumber($number);
+        return $response;
+      }
     }
-    catch (\Exception $exception) {
 
-      return ReviewResponseData::createEmpty();
-    }
-  }
-
-  public function sync(Decision $decision, ReviewResponseDataInterface $searchResponseData) {
-
-    $decision->setText($searchResponseData->getText());
-    $decision->setNumber($searchResponseData->getNumber());
-  }
-
-  protected function processHtml($html) {
-
-    $html = str_replace('&nbsp;', ' ', $html);
-
-    return $html;
+    return $response;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function search(SearchRequestDataInterface $searchRequestData) {
+  public function search(RequestDataInterface $requestData) {
     /*$results = [];
     $category1ID = 5139;
     $categories2 = CaseCategory2::getList();
@@ -172,7 +148,7 @@ class CourtApiService implements CourtApiServiceInterface {
     $a = 1;
     exit;*/
 
-    $post = $searchRequestData->toApiArray();
+    $post = $requestData->toApiArray();
     // Special handling for query params.
     $post = http_build_query($post);
     $post = preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $post);
@@ -181,29 +157,31 @@ class CourtApiService implements CourtApiServiceInterface {
     // TODO dynamic user agent
     // TODO manage session
     // TODO query time
-    $response = $this->client->post(
-      new Uri($searchRequestData->getUrl()),
-      [
-        'headers' => [
-          'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
-          'Content-Type' => 'application/x-www-form-urlencoded',
-          'Content-Length' => strlen($post),
-        ],
-        'connect_timeout' => 10,
-        'body' => $post,
-      ]
-    );
-    $code = $response->getStatusCode();
-    $headers = $response->getHeaders();
-    // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
-    $body = $response->getBody()->getContents();
-    $crawler = new Crawler($body);
-    if ($crawler->filter('#divFooterSearch .td1')->count()) {
-      $summary = $crawler->filter('#divFooterSearch .td1')->first()->html();
+    try {
+      $response = $this->client->post(
+        $requestData->getUrl(),
+        [
+          'headers' => [
+            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Content-Length' => strlen($post),
+          ],
+          'connect_timeout' => 10,
+          'body' => $post,
+        ]
+      );
+      $code = $response->getStatusCode();
+      $headers = $response->getHeaders();
+      // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
+      $body = $response->getBody()->getContents();
+
+      return ResponseData::create()
+        ->addParser(Parser::create($body));
     }
+    catch (\Exception $exception) {
 
-    return SearchResponseData::create()->setSummary($summary);
-
+      return ResponseData::createEmpty();
+    }
   }
 
 }

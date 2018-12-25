@@ -3,11 +3,11 @@
 namespace Drupal\court\Utils;
 
 /**
- * Class ReviewRequestDataInterface.
+ * Class RequestDataInterface.
  *
  * @package Drupal\court\Utils
  */
-interface ReviewRequestDataInterface {
+interface RequestDataInterface {
 
   /**
    * Getter for request api params.

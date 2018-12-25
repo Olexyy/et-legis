@@ -3,11 +3,11 @@
 namespace Drupal\court\Utils;
 
 /**
- * Class SearchRequestData.
+ * Class RequestData.
  *
  * @package Drupal\court\Utils
  */
-class SearchRequestData implements SearchRequestDataInterface {
+class RequestData implements RequestDataInterface {
 
   // Пошук за контекстом
   protected $searchExpression = '';
@@ -90,7 +90,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string $caseNumber
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCaseNumber($caseNumber) {
     $this->caseNumber = $caseNumber;
@@ -329,7 +329,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $courtRegion
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCourtRegion(array $courtRegion) {
     $this->courtRegion = $courtRegion;
@@ -339,7 +339,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param int|string $courtRegion
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addCourtRegion($courtRegion) {
     $this->courtRegion = $courtRegion;
@@ -356,7 +356,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $courtName
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCourtName(array $courtName){
     $this->courtName = $courtName;
@@ -366,7 +366,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param int|string $courtName
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addCourtName($courtName) {
     $this->courtName = $courtName;
@@ -383,7 +383,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $instType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setInstType(array $instType) {
     $this->instType = $instType;
@@ -393,7 +393,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string|int $instType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addInstType($instType) {
     $this->instType[] = $instType;
@@ -410,7 +410,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $vrType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setVrType(array $vrType) {
     $this->vrType = $vrType;
@@ -420,7 +420,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string|int $vrType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addVrType($vrType) {
     $this->vrType[]= $vrType;
@@ -437,7 +437,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $csType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCsType(array $csType) {
     $this->csType = $csType;
@@ -447,7 +447,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param int|string $csType
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addCsType($csType) {
     $this->csType = $csType;
@@ -464,7 +464,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $caseCategory1
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCaseCategory1(array $caseCategory1) {
     $this->caseCategory1 = $caseCategory1;
@@ -474,7 +474,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string|int $caseCategory1
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addCaseCategory1($caseCategory1) {
     $this->caseCategory1[] = $caseCategory1;
@@ -491,7 +491,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $caseCategory2
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setCaseCategory2(array $caseCategory2) {
     $this->caseCategory2 = $caseCategory2;
@@ -501,7 +501,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string|int $caseCategory2
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addCaseCategory2($caseCategory2) {
     $this->caseCategory2[] = $caseCategory2;
@@ -518,7 +518,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param array $sideStatus
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function setSideStatus(array $sideStatus) {
     $this->sideStatus = $sideStatus;
@@ -528,7 +528,7 @@ class SearchRequestData implements SearchRequestDataInterface {
   /**
    * @param string|int $sideStatus
    *
-   * @return SearchRequestData
+   * @return $this
    */
   public function addSideStatus($sideStatus) {
     $this->sideStatus[] = $sideStatus;

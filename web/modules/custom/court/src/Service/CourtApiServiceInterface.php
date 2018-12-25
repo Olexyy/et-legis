@@ -3,9 +3,8 @@
 namespace Drupal\court\Service;
 
 use Drupal\court\Entity\Decision;
-use Drupal\court\Utils\ReviewRequestDataInterface;
-use Drupal\court\Utils\ReviewResponseDataInterface;
-use Drupal\court\Utils\SearchRequestDataInterface;
+use Drupal\court\Utils\RequestDataInterface;
+use Drupal\court\Utils\ResponseDataInterface;
 
 /**
  * Interface CourtApiServiceInterface.
@@ -21,24 +20,24 @@ interface CourtApiServiceInterface {
   /**
    * Executes api request.
    *
-   * @param \Drupal\court\Utils\SearchRequestDataInterface $requestData
+   * @param \Drupal\court\Utils\RequestDataInterface $requestData
    *   Request data.
    *
-   * @return \Drupal\court\Utils\SearchResponseDataInterface
+   * @return \Drupal\court\Utils\ResponseDataInterface
    *   Response data.
    */
-  public function search(SearchRequestDataInterface $requestData);
+  public function search(RequestDataInterface $requestData);
 
   /**
    * Executes api request.
    *
-   * @param \Drupal\court\Utils\ReviewRequestDataInterface $requestData
+   * @param \Drupal\court\Utils\RequestDataInterface $requestData
    *   Request data.
    *
-   * @return \Drupal\court\Utils\ReviewResponseDataInterface
+   * @return \Drupal\court\Utils\ResponseDataInterface
    *   Response data.
    */
-  public function review(ReviewRequestDataInterface $requestData);
+  public function review(RequestDataInterface $requestData);
 
   /**
    * Number of cases in court register.
@@ -58,7 +57,5 @@ interface CourtApiServiceInterface {
    *   Url string.
    */
   public function getReviewUrl($number);
-
-  public function sync(Decision $decision, ReviewResponseDataInterface $searchResponseData);
 
 }

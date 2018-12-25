@@ -9,8 +9,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\court\Service\CourtApiService;
 use Drupal\court\Service\CourtApiServiceInterface;
-use Drupal\court\Utils\ReviewRequestData;
-use Drupal\court\Utils\SearchRequestData;
+use Drupal\court\Utils\RequestData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -62,13 +61,14 @@ class DecisionForm extends ContentEntityForm {
     /* @var $entity \Drupal\court\Entity\Decision */
     $entity = $form_state->getFormObject()->getEntity();
     if ($number = $this->getRequest()->query->get('import')) {
-      $this->messenger()->addStatus($number);
-      $resp = $this->courtApiService
+      $response = $this->courtApiService
         ->review(
-          ReviewRequestData::create()->setRegNumber($number)
+          RequestData::create()->setRegNumber($number)
         );
-      if (!$resp->isEmpty()) {
-        $this->courtApiService->sync($entity, $resp);
+      if (!$response->isEmpty()) {
+        foreach ($response->getParsers() as $parser) {
+          $parser->sync($entity);
+        }
       }
     }
     $form = parent::buildForm($form, $form_state);
