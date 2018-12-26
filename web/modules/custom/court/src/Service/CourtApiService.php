@@ -76,9 +76,14 @@ class CourtApiService implements CourtApiServiceInterface {
     if (!$response->isEmpty() && $response->getParser()->hasResults()) {
       try {
         $number = $requestData->getRegNumber();
-        $rawResponse = $this->client->get($this->getReviewUrl($number));
+        $rawResponse = $this->client->get($this->getReviewUrl($number), [
+          'headers' => [
+            'User-Agent' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)',
+            //'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
+          ],
+        ]);
         $html = $rawResponse->getBody()->getContents();
-        $response->addParser(Parser::create($html));
+        $response->addParser(Parser::createReview($html));
 
         return $response;
       }
@@ -176,7 +181,7 @@ class CourtApiService implements CourtApiServiceInterface {
       $body = $response->getBody()->getContents();
 
       return ResponseData::create()
-        ->addParser(Parser::create($body));
+        ->addParser(Parser::createSearch($body));
     }
     catch (\Exception $exception) {
 

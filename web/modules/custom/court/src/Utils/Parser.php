@@ -13,6 +13,13 @@ use Symfony\Component\DomCrawler\Crawler;
 class Parser implements ParserInterface {
 
   /**
+   * Parser type.
+   *
+   * @var string
+   */
+  protected $type;
+
+  /**
    * Crawler.
    *
    * @var \Symfony\Component\DomCrawler\Crawler
@@ -27,27 +34,103 @@ class Parser implements ParserInterface {
   protected $html;
 
   /**
-   * Search results.
+   * Search results instances.
    *
    * @var array|\Drupal\court\Utils\SearchItem[]
    */
   protected $results;
 
+  /**
+   * Search summary.
+   *
+   * @var string
+   */
   protected $summary;
 
+  /**
+   * Search results count.
+   *
+   * @var int
+   */
+  protected $count;
+
+  /**
+   * Review decision text.
+   *
+   * @var string
+   */
   protected $text;
+
+  /**
+   * Review decision category.
+   *
+   * @var string
+   */
+  protected $category;
+
+  /**
+   * Review decision registered.
+   *
+   * @var int
+   */
+  protected $registered;
+
+  /**
+   * Review decision published.
+   *
+   * @var int
+   */
+  protected $published;
 
   /**
    * Parser constructor.
    *
+   * @param string $type
+   *   Type.
    * @param string $html
    *   Html.
    */
-  public function __construct($html) {
+  public function __construct($type, $html) {
 
     $this->crawler = new Crawler();
     $this->html = $this->processHtml($html);
     $this->crawler->addHtmlContent($this->html);
+    $this->type = $type;
+    if ($this->typeIs(static::REVIEW)) {
+      $this->getCategory();
+      $this->getPublished();
+      $this->getRegistered();
+    }
+    if ($this->typeIs(static::SEARCH)) {
+      $this->getSummary();
+      $this->getCount();
+      $this->getResults();
+    }
+  }
+
+  /**
+   * Getter.
+   *
+   * @return string
+   *   Value.
+   */
+  public function getType() {
+
+    return $this->type;
+  }
+
+  /**
+   * Predicate.
+   *
+   * @param string $type
+   *   Decision type.
+   *
+   * @return bool
+   *   Result.
+   */
+  public function typeIs($type) {
+
+    return $this->type == $type;
   }
 
   /**
@@ -69,15 +152,45 @@ class Parser implements ParserInterface {
   /**
    * Factory method.
    *
+   * @param string $type
+   *   Type.
    * @param string $html
    *   Html.
    *
    * @return $this
    *   This object.
    */
-  public static function create($html) {
+  public static function create($type, $html) {
 
-    return new static($html);
+    return new static($type, $html);
+  }
+
+  /**
+   * Factory method.
+   *
+   * @param string $html
+   *   Html.
+   *
+   * @return $this
+   *   This object.
+   */
+  public static function createReview($html) {
+
+    return static::create(static::REVIEW, $html);
+  }
+
+  /**
+   * Factory method.
+   *
+   * @param string $html
+   *   Html.
+   *
+   * @return $this
+   *   This object.
+   */
+  public static function createSearch($html) {
+
+    return static::create(static::SEARCH, $html);
   }
 
   /**
@@ -130,21 +243,34 @@ class Parser implements ParserInterface {
     return $this->text;
   }
 
+  /**
+   * Syncs decision with parsed data.
+   *
+   * @param \Drupal\court\Entity\DecisionInterface $decision
+   *   Decision to fill up.
+   */
   public function sync(DecisionInterface $decision) {
 
-    if ($this->hasResults()) {
-      $result = $this->getResults()[0];
-      $decision->setNumber($result->getNumber());
-      $decision->setType($result->getType());
-      $decision->setCaseNumber($result->getCaseNumber());
-      $decision->setJurisdiction($result->getJurisdiction());
-      $decision->setJudge($result->getJudge());
-      $decision->setCourt($result->getCourt());
+    if ($this->typeIs(static::SEARCH)) {
+      // Search type.
+      if ($this->hasResults()) {
+        $result = $this->getResults()[0];
+        $decision->setNumber($result->getNumber());
+        $decision->setType($result->getType());
+        $decision->setCaseNumber($result->getCaseNumber());
+        $decision->setJurisdiction($result->getJurisdiction());
+        $decision->setJudge($result->getJudge());
+        $decision->setCourt($result->getCourt());
+      }
     }
-    else {
+    // Review type.
+    elseif ($this->typeIs(static::REVIEW)) {
       if ($text = $this->getText()) {
         $decision->setText($text);
       }
+      $category = $this->getCategory();
+      $registered = $this->getRegistered();
+      $published = $this->getPublished();
     }
   }
 
@@ -201,6 +327,48 @@ class Parser implements ParserInterface {
     }
 
     return 0;
+  }
+
+  public function getCategory() {
+
+    if (!is_string($this->category)) {
+      $this->category = '';
+      if ($this->crawler->filter('#divcasecat')->count()) {
+        if ($this->crawler->filter('#divcasecat tr')->count()) {
+          $rows = $this->crawler->filter('#divcasecat tr');
+          // '2/0417/124/12: Цивільні справи; Позовне провадження; Спори, що виникають із сімейних правовідносин.'
+          $category = $rows->eq(0)->filter('td b')->text();
+          if ($rows->eq(1)->filter('td b')->count()) {
+            // '09.06.2015.'
+            $registered = $rows->eq(1)->filter('td b')->eq(1)->text();
+            // '10.06.2015.'
+            $published = $rows->eq(1)->filter('td b')->eq(2)->text();
+          }
+
+          $this->category = $this->crawler->filter('#txtdepository')
+            ->first()
+            ->html();
+        }
+      }
+    }
+
+    return $this->category;
+  }
+
+  public function getRegistered() {
+
+    if (!is_string($this->text)) {
+      $this->text = '';
+      if ($this->crawler->filter('#divcasecat')->count()) {
+        $this->text = $this->crawler->filter('#txtdepository')->first()->html();
+      }
+    }
+
+    return $this->text;
+  }
+
+  public function getPublished() {
+
   }
 
 }
