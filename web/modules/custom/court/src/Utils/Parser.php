@@ -421,13 +421,8 @@ class Parser implements ParserInterface {
       if (stripos($categories, 'не визначено') === FALSE) {
         $categories = array_filter(explode(';', $categories));
         $count = count($categories);
-        // Little hack, we do not have categories lower than 3-rd level for now.
-        if ($count > 3) {
-          $category = $count[2];
-        }
-        else {
-          $category = end($categories);
-        }
+        // Little hack, we do not have categories lower than 1-st level for now.
+        $category = current($categories);
 
         return $this->processString($category);
       }
