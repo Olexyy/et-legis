@@ -55,32 +55,11 @@ class Parser implements ParserInterface {
   protected $count;
 
   /**
-   * Review decision text.
+   * Review item.
    *
-   * @var string
+   * @var \Drupal\court\Utils\ReviewItem
    */
-  protected $text;
-
-  /**
-   * Review decision category.
-   *
-   * @var string
-   */
-  protected $category;
-
-  /**
-   * Review decision registered.
-   *
-   * @var int
-   */
-  protected $registered;
-
-  /**
-   * Review decision published.
-   *
-   * @var int
-   */
-  protected $published;
+  protected $review;
 
   /**
    * Parser constructor.
@@ -96,16 +75,6 @@ class Parser implements ParserInterface {
     $this->html = $this->processHtml($html);
     $this->crawler->addHtmlContent($this->html);
     $this->type = $type;
-    if ($this->typeIs(static::REVIEW)) {
-      $this->getCategory();
-      $this->getPublished();
-      $this->getRegistered();
-    }
-    if ($this->typeIs(static::SEARCH)) {
-      $this->getSummary();
-      $this->getCount();
-      $this->getResults();
-    }
   }
 
   /**
@@ -231,16 +200,41 @@ class Parser implements ParserInterface {
     return '';
   }
 
-  public function getText() {
+  /**
+   * Getter for review item.
+   *
+   * @return \Drupal\court\Utils\ReviewItem
+   *   Review item.
+   */
+  public function getReview() {
 
-    if (!is_string($this->text)) {
-      $this->text = '';
-      if ($this->crawler->filter('#txtdepository')->count()) {
-        $this->text = $this->crawler->filter('#txtdepository')->first()->html();
+    if (!$this->review) {
+      $this->review = ReviewItem::create();
+      if ($text = $this->getText()) {
+        $this->review->setText($text);
+      }
+      if ($category = $this->getCategory()) {
+        $this->review->setCategory($category);
+      }
+      if ($registered = $this->getRegistered()) {
+        $this->review->setRegistered($registered);
+      }
+      if ($published = $this->getPublished()) {
+        $this->review->setPublished($published);
       }
     }
 
-    return $this->text;
+    return $this->review;
+  }
+
+  public function getText() {
+
+    if ($this->crawler->filter('#txtdepository')->count()) {
+
+      return $this->crawler->filter('#txtdepository')->first()->html();
+    }
+
+    return NULL;
   }
 
   /**
@@ -256,21 +250,19 @@ class Parser implements ParserInterface {
       if ($this->hasResults()) {
         $result = $this->getResults()[0];
         $decision->setNumber($result->getNumber());
-        $decision->setType($result->getType());
+        $decision->setType($result->getTypeId());
         $decision->setCaseNumber($result->getCaseNumber());
-        $decision->setJurisdiction($result->getJurisdiction());
+        $decision->setJurisdiction($result->getJurisdictionId());
         $decision->setJudge($result->getJudge());
-        $decision->setCourt($result->getCourt());
+        $decision->setCourt($result->getCourtId());
       }
     }
     // Review type.
     elseif ($this->typeIs(static::REVIEW)) {
-      if ($text = $this->getText()) {
-        $decision->setText($text);
-      }
-      $category = $this->getCategory();
-      $registered = $this->getRegistered();
-      $published = $this->getPublished();
+      $decision->setText($this->getReview()->getText());
+      $decision->setCategory($this->getReview()->getCategoryId());
+      $decision->setRegistered($this->getReview()->getRegistered());
+      $decision->setPublished($this->getReview()->getPublished());
     }
   }
 
@@ -331,44 +323,117 @@ class Parser implements ParserInterface {
 
   public function getCategory() {
 
-    if (!is_string($this->category)) {
-      $this->category = '';
-      if ($this->crawler->filter('#divcasecat')->count()) {
-        if ($this->crawler->filter('#divcasecat tr')->count()) {
-          $rows = $this->crawler->filter('#divcasecat tr');
-          // '2/0417/124/12: Цивільні справи; Позовне провадження; Спори, що виникають із сімейних правовідносин.'
-          $category = $rows->eq(0)->filter('td b')->text();
-          if ($rows->eq(1)->filter('td b')->count()) {
-            // '09.06.2015.'
-            $registered = $rows->eq(1)->filter('td b')->eq(1)->text();
-            // '10.06.2015.'
-            $published = $rows->eq(1)->filter('td b')->eq(2)->text();
-          }
+    if ($this->crawler->filter('#divcasecat')->count()) {
+      if ($this->crawler->filter('#divcasecat tr')->count()) {
+        $rows = $this->crawler->filter('#divcasecat tr');
+        // '2/0417/124/12: Цивільні справи; Позовне провадження; Спори, що виникають із сімейних правовідносин.'
+        $row = $rows->eq(0)->filter('td b')->text();
 
-          $this->category = $this->crawler->filter('#txtdepository')
-            ->first()
-            ->html();
-        }
+        return $this->processCategory($row);
       }
     }
 
-    return $this->category;
+    return '';
   }
 
   public function getRegistered() {
 
-    if (!is_string($this->text)) {
-      $this->text = '';
-      if ($this->crawler->filter('#divcasecat')->count()) {
-        $this->text = $this->crawler->filter('#txtdepository')->first()->html();
+    if ($this->crawler->filter('#divcasecat')->count()) {
+      if ($this->crawler->filter('#divcasecat tr')->count()) {
+        $rows = $this->crawler->filter('#divcasecat tr');
+        if ($rows->eq(1)->filter('td b')->count()) {
+          // '09.06.2015.'
+          $registered = $rows->eq(1)->filter('td b')->eq(1)->text();
+
+          return $this->processTimestamp($registered);
+        }
       }
     }
 
-    return $this->text;
+    return NULL;
   }
 
   public function getPublished() {
 
+    if ($this->crawler->filter('#divcasecat')->count()) {
+      if ($this->crawler->filter('#divcasecat tr')->count()) {
+        $rows = $this->crawler->filter('#divcasecat tr');
+        if ($rows->eq(1)->filter('td b')->count()) {
+          // '09.06.2015.'
+          $published = $rows->eq(1)->filter('td b')->eq(2)->text();
+
+          return $this->processTimestamp($published);
+        }
+      }
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Processes string.
+   *
+   * @param string $string
+   *   String.
+   *
+   * @return string
+   *   Processed string.
+   */
+  protected function processString($string) {
+
+    return trim($string, ". \t\n\r\0\x0B");
+  }
+
+  /**
+   * Parses timestamp.
+   *
+   * @param string $row
+   *   Unparsed row.
+   *
+   * @return int|null
+   *   Time if any.
+   */
+  protected function processTimestamp($row) {
+
+    $row = $this->processString($row);
+    if ($time = strtotime($row)) {
+      return $time;
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Category negotiator.
+   *
+   * @param string $row
+   *   Unparsed row.
+   *
+   * @return string
+   *   Category if any.
+   */
+  protected function processCategory($row) {
+
+    $categories = explode(':', $row);
+    if (count($categories) == 2) {
+      $categories = $categories[1];
+      $categories = $this->processString($categories);
+      if (stripos($categories, 'не визначено') === FALSE) {
+        $categories = array_filter(explode(';', $categories));
+        $count = count($categories);
+        // Little hack, we do not have categories lower than 3-rd level for now.
+        if ($count > 3) {
+          $category = $count[2];
+        }
+        else {
+          $category = end($categories);
+        }
+
+        return $this->processString($category);
+      }
+    }
+
+    return '';
   }
 
 }

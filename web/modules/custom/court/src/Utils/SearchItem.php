@@ -2,6 +2,8 @@
 
 namespace Drupal\court\Utils;
 
+use Drupal\court\Entity\DecisionOptions;
+
 /**
  * Class SearchItem.
  *
@@ -24,6 +26,21 @@ class SearchItem {
   protected $court;
 
   protected $judge;
+
+  /**
+   * Options.
+   *
+   * @var \Drupal\court\Entity\DecisionOptions
+   */
+  protected $options;
+
+  /**
+   * ReviewItem constructor.
+   */
+  public function __construct() {
+
+    $this->options = DecisionOptions::instance();
+  }
 
   /**
    * @return mixed
@@ -57,6 +74,11 @@ class SearchItem {
   public function setType($type) {
     $this->type = $type;
     return $this;
+  }
+
+  public function getTypeId() {
+
+    return $this->options->searchTypeId($this->type);
   }
 
   /**
@@ -113,6 +135,13 @@ class SearchItem {
   /**
    * @return mixed
    */
+  public function getJurisdictionId() {
+    return $this->options->searchJurisdictionId($this->jurisdiction);
+  }
+
+  /**
+   * @return mixed
+   */
   public function getCaseNumber() {
     return $this->caseNumber;
   }
@@ -142,6 +171,13 @@ class SearchItem {
   public function setCourt($court) {
     $this->court = $court;
     return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getCourtId() {
+    return $this->options->searchCourtId($this->court);
   }
 
   /**

@@ -193,9 +193,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDefaultValue('')
       ->setDescription(t('Type of decision.'))
       ->setSetting('max_length', 50)
-      ->setSetting('allowed_values_function', static::class . '::getOptionsForms')
+      ->setSetting('allowed_values_function', static::class . '::getOptionsTypes')
       ->addPropertyConstraints('value', [
-        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesForms'],
+        'AllowedValues' => ['callback' => static::class . '::getAllowedValuesTypes'],
       ])
       ->setDisplayOptions('form', [
         'type' => 'options_select',
@@ -374,11 +374,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getOptionsForms() {
+  public static function getOptionsTypes() {
 
-    $options = array_values(DecisionOptions::instance()->forms());
-
-    return array_combine($options, $options);
+    return DecisionOptions::instance()->types();
   }
 
   /**
@@ -387,9 +385,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getAllowedValuesForm() {
+  public static function getAllowedValuesTypes() {
 
-    return array_values(DecisionOptions::instance()->forms());
+    return array_keys(DecisionOptions::instance()->types());
   }
 
   /**
@@ -398,11 +396,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getOptionsJurisdictions() {
+  public static function getOptionsJurisdictions() {
 
-    $options = array_values(DecisionOptions::instance()->jurisdictions());
-
-    return array_combine($options, $options);
+    return DecisionOptions::instance()->jurisdictions();
   }
 
   /**
@@ -411,9 +407,9 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getAllowedValuesJurisdictions() {
+  public static function getAllowedValuesJurisdictions() {
 
-    return array_values(DecisionOptions::instance()->jurisdictions());
+    return array_keys(DecisionOptions::instance()->jurisdictions());
   }
 
   /**
@@ -424,9 +420,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getOptionsCategories() {
 
-    $options = array_values(DecisionOptions::instance()->categories());
-
-    return array_combine($options, $options);
+    return DecisionOptions::instance()->categories1();
   }
 
   /**
@@ -437,7 +431,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getAllowedValuesCategories() {
 
-    return array_values(DecisionOptions::instance()->categories());
+    return array_keys(DecisionOptions::instance()->categories());
   }
 
   /**
@@ -448,9 +442,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getOptionsCourts() {
 
-    $options = array_values(DecisionOptions::instance()->courts());
-
-    return array_combine($options, $options);
+    return DecisionOptions::instance()->courts();
   }
 
   /**
@@ -461,7 +453,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getAllowedValuesCourts() {
 
-    return array_values(DecisionOptions::instance()->courts());
+    return array_keys(DecisionOptions::instance()->courts());
   }
 
   /**
@@ -472,9 +464,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getOptionsInstances() {
 
-    $options = array_values(DecisionOptions::instance()->instances());
-
-    return array_combine($options, $options);
+    return DecisionOptions::instance()->instances();
   }
 
   /**
@@ -485,7 +475,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    */
   public function getAllowedValuesInstances() {
 
-    return array_values(DecisionOptions::instance()->instances());
+    return array_keys(DecisionOptions::instance()->instances());
   }
 
   public function setText($value) {
