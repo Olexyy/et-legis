@@ -2,9 +2,9 @@
 
 namespace Drupal\court\Service;
 
-use Drupal\court\Utils\Parser;
-use Drupal\court\Utils\RequestDataInterface;
-use Drupal\court\Utils\ResponseData;
+use Drupal\court\Data\RequestDataInterface;
+use Drupal\court\Parser\Parser;
+use Drupal\court\Data\ResponseData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DomCrawler\Crawler;
@@ -73,7 +73,7 @@ class CourtApiService implements CourtApiServiceInterface {
 
     $response = $this->search($requestData);
     // Get review only if connection is ok and any results.
-    if (!$response->isEmpty() && $response->getParser()->hasResults()) {
+    if (!$response->isEmpty() && $response->getParser()->getSearchResult()->hasResults()) {
       try {
         $number = $requestData->getRegNumber();
         $rawResponse = $this->client->get($this->getReviewUrl($number), [

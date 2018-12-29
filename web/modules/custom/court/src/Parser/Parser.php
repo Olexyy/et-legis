@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Parser;
 
 use Drupal\court\Entity\DecisionInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 /**
  * Class Parser.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Parser
  */
 class Parser implements ParserInterface {
 
@@ -34,32 +34,18 @@ class Parser implements ParserInterface {
   protected $html;
 
   /**
-   * Search results instances.
-   *
-   * @var array|\Drupal\court\Utils\SearchItem[]
-   */
-  protected $results;
-
-  /**
-   * Search summary.
-   *
-   * @var string
-   */
-  protected $summary;
-
-  /**
-   * Search results count.
-   *
-   * @var int
-   */
-  protected $count;
-
-  /**
    * Review item.
    *
-   * @var \Drupal\court\Utils\ReviewItem
+   * @var \Drupal\court\Parser\ReviewResult
    */
-  protected $review;
+  protected $reviewResult;
+
+  /**
+   * Search result.
+   *
+   * @var \Drupal\court\Parser\SearchResult
+   */
+  protected $searchResult;
 
   /**
    * Parser constructor.
@@ -100,22 +86,6 @@ class Parser implements ParserInterface {
   public function typeIs($type) {
 
     return $this->type == $type;
-  }
-
-  /**
-   * Processes Html before it is crawled.
-   *
-   * @param string $html
-   *   Html.
-   *
-   * @return string
-   *   Processed Html.
-   */
-  protected function processHtml($html) {
-
-    $html = str_replace('&nbsp;', ' ', $html);
-
-    return $html;
   }
 
   /**
@@ -185,59 +155,6 @@ class Parser implements ParserInterface {
   }
 
   /**
-   * Getter for search results summary.
-   *
-   * @return string
-   *   Summary string.
-   */
-  public function getSummary() {
-
-    if ($this->crawler->filter('#divFooterSearch .td1')->count()) {
-
-      return $this->crawler->filter('#divFooterSearch .td1')->first()->html();
-    }
-
-    return '';
-  }
-
-  /**
-   * Getter for review item.
-   *
-   * @return \Drupal\court\Utils\ReviewItem
-   *   Review item.
-   */
-  public function getReview() {
-
-    if (!$this->review) {
-      $this->review = ReviewItem::create();
-      if ($text = $this->getText()) {
-        $this->review->setText($text);
-      }
-      if ($category = $this->getCategory()) {
-        $this->review->setCategory($category);
-      }
-      if ($registered = $this->getRegistered()) {
-        $this->review->setRegistered($registered);
-      }
-      if ($published = $this->getPublished()) {
-        $this->review->setPublished($published);
-      }
-    }
-
-    return $this->review;
-  }
-
-  public function getText() {
-
-    if ($this->crawler->filter('#txtdepository')->count()) {
-
-      return $this->crawler->filter('#txtdepository')->first()->html();
-    }
-
-    return NULL;
-  }
-
-  /**
    * Syncs decision with parsed data.
    *
    * @param \Drupal\court\Entity\DecisionInterface $decision
@@ -247,8 +164,7 @@ class Parser implements ParserInterface {
 
     if ($this->typeIs(static::SEARCH)) {
       // Search type.
-      if ($this->hasResults()) {
-        $result = $this->getResults()[0];
+      if ($result = $this->getSearchResult()->getFirstResult()) {
         $decision->setNumber($result->getNumber());
         $decision->setType($result->getTypeId());
         $decision->setCaseNumber($result->getCaseNumber());
@@ -259,47 +175,121 @@ class Parser implements ParserInterface {
     }
     // Review type.
     elseif ($this->typeIs(static::REVIEW)) {
-      $decision->setText($this->getReview()->getText());
-      $decision->setCategory($this->getReview()->getCategoryId());
-      $decision->setRegistered($this->getReview()->getRegistered());
-      $decision->setPublished($this->getReview()->getPublished());
+      $decision->setText($this->getReviewResult()->getText());
+      $decision->setCategory($this->getReviewResult()->getCategoryId());
+      $decision->setRegistered($this->getReviewResult()->getRegistered());
+      $decision->setPublished($this->getReviewResult()->getPublished());
     }
   }
 
-  public function getResults() {
+  /**
+   * Getter for review result.
+   *
+   * @return \Drupal\court\Parser\ReviewResult
+   *   Review result.
+   */
+  public function getReviewResult() {
 
-    if (!is_array($this->results)) {
-      $this->results = [];
-      if ($this->crawler->filter('#tableresult tr')->count()) {
-        $row = $this->crawler->filter('#tableresult tr')->eq(1)->filter('td');
-        $number = trim($row->eq(0)->filter('a')->text());
-        $type = trim($row->eq(1)->text());
-        $resolved = strtotime(trim($row->eq(2)->text()));
-        $validated = strtotime(trim($row->eq(3)->text()));
-        $jurisdiction = trim($row->eq(4)->text());
-        $caseNumber = trim($row->eq(5)->text());
-        $court = trim($row->eq(6)->text());
-        $judge = trim($row->eq(7)->text());
-        $searchItem = new SearchItem();
-        $searchItem
-          ->setNumber($number)
-          ->setType($type)
-          ->setResolved($resolved)
-          ->setValidated($validated)
-          ->setJurisdiction($jurisdiction)
-          ->setCaseNumber($caseNumber)
-          ->setCourt($court)
-          ->setJudge($judge);
-        $this->results[] = $searchItem;
+    if (!$this->reviewResult) {
+      $this->reviewResult = ReviewResult::create();
+      if ($text = $this->getText()) {
+        $this->reviewResult->setText($text);
+      }
+      if ($category = $this->getCategory()) {
+        $this->reviewResult->setCategory($category);
+      }
+      if ($registered = $this->getRegistered()) {
+        $this->reviewResult->setRegistered($registered);
+      }
+      if ($published = $this->getPublished()) {
+        $this->reviewResult->setPublished($published);
       }
     }
 
-    return $this->results;
+    return $this->reviewResult;
   }
 
-  public function hasResults() {
+  public function getSearchResult() {
 
-    return (bool) $this->getResults();
+    if (!$this->searchResult) {
+      $this->searchResult = SearchResult::create();
+      $this->searchResult->setResults($this->getResults());
+      $this->searchResult->setCount($this->getCount());
+      $this->searchResult->setSummary($this->getSummary());
+    }
+
+    return $this->searchResult;
+  }
+
+  /**
+   * Processes Html before it is crawled.
+   *
+   * @param string $html
+   *   Html.
+   *
+   * @return string
+   *   Processed Html.
+   */
+  protected function processHtml($html) {
+
+    $html = str_replace('&nbsp;', ' ', $html);
+
+    return $html;
+  }
+
+  /**
+   * Getter for search results summary.
+   *
+   * @return string
+   *   Summary string.
+   */
+  protected function getSummary() {
+
+    if ($this->crawler->filter('#divFooterSearch .td1')->count()) {
+
+      return $this->crawler->filter('#divFooterSearch .td1')->first()->html();
+    }
+
+    return '';
+  }
+
+  protected function getText() {
+
+    if ($this->crawler->filter('#txtdepository')->count()) {
+
+      return $this->crawler->filter('#txtdepository')->first()->html();
+    }
+
+    return NULL;
+  }
+
+  protected function getResults() {
+
+    $results = [];
+    if ($this->crawler->filter('#tableresult tr')->count()) {
+      $row = $this->crawler->filter('#tableresult tr')->eq(1)->filter('td');
+      $number = trim($row->eq(0)->filter('a')->text());
+      $type = trim($row->eq(1)->text());
+      $resolved = strtotime(trim($row->eq(2)->text()));
+      $validated = strtotime(trim($row->eq(3)->text()));
+      $jurisdiction = trim($row->eq(4)->text());
+      $caseNumber = trim($row->eq(5)->text());
+      $court = trim($row->eq(6)->text());
+      $judge = trim($row->eq(7)->text());
+      $searchItem = new SearchItem();
+      $searchItem
+        ->setNumber($number)
+        ->setType($type)
+        ->setResolved($resolved)
+        ->setValidated($validated)
+        ->setJurisdiction($jurisdiction)
+        ->setCaseNumber($caseNumber)
+        ->setCourt($court)
+        ->setJudge($judge);
+      $results[] = $searchItem;
+    }
+
+    return $results;
   }
 
   /**
@@ -308,7 +298,7 @@ class Parser implements ParserInterface {
    * @return int
    *   Count.
    */
-  public function getCount() {
+  protected function getCount() {
 
     $matches = [];
     if (preg_match('@За заданими параметрами пошуку знайдено документів:\s*(\d+)@', $this->getSummary(), $matches)) {
@@ -321,7 +311,7 @@ class Parser implements ParserInterface {
     return 0;
   }
 
-  public function getCategory() {
+  protected function getCategory() {
 
     if ($this->crawler->filter('#divcasecat')->count()) {
       if ($this->crawler->filter('#divcasecat tr')->count()) {
@@ -336,7 +326,7 @@ class Parser implements ParserInterface {
     return '';
   }
 
-  public function getRegistered() {
+  protected function getRegistered() {
 
     if ($this->crawler->filter('#divcasecat')->count()) {
       if ($this->crawler->filter('#divcasecat tr')->count()) {
@@ -353,7 +343,7 @@ class Parser implements ParserInterface {
     return NULL;
   }
 
-  public function getPublished() {
+  protected function getPublished() {
 
     if ($this->crawler->filter('#divcasecat')->count()) {
       if ($this->crawler->filter('#divcasecat tr')->count()) {

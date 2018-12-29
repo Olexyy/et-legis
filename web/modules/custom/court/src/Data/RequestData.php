@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Data;
 
 /**
  * Class RequestData.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Data
  */
 class RequestData implements RequestDataInterface {
 
@@ -534,7 +534,5 @@ class RequestData implements RequestDataInterface {
     $this->sideStatus[] = $sideStatus;
     return $this;
   }
-
-
 
 }

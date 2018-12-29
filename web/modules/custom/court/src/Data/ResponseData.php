@@ -1,11 +1,13 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Data;
+
+use Drupal\court\Parser\ParserInterface;
 
 /**
  * Class SearchResponseData.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Data
  */
 class ResponseData implements ResponseDataInterface {
 
@@ -19,7 +21,7 @@ class ResponseData implements ResponseDataInterface {
   /**
    * Parser.
    *
-   * @var \Drupal\court\Utils\Parser[]|array
+   * @var \Drupal\court\Parser\Parser[]|array
    */
   protected $parsers = [];
 
@@ -60,7 +62,7 @@ class ResponseData implements ResponseDataInterface {
   /**
    * Getter for Html parser.
    *
-   * @return \Drupal\court\Utils\Parser|null
+   * @return \Drupal\court\Parser\Parser|null
    *   Html parser.
    */
   public function getParser() {
@@ -75,7 +77,7 @@ class ResponseData implements ResponseDataInterface {
   /**
    * Getter for Html parsers.
    *
-   * @return \Drupal\court\Utils\Parser[]|array
+   * @return \Drupal\court\Parser\Parser[]|array
    *   Html parsers.
    */
   public function getParsers() {
@@ -86,7 +88,7 @@ class ResponseData implements ResponseDataInterface {
   /**
    * Parser setter.
    *
-   * @param \Drupal\court\Utils\ParserInterface $parser
+   * @param \Drupal\court\Parser\ParserInterface $parser
    *   Parser.
    *
    * @return $this

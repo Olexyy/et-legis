@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Parser;
 
 use Drupal\court\Entity\DecisionOptions;
 
 /**
  * Class ReviewItem.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Parser
  */
-class ReviewItem {
+class ReviewResult {
 
   /**
    * Review decision text.
@@ -75,10 +75,12 @@ class ReviewItem {
   /**
    * @param string $text
    *
-   * @return ReviewItem
+   * @return $this
    */
   public function setText($text) {
+
     $this->text = $text;
+
     return $this;
   }
 
@@ -97,7 +99,7 @@ class ReviewItem {
   /**
    * @param string $category
    *
-   * @return ReviewItem
+   * @return $this
    */
   public function setCategory($category) {
     $this->category = $category;
@@ -114,7 +116,7 @@ class ReviewItem {
   /**
    * @param int $registered
    *
-   * @return ReviewItem
+   * @return $this
    */
   public function setRegistered(int $registered) {
     $this->registered = $registered;
@@ -131,7 +133,7 @@ class ReviewItem {
   /**
    * @param int $published
    *
-   * @return ReviewItem
+   * @return $this
    */
   public function setPublished($published) {
     $this->published = $published;

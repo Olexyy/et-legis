@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Parser;
 
 use Drupal\court\Entity\DecisionOptions;
 
 /**
- * Class SearchItem.
+ * Class SearchResult.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Parser
  */
 class SearchItem {
 

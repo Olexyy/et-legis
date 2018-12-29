@@ -2,9 +2,7 @@
 
 namespace Drupal\court\Service;
 
-use Drupal\court\Entity\Decision;
-use Drupal\court\Utils\RequestDataInterface;
-use Drupal\court\Utils\ResponseDataInterface;
+use Drupal\court\Data\RequestDataInterface;
 
 /**
  * Interface CourtApiServiceInterface.
@@ -20,10 +18,10 @@ interface CourtApiServiceInterface {
   /**
    * Executes api request.
    *
-   * @param \Drupal\court\Utils\RequestDataInterface $requestData
+   * @param \Drupal\court\Data\RequestDataInterface $requestData
    *   Request data.
    *
-   * @return \Drupal\court\Utils\ResponseDataInterface
+   * @return \Drupal\court\Data\ResponseDataInterface
    *   Response data.
    */
   public function search(RequestDataInterface $requestData);
@@ -31,10 +29,10 @@ interface CourtApiServiceInterface {
   /**
    * Executes api request.
    *
-   * @param \Drupal\court\Utils\RequestDataInterface $requestData
+   * @param \Drupal\court\Data\RequestDataInterface $requestData
    *   Request data.
    *
-   * @return \Drupal\court\Utils\ResponseDataInterface
+   * @return \Drupal\court\Data\ResponseDataInterface
    *   Response data.
    */
   public function review(RequestDataInterface $requestData);

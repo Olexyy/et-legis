@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Data;
 
 /**
  * Class RequestDataInterface.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Data
  */
 interface RequestDataInterface {
 

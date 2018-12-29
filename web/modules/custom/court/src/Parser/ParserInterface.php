@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Parser;
 
 /**
  * Interface ParserInterface.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Parser
  */
 interface ParserInterface {
 
@@ -67,24 +67,8 @@ interface ParserInterface {
    */
   public function getCrawler();
 
-  /**
-   * Getter for search results summary.
-   *
-   * @return string
-   *   Summary string.
-   */
-  public function getSummary();
+  public function getSearchResult();
 
-  /**
-   * Extracts count from summary.
-   *
-   * @return int
-   *   Count.
-   */
-  public function getCount();
-
-  public function getResults();
-
-  public function hasResults();
+  public function getReviewResult();
 
 }

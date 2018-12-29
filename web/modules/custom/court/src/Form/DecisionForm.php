@@ -9,7 +9,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\court\Service\CourtApiService;
 use Drupal\court\Service\CourtApiServiceInterface;
-use Drupal\court\Utils\RequestData;
+use Drupal\court\Data\RequestData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

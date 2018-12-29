@@ -1,11 +1,13 @@
 <?php
 
-namespace Drupal\court\Utils;
+namespace Drupal\court\Data;
+
+use Drupal\court\Parser\ParserInterface;
 
 /**
  * Interface ResponseDataInterface.
  *
- * @package Drupal\court\Utils
+ * @package Drupal\court\Data
  */
 interface ResponseDataInterface {
 
@@ -28,7 +30,7 @@ interface ResponseDataInterface {
   /**
    * Parser setter.
    *
-   * @param \Drupal\court\Utils\ParserInterface $parser
+   * @param \Drupal\court\Parser\ParserInterface $parser
    *   Parser.
    *
    * @return $this
@@ -39,7 +41,7 @@ interface ResponseDataInterface {
   /**
    * Getter for Html parser.
    *
-   * @return \Drupal\court\Utils\Parser
+   * @return \Drupal\court\Parser\Parser
    *   Html parser.
    */
   public function getParser();
@@ -47,7 +49,7 @@ interface ResponseDataInterface {
   /**
    * Getter for Html parsers.
    *
-   * @return \Drupal\court\Utils\Parser[]|array
+   * @return \Drupal\court\Parser\Parser[]|array
    *   Html parsers.
    */
   public function getParsers();
