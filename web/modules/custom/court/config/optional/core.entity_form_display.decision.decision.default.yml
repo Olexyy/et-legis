@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - court
+    - inline_entity_form
     - text
 id: decision.decision.default
 targetEntityType: decision
@@ -26,18 +27,18 @@ content:
   court:
     type: options_select
     region: content
-    weight: 5
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   instance:
     type: options_select
     region: content
-    weight: 6
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   judge:
     type: string_textfield
-    weight: 9
+    weight: 7
     region: content
     settings:
       size: 60
@@ -51,14 +52,14 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 8
+    weight: 18
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   legal_position:
     type: text_textarea
-    weight: 15
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -73,29 +74,36 @@ content:
       placeholder: ''
     third_party_settings: {  }
   published:
-    type: datetime_timestamp
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  registered:
-    type: datetime_timestamp
+    type: datetime_timestamp_nullable
     weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
+  registered:
+    type: datetime_timestamp_nullable
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   related:
-    type: entity_reference_autocomplete
-    weight: 16
+    type: inline_entity_form_complex
+    weight: 15
     region: content
     settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_existing: true
       match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_new: false
+      allow_duplicate: false
     third_party_settings: {  }
   resolved:
-    type: datetime_timestamp
-    weight: 7
+    type: datetime_timestamp_nullable
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -114,11 +122,11 @@ content:
       size: 60
       placeholder: ''
     region: content
-    weight: 17
+    weight: 16
     third_party_settings: {  }
   text:
     type: text_textarea
-    weight: 14
+    weight: 12
     region: content
     settings:
       rows: 5
@@ -137,11 +145,11 @@ content:
       size: 60
       placeholder: ''
     region: content
-    weight: 18
+    weight: 17
     third_party_settings: {  }
   validated:
-    type: datetime_timestamp
-    weight: 10
+    type: datetime_timestamp_nullable
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
