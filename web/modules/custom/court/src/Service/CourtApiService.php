@@ -5,6 +5,7 @@ namespace Drupal\court\Service;
 use Drupal\court\Data\RequestDataInterface;
 use Drupal\court\Parser\Parser;
 use Drupal\court\Data\ResponseData;
+use Drupal\court\UserAgent\Generator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DomCrawler\Crawler;
@@ -78,8 +79,7 @@ class CourtApiService implements CourtApiServiceInterface {
         $number = $requestData->getRegNumber();
         $rawResponse = $this->client->get($this->getReviewUrl($number), [
           'headers' => [
-            'User-Agent' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)',
-            //'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
+            'User-Agent' => Generator::create()->generate(),
           ],
         ]);
         $html = $rawResponse->getBody()->getContents();
@@ -100,58 +100,6 @@ class CourtApiService implements CourtApiServiceInterface {
    * {@inheritdoc}
    */
   public function search(RequestDataInterface $requestData) {
-    /*$results = [];
-    $category1ID = 5139;
-    $categories2 = CaseCategory2::getList();
-    $category2 = $categories2[$category1ID];
-    $total = count($category2);
-    $start = 400;
-    $limit = 466;
-    $i = 0;
-    foreach ($category2 as $category2ID => $label) {
-      if($i < $start)  {
-        $i++;
-        continue;
-      }
-      if($i >= $limit)  {
-        break;
-      }
-      $searchRequestData = SearchRequestData::create()
-        ->addCaseCategory1($category1ID)
-        ->addCaseCategory2($category2ID);
-      $post = $searchRequestData->getParams();
-      $post = http_build_query($post);
-      $post = preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $post);
-      $response = $this->client->post(
-        new Uri($searchRequestData->getUrl()),
-        [
-          'headers' => [
-            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Content-Length' => strlen($post),
-          ],
-          'connect_timeout' => 10,
-          'body' => $post,
-        ]
-      );
-      $code = $response->getStatusCode();
-      $headers = $response->getHeaders();
-      // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
-      $body = $response->getBody()->getContents();
-      $crawler = new Crawler($body);
-      if ($options = $crawler->filter('#CaseCat3 option')->count()) {
-        foreach ($crawler->filter('#CaseCat3 option') as $option) {
-          $value = $option->nodeValue;
-          $id = $option->getAttribute('value');
-          $results[$category1ID][$category2ID][$id] = $value;
-        }
-        //$summary = $crawler->filter('#caseCategory3')->first()->html();
-      }
-      sleep(1);
-      $i++;
-    }
-    $a = 1;
-    exit;*/
 
     $post = $requestData->toApiArray();
     // Special handling for query params.
@@ -159,7 +107,6 @@ class CourtApiService implements CourtApiServiceInterface {
     $post = preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $post);
     // TODO try catch
     // TODO manage response code
-    // TODO dynamic user agent
     // TODO manage session
     // TODO query time
     try {
@@ -167,7 +114,7 @@ class CourtApiService implements CourtApiServiceInterface {
         $requestData->getUrl(),
         [
           'headers' => [
-            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
+            'User-Agent' => Generator::create()->generate(),
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Content-Length' => strlen($post),
           ],
@@ -190,6 +137,59 @@ class CourtApiService implements CourtApiServiceInterface {
   }
 
 }
+
+/*$results = [];
+$category1ID = 5139;
+$categories2 = CaseCategory2::getList();
+$category2 = $categories2[$category1ID];
+$total = count($category2);
+$start = 400;
+$limit = 466;
+$i = 0;
+foreach ($category2 as $category2ID => $label) {
+  if($i < $start)  {
+    $i++;
+    continue;
+  }
+  if($i >= $limit)  {
+    break;
+  }
+  $searchRequestData = SearchRequestData::create()
+    ->addCaseCategory1($category1ID)
+    ->addCaseCategory2($category2ID);
+  $post = $searchRequestData->getParams();
+  $post = http_build_query($post);
+  $post = preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $post);
+  $response = $this->client->post(
+    new Uri($searchRequestData->getUrl()),
+    [
+      'headers' => [
+        'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0) Gecko/20100101 Firefox/38.0',
+        'Content-Type' => 'application/x-www-form-urlencoded',
+        'Content-Length' => strlen($post),
+      ],
+      'connect_timeout' => 10,
+      'body' => $post,
+    ]
+  );
+  $code = $response->getStatusCode();
+  $headers = $response->getHeaders();
+  // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
+  $body = $response->getBody()->getContents();
+  $crawler = new Crawler($body);
+  if ($options = $crawler->filter('#CaseCat3 option')->count()) {
+    foreach ($crawler->filter('#CaseCat3 option') as $option) {
+      $value = $option->nodeValue;
+      $id = $option->getAttribute('value');
+      $results[$category1ID][$category2ID][$id] = $value;
+    }
+    //$summary = $crawler->filter('#caseCategory3')->first()->html();
+  }
+  sleep(1);
+  $i++;
+}
+$a = 1;
+exit;*/
 
 /*
   $ch = curl_init($requestData->getUrl());
