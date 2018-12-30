@@ -75,13 +75,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   published:
-    type: datetime_timestamp
+    type: datetime_timestamp_nullable
     weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   registered:
-    type: datetime_timestamp
+    type: datetime_timestamp_nullable
     weight: 10
     region: content
     settings: {  }
@@ -94,16 +94,16 @@ content:
       form_mode: default
       label_singular: ''
       label_plural: ''
-      allow_new: true
       allow_existing: true
       match_operator: CONTAINS
       override_labels: false
       collapsible: false
       collapsed: false
+      allow_new: false
       allow_duplicate: false
     third_party_settings: {  }
   resolved:
-    type: datetime_timestamp
+    type: datetime_timestamp_nullable
     weight: 8
     region: content
     settings: {  }
@@ -149,7 +149,7 @@ content:
     weight: 17
     third_party_settings: {  }
   validated:
-    type: datetime_timestamp
+    type: datetime_timestamp_nullable
     weight: 9
     region: content
     settings: {  }
