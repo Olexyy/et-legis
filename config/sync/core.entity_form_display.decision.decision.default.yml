@@ -2,9 +2,11 @@ uuid: a5ff86dd-d468-4d29-967b-56d0c410d9cb
 langcode: uk
 status: true
 dependencies:
+  config:
+    - entity_browser.browser.decisions
   module:
     - court
-    - inline_entity_form
+    - entity_browser
     - text
 id: decision.decision.default
 targetEntityType: decision
@@ -87,20 +89,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   related:
-    type: inline_entity_form_complex
+    type: entity_browser_entity_reference
     weight: 15
     region: content
     settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_existing: true
-      match_operator: CONTAINS
-      override_labels: false
-      collapsible: false
-      collapsed: false
-      allow_new: false
-      allow_duplicate: false
+      entity_browser: decisions
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
   resolved:
     type: datetime_timestamp_nullable

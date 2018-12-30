@@ -1,0 +1,31 @@
+uuid: 4faa29c3-2db5-446d-9855-980d4ad1b7e3
+langcode: uk
+status: true
+dependencies:
+  config:
+    - views.view.decision_browser
+  module:
+    - views
+name: decisions
+label: Decisions
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  6d062a82-c4e1-409d-b992-c2f68a4c311f:
+    settings:
+      view: decision_browser
+      view_display: entity_browser_1
+      submit_text: 'Select entities'
+      auto_select: false
+    uuid: 6d062a82-c4e1-409d-b992-c2f68a4c311f
+    weight: 1
+    label: view
+    id: view
