@@ -3,3 +3,5 @@ description: 'Court functionality integration.'
 type: module
 package: system
 core: 8.x
+dependencies:
+  - inline_entity_form:inline_entity_form

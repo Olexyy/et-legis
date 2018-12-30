@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - court
+    - inline_entity_form
     - text
 id: decision.decision.default
 targetEntityType: decision
@@ -86,13 +87,20 @@ content:
     settings: {  }
     third_party_settings: {  }
   related:
-    type: entity_reference_autocomplete
+    type: inline_entity_form_complex
     weight: 15
     region: content
     settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
       match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
     third_party_settings: {  }
   resolved:
     type: datetime_timestamp

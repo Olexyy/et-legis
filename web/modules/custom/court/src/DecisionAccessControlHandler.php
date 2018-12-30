@@ -21,7 +21,7 @@ class DecisionAccessControlHandler extends EntityAccessControlHandler {
     /** @var \Drupal\court\Entity\DecisionInterface $entity */
     switch ($operation) {
       case 'view':
-        if (!$entity->isPublished()) {
+        if (!$entity->isActive()) {
           return AccessResult::allowedIfHasPermission($account, 'view unpublished decision entities');
         }
         return AccessResult::allowedIfHasPermission($account, 'view published decision entities');
