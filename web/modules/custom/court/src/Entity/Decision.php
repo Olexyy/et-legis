@@ -646,4 +646,80 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     return $this;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function hasRelated() {
+
+    if (isset($this->related)) {
+
+      return $this->related->count();
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getRelated() {
+
+    if (isset($this->related)) {
+
+      return $this->related->referencedEntities();
+    }
+
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getRelatedIds() {
+
+    if (isset($this->related)) {
+      $values = $this->related->getValue();
+
+      return array_column($values, 'target_id');
+    }
+
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeRelatedById($relatedId) {
+
+    if (isset($this->related)) {
+      $values = $this->related->getValue();
+      $key = array_search($relatedId, array_column($values, 'target_id'));
+      if ($key !== FALSE) {
+        $this->related->removeItem($key);
+      }
+    }
+
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeRelated(DecisionInterface $decision) {
+
+    return $this->removeRelatedById($decision->id());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addRelated(DecisionInterface $decision) {
+
+    if (isset($this->related)) {
+      $this->related[] = $decision;
+    }
+
+    return $this;
+  }
+
 }

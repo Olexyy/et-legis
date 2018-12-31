@@ -13,8 +13,6 @@ use Drupal\user\EntityOwnerInterface;
  */
 interface DecisionInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
-  // Add get/set methods for your configuration properties here.
-
   /**
    * Gets the Decision name.
    *
@@ -129,5 +127,38 @@ interface DecisionInterface extends ContentEntityInterface, EntityChangedInterfa
   public function getLegalPosition();
 
   public function setLegalPosition($value);
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasRelated();
+
+  /**
+   * Getter for related decisions.
+   *
+   * @return array|\Drupal\court\Entity\DecisionInterface[]
+   *   Related decisions if any.
+   */
+  public function getRelated();
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getRelatedIds();
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeRelatedById($relatedId);
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeRelated(DecisionInterface $decision);
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addRelated(DecisionInterface $decision);
 
 }
