@@ -74,32 +74,10 @@ class CaseFilter extends FilterBase implements ContainerFactoryPluginInterface {
    */
   public function process($text, $langcode) {
 
-    $text = preg_replace_callback('/\[iframe url="(.+)".*title="(.*)".*width="([\d]+|auto)".*height="(\d+)".*\]/i',
+    $text = preg_replace_callback('/\[case (\d+)\]/i',
       function($matches) {
-
-      $url = $matches[1];
-      $title = $matches[2];
-      $width = $matches[3];
-      $height = $matches[4];
-      $width = ($width == 'auto')? "style=width:100%" : "style='width:'{$width}px";
-      // 1) If url is valid.
-      if (UrlHelper::isValid($url, TRUE)) {
-        try {
-          $response = $this->httpClient->head($url);
-          // 2) If response is 200.
-          if ($response->getStatusCode() == 200) {
-            // 3) If page is not forbidden to be accessed through iframe.
-            if (!$response->hasHeader('X-Frame-Options')) {
-              return '<div class = "iframe-wrapper" style="text-align:center;">
-              <iframe title="' . $title . '" src="' . $url . '" frameborder="0" allowfullscreen height="' . $height . '" ' . $width . '></iframe></div>';
-            }
-          }
-        }
-        catch(\Exception $exception) {
-          return '';
-        }
-      }
-      return '';
+      $number = $matches[1];
+      return '<a href="http://www.reyestr.court.gov.ua/Review/'.$number.'">' . $number . '</a>';
     }, $text);
 
     return new FilterProcessResult($text);
