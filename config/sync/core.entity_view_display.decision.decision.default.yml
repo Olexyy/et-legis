@@ -1,0 +1,51 @@
+uuid: 97f2dbe2-57ca-46ae-b76d-1ddb12476381
+langcode: en
+status: true
+dependencies:
+  module:
+    - court
+id: decision.decision.default
+targetEntityType: decision
+bundle: decision
+mode: default
+content:
+  case_number:
+    label: above
+    type: string
+    region: content
+    weight: 1
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  number:
+    label: above
+    type: string
+    region: content
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  resume:
+    type: decision_table
+    weight: 2
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  category: true
+  court: true
+  instance: true
+  judge: true
+  jurisdiction: true
+  langcode: true
+  legal_position: true
+  published: true
+  registered: true
+  related: true
+  resolved: true
+  tags: true
+  text: true
+  type: true
+  user_id: true
+  validated: true
