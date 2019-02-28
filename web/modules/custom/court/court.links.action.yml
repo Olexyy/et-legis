@@ -2,4 +2,9 @@ entity.decision.add_form:
   route_name: entity.decision.add_form
   title: 'Add Decision'
   appears_on:
-    - entity.decision.collection
+    - view.decisions.collection
+entity.legal_position.add_form:
+  route_name: entity.legal_position.add_form
+  title: 'Add Legal position'
+  appears_on:
+    - view.legal_positions.collection

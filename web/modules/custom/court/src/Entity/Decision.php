@@ -47,11 +47,11 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/config/decision/decision/{decision}",
- *     "add-form" = "/admin/config/decision/decision/add",
- *     "edit-form" = "/admin/config/decision/decision/{decision}/edit",
- *     "delete-form" = "/admin/config/decision/decision/{decision}/delete",
- *     "collection" = "/admin/config/decision/decision",
+ *     "canonical" = "/admin/config/decision/{decision}",
+ *     "add-form" = "/admin/config/decision/add",
+ *     "edit-form" = "/admin/config/decision/{decision}/edit",
+ *     "delete-form" = "/admin/config/decision/{decision}/delete",
+ *     "collection" = "/admin/content/decision",
  *   },
  *   field_ui_base_route = "decision.settings"
  * )

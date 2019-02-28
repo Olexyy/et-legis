@@ -20,3 +20,37 @@ entity.decision.delete_form:
   title: Delete
   weight: 10
 
+# Legal position routing definition
+legal_position.settings_tab:
+  route_name: legal_position.settings
+  title: 'Settings'
+  base_route: legal_position.settings
+
+entity.legal_position.canonical:
+  route_name: entity.legal_position.canonical
+  base_route: entity.legal_position.canonical
+  title: 'View'
+
+entity.legal_position.edit_form:
+  route_name: entity.legal_position.edit_form
+  base_route: entity.legal_position.canonical
+  title: 'Edit'
+
+entity.legal_position.delete_form:
+  route_name:  entity.legal_position.delete_form
+  base_route:  entity.legal_position.canonical
+  title: Delete
+  weight: 10
+
+entity.decision.collection:
+  title: 'Decisions'
+  route_name: view.decisions.collection
+  base_route: system.admin_content
+  weight: -200
+
+entity.legal_position.collection:
+  title: 'Legal positions'
+  route_name: view.legal_positions.collection
+  base_route: system.admin_content
+  weight: -200
+

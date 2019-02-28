@@ -72,24 +72,20 @@ class DecisionForm extends ContentEntityForm {
       }
     }
     $form = parent::buildForm($form, $form_state);
-
-    return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function actionsElement(array $form, FormStateInterface $form_state) {
-
-    $actions = parent::actionsElement($form, $form_state);
-    $actions['import'] = [
+    $form['import'] = [
       '#type' => 'button',
       '#executes_submit_callback' => TRUE,
       '#limit_validation_errors' => [['number']],
       '#value' => $this->t('Import'),
+      '#weight' => -100,
+    ];
+    $form['import_description'] = [
+      '#type' => 'item',
+      '#description' => $this->t('Import by decision number'),
+      '#weight' => -100,
     ];
 
-    return $actions;
+    return $form;
   }
 
   /**
@@ -117,13 +113,13 @@ class DecisionForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Decision.', [
+        $this->messenger->addStatus($this->t('Created the %label Decision.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Decision.', [
+        $this->messenger->addStatus($this->t('Saved the %label Decision.', [
           '%label' => $entity->label(),
         ]));
     }

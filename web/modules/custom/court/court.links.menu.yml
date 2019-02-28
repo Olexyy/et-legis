@@ -1,14 +1,28 @@
 
 # Decision menu items definition
 entity.decision.collection:
-  title: 'Decision list'
+  title: 'Decisions list'
   route_name: entity.decision.collection
   description: 'List Decision entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 decision.admin.structure.settings:
   title: 'Decision settings'
   description: 'Configure Decision entities'
   route_name: decision.settings
+  parent: system.admin_structure
+
+# Legal position menu items definition
+entity.legal_position.collection:
+  title: 'Legal positions list'
+  route_name: entity.legal_position.collection
+  description: 'List Legal position entities'
+  parent: system.admin_content
+  weight: 100
+
+legal_position.admin.structure.settings:
+  title: 'Legal position settings'
+  description: 'Configure Legal position entities'
+  route_name: legal_position.settings
   parent: system.admin_structure

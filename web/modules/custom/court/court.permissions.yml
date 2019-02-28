@@ -17,3 +17,22 @@ view published decision entities:
 
 view unpublished decision entities:
   title: 'View unpublished Decision entities'
+add legal position entities:
+  title: 'Create new Legal position entities'
+
+administer legal position entities:
+  title: 'Administer Legal position entities'
+  description: 'Allow to access the administration form to configure Legal position entities.'
+  restrict access: true
+
+delete legal position entities:
+  title: 'Delete Legal position entities'
+
+edit legal position entities:
+  title: 'Edit Legal position entities'
+
+view published legal position entities:
+  title: 'View published Legal position entities'
+
+view unpublished legal position entities:
+  title: 'View unpublished Legal position entities'

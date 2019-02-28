@@ -1,0 +1,22 @@
+{#
+/**
+ * @file legal_position.html.twig
+ * Default theme implementation to present Legal position data.
+ *
+ * This template is used when viewing Legal position pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_legal_position()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('legal_position') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

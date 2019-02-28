@@ -764,19 +764,6 @@ $settings['entity_update_batch_size'] = 50;
  *
  * Keep this code block at the end of this file to take full effect.
  */
-
-$databases['default']['default'] = [
-  'database' => getenv('DB_NAME'),
-  'driver' => 'mysql',
-  'host' => getenv('DB_HOST'),
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'password' => getenv('DB_PASSWORD'),
-  'port' => getenv('DB_PORT'),
-  'prefix' => '',
-  'username' => getenv('DB_USER'),
-  'collation' => getenv('DB_COLLATION'),
-];
-
 #
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
