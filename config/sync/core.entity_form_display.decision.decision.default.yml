@@ -61,14 +61,23 @@ content:
       include_locked: true
     third_party_settings: {  }
   legal_position:
-    type: entity_reference_autocomplete
+    type: inline_entity_form_complex
     weight: 12
     region: content
     settings:
-      placeholder: ''
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
       match_operator: CONTAINS
-      size: 60
-    third_party_settings: {  }
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
+    third_party_settings:
+      entity_browser_entity_form:
+        entity_browser_id: legal_positions
   number:
     type: string_textfield
     region: content
