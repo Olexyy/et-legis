@@ -1,13 +1,13 @@
-uuid: a5ff86dd-d468-4d29-967b-56d0c410d9cb
+uuid: 5c3dc0a1-264a-497a-ac36-a95d55c2f861
 langcode: uk
 status: true
 dependencies:
-  config:
-    - entity_browser.browser.decisions
   module:
     - court
-    - entity_browser
+    - inline_entity_form
     - text
+_core:
+  default_config_hash: Ts9P8vMg0kGHEoLG0ZLWddkQuN4qe0KliWFWE9ftMeg
 id: decision.decision.default
 targetEntityType: decision
 bundle: decision
@@ -61,12 +61,13 @@ content:
       include_locked: true
     third_party_settings: {  }
   legal_position:
-    type: text_textarea
-    weight: 14
+    type: entity_reference_autocomplete
+    weight: 12
     region: content
     settings:
-      rows: 5
       placeholder: ''
+      match_operator: CONTAINS
+      size: 60
     third_party_settings: {  }
   number:
     type: string_textfield
@@ -89,18 +90,20 @@ content:
     settings: {  }
     third_party_settings: {  }
   related:
-    type: entity_browser_entity_reference
-    weight: 15
+    type: inline_entity_form_complex
+    weight: 13
     region: content
     settings:
-      entity_browser: decisions
-      field_widget_display: label
-      field_widget_edit: true
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_replace: false
-      open: false
-      field_widget_display_settings: {  }
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_new: false
+      allow_duplicate: false
     third_party_settings: {  }
   resolved:
     type: datetime_timestamp_nullable
@@ -110,7 +113,7 @@ content:
     third_party_settings: {  }
   resume:
     type: text_textarea
-    weight: 13
+    weight: 15
     region: content
     settings:
       rows: 5
@@ -123,11 +126,11 @@ content:
       size: 60
       placeholder: ''
     region: content
-    weight: 16
+    weight: 14
     third_party_settings: {  }
   text:
     type: text_textarea
-    weight: 12
+    weight: 16
     region: content
     settings:
       rows: 5

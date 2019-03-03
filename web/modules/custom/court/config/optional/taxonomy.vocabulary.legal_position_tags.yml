@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Legal position tags
+vid: legal_position_tags
+description: 'Legal position tags.'
+hierarchy: 0
+weight: 0

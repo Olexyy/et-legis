@@ -7,6 +7,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\court\Plugin\Field\TextFieldItemList;
 use Drupal\user\UserInterface;
 
 /**
@@ -288,9 +289,12 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['text'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Text'))
-      ->setDefaultValue('')
-      ->setDescription(t('Decision text.'))
+      ->setComputed(TRUE)
+      ->setInternal(FALSE)
+      ->setReadOnly(TRUE)
+      ->setClass(TextFieldItemList::class)
+      ->setLabel(t('Decision text.'))
+      ->setDescription(t('Decision text will not be saved.'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['resume'] = BaseFieldDefinition::create('text_long')
@@ -299,17 +303,17 @@ class Decision extends ContentEntityBase implements DecisionInterface {
       ->setDescription(t('Short resume.'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['legal_position'] = BaseFieldDefinition::create('text_long')
+    $fields['legal_position'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Legal position'))
-      ->setDefaultValue('')
-      ->setDescription(t('Legal position.'))
+      ->setDescription(t('Related legal position.'))
+      ->setSetting('target_type', 'legal_position')
+      ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['related'] = BaseFieldDefinition::create('entity_reference')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setLabel(t('Related decisions'))
       ->setDescription(t('Related Decisions from another instances.'))
-      ->setRevisionable(TRUE)
       ->setSetting('target_type', 'decision')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('form', TRUE)

@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - court
+_core:
+  default_config_hash: Ftw-HzHp9rmFZ_4k4SeqjRAGdTdbRVptIjt5GZyyUFI
 id: legal_positions
 label: 'Правові позиції'
 module: views
@@ -153,7 +155,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: '/admin/content/legal-positions'
+      path: /admin/content/legal-positions
     cache_metadata:
       max-age: -1
       contexts:

@@ -1,10 +1,12 @@
-uuid: 35ba3f43-7171-47a6-92fc-9687eb527486
+uuid: 0e4fe8b2-f395-4c04-9727-aaa426902f30
 langcode: uk
 status: true
 dependencies:
   module:
     - court
     - entity_browser
+_core:
+  default_config_hash: n6iGDPF-wWwA_p8MX9LXn2Z32k7WMKETLIzUBMgMTTM
 id: decision_browser
 label: 'Decision browser'
 module: views

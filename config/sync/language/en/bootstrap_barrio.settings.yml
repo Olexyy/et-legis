@@ -1,0 +1,4 @@
+bootstrap_barrio_sidebar_position: both
+bootstrap_barrio_navbar_container: navbar-toggleable-md
+bootstrap_barrio_navbar_top_background: bg-secondary
+bootstrap_barrio_navbar_background: bg-primary

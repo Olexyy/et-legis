@@ -1,0 +1,11 @@
+uuid: 98066493-e2be-49c0-ab8d-4cfa87b4a47b
+langcode: uk
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: ahWK8XxUQWStqI8lHmuGmzejF4F2clbFvG93_-l5ONE
+name: 'Legal position tags'
+vid: legal_position_tags
+description: 'Legal position tags.'
+hierarchy: 0
+weight: 0

@@ -10,5 +10,5 @@ recipients:
   - admin@example.com
 reply: ''
 weight: 0
-message: 'Your message has been sent.'
+message: 'Ваше повідомлення було надіслано.'
 redirect: ''

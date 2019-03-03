@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - court
+_core:
+  default_config_hash: y_qnj7PdpepGpy2gUzqmw5jNK_V97VF1q9e6nKplESM
 id: decisions
 label: Рішення
 module: views
@@ -153,7 +155,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: '/admin/content/decisions'
+      path: /admin/content/decisions
     cache_metadata:
       max-age: -1
       contexts:

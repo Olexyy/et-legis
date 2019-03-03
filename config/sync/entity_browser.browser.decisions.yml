@@ -1,4 +1,4 @@
-uuid: 4faa29c3-2db5-446d-9855-980d4ad1b7e3
+uuid: afc220db-9e7f-4bad-93c5-fc497aac6826
 langcode: uk
 status: true
 dependencies:
@@ -6,6 +6,8 @@ dependencies:
     - views.view.decision_browser
   module:
     - views
+_core:
+  default_config_hash: WeH9Bhqaxap_cBXAMVcxFAhZq49gixaslZtBYvlg1ds
 name: decisions
 label: Decisions
 display: modal
@@ -25,7 +27,7 @@ widgets:
       view_display: entity_browser_1
       submit_text: 'Select entities'
       auto_select: false
-    uuid: 6d062a82-c4e1-409d-b992-c2f68a4c311f
+    uuid: ''
     weight: 1
     label: view
     id: view
