@@ -113,13 +113,13 @@ class DecisionForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        $this->messenger->addStatus($this->t('Created the %label Decision.', [
+        $this->messenger()->addStatus($this->t('Created the %label Decision.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        $this->messenger->addStatus($this->t('Saved the %label Decision.', [
+        $this->messenger()->addStatus($this->t('Saved the %label Decision.', [
           '%label' => $entity->label(),
         ]));
     }
