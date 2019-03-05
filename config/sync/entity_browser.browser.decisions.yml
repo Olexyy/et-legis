@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.decision_browser
   module:
+    - entity_browser_entity_form
     - views
 _core:
   default_config_hash: WeH9Bhqaxap_cBXAMVcxFAhZq49gixaslZtBYvlg1ds
@@ -12,22 +13,32 @@ name: decisions
 label: Decisions
 display: modal
 display_configuration:
-  width: '650'
-  height: '500'
+  width: '800'
+  height: '600'
   link_text: 'Select entities'
   auto_open: false
 selection_display: no_display
 selection_display_configuration: {  }
-widget_selector: tabs
+widget_selector: single
 widget_selector_configuration: {  }
 widgets:
   6d062a82-c4e1-409d-b992-c2f68a4c311f:
     settings:
       view: decision_browser
       view_display: entity_browser_1
-      submit_text: 'Select entities'
-      auto_select: false
+      submit_text: null
+      auto_select: null
     uuid: ''
     weight: 1
     label: view
     id: view
+  7ef14a21-6a46-4101-9d21-883302338fb1:
+    settings:
+      entity_type: legal_position
+      bundle: legal_position
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: 7ef14a21-6a46-4101-9d21-883302338fb1
+    weight: 2
+    label: entity_form
+    id: entity_form

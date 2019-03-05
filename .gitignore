@@ -7,7 +7,7 @@
 /web/profiles/contrib/
 /web/libraries/
 /web/themes/custom/*/node_modules
-/web/themes/custom/*/package-lock.json
+#/web/themes/custom/*/package-lock.json
 
 # Ignore sensitive information
 /web/sites/*/settings.php

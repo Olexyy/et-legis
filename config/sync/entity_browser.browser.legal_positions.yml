@@ -10,13 +10,13 @@ name: legal_positions
 label: 'Legal positions'
 display: modal
 display_configuration:
-  width: '650'
-  height: '500'
+  width: '800'
+  height: '600'
   link_text: 'Select entities'
   auto_open: false
 selection_display: no_display
 selection_display_configuration: {  }
-widget_selector: tabs
+widget_selector: single
 widget_selector_configuration: {  }
 widgets:
   63401c8b-471c-4b0b-9b4f-3ebb20976f2d:
