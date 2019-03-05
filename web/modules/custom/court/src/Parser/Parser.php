@@ -163,22 +163,42 @@ class Parser implements ParserInterface {
   public function sync(DecisionInterface $decision) {
 
     if ($this->typeIs(static::SEARCH)) {
-      // Search type.
+      // Search type. Fill out only if not empty.
       if ($result = $this->getSearchResult()->getFirstResult()) {
-        $decision->setNumber($result->getNumber());
-        $decision->setType($result->getTypeId());
-        $decision->setCaseNumber($result->getCaseNumber());
-        $decision->setJurisdiction($result->getJurisdictionId());
-        $decision->setJudge($result->getJudge());
-        $decision->setCourt($result->getCourtId());
+        if ($result->getNumber() && !$decision->getNumber()) {
+          $decision->setNumber($result->getNumber());
+        }
+        if ($result->getTypeId() && !$decision->getType()) {
+          $decision->setType($result->getTypeId());
+        }
+        if ($result->getCaseNumber() && !$decision->getCaseNumber()) {
+          $decision->setCaseNumber($result->getCaseNumber());
+        }
+        if ($result->getJurisdictionId() && !$decision->getJurisdiction()) {
+          $decision->setJurisdiction($result->getJurisdictionId());
+        }
+        if ($result->getJudge() && !$decision->getJudge()) {
+          $decision->setJudge($result->getJudge());
+        }
+        if ($result->getCourtId() && !$decision->getCourt()) {
+          $decision->setCourt($result->getCourtId());
+        }
       }
     }
-    // Review type.
+    // Review type. Fill out only if not empty.
     elseif ($this->typeIs(static::REVIEW)) {
-      $decision->setText($this->getReviewResult()->getText());
-      $decision->setCategory($this->getReviewResult()->getCategoryId());
-      $decision->setRegistered($this->getReviewResult()->getRegistered());
-      $decision->setPublished($this->getReviewResult()->getPublished());
+      if ($this->getReviewResult()->getText() && !$decision->getText()) {
+        $decision->setText($this->getReviewResult()->getText());
+      }
+      if ($this->getReviewResult()->getCategoryId() && !$decision->getCategory()) {
+        $decision->setCategory($this->getReviewResult()->getCategoryId());
+      }
+      if ($this->getReviewResult()->getRegistered() && !$decision->getRegistered()) {
+        $decision->setRegistered($this->getReviewResult()->getRegistered());
+      }
+      if ($this->getReviewResult()->getPublished() && !$decision->getPublished()) {
+        $decision->setPublished($this->getReviewResult()->getPublished());
+      }
     }
   }
 

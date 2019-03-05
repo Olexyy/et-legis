@@ -2,9 +2,11 @@ uuid: 5c3dc0a1-264a-497a-ac36-a95d55c2f861
 langcode: uk
 status: true
 dependencies:
+  config:
+    - entity_browser.browser.decisions
   module:
     - court
-    - inline_entity_form
+    - entity_browser
     - text
 _core:
   default_config_hash: Ts9P8vMg0kGHEoLG0ZLWddkQuN4qe0KliWFWE9ftMeg
@@ -61,23 +63,19 @@ content:
       include_locked: true
     third_party_settings: {  }
   legal_position:
-    type: inline_entity_form_complex
+    type: entity_browser_entity_reference
     weight: 12
     region: content
     settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      override_labels: false
-      collapsible: false
-      collapsed: false
-      allow_duplicate: false
-    third_party_settings:
-      entity_browser_entity_form:
-        entity_browser_id: legal_positions
+      entity_browser: legal_positions
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      selection_mode: selection_append
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
   number:
     type: string_textfield
     region: content
@@ -99,20 +97,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   related:
-    type: inline_entity_form_complex
+    type: entity_browser_entity_reference
     weight: 13
     region: content
     settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_existing: true
-      match_operator: CONTAINS
-      override_labels: false
-      collapsible: false
-      collapsed: false
-      allow_new: false
-      allow_duplicate: false
+      entity_browser: decisions
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      selection_mode: selection_append
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
   resolved:
     type: datetime_timestamp_nullable

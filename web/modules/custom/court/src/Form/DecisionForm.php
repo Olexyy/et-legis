@@ -3,6 +3,7 @@
 namespace Drupal\court\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Component\Render\HtmlEscapedText;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -61,6 +62,11 @@ class DecisionForm extends ContentEntityForm {
     /* @var $entity \Drupal\court\Entity\Decision */
     $entity = $form_state->getFormObject()->getEntity();
     if ($number = $this->getRequest()->query->get('import')) {
+      if (!$entity->getNumber()) {
+        $entity->setNumber(new HtmlEscapedText($number));
+      }
+    }
+    if ($number = $entity->getNumber()) {
       $response = $this->courtApiService
         ->review(
           RequestData::create()->setRegNumber($number)
