@@ -183,6 +183,12 @@ class Parser implements ParserInterface {
         if ($result->getCourtId() && !$decision->getCourt()) {
           $decision->setCourt($result->getCourtId());
         }
+        if ($result->getResolved() && !$decision->getResolved()) {
+          $decision->setResolved($result->getResolved());
+        }
+        if ($result->getValidated() && !$decision->getValidated()) {
+          $decision->setValidated($result->getValidated());
+        }
       }
     }
     // Review type. Fill out only if not empty.

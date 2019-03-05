@@ -62,9 +62,7 @@ class DecisionForm extends ContentEntityForm {
     /* @var $entity \Drupal\court\Entity\Decision */
     $entity = $form_state->getFormObject()->getEntity();
     if ($number = $this->getRequest()->query->get('import')) {
-      if (!$entity->getNumber()) {
-        $entity->setNumber(new HtmlEscapedText($number));
-      }
+      $entity->setNumber($number);
     }
     if ($number = $entity->getNumber()) {
       $response = $this->courtApiService

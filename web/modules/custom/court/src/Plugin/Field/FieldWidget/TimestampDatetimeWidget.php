@@ -28,14 +28,15 @@ class TimestampDatetimeWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $date_format = DateFormat::load('html_date')->getPattern();
-    $time_format = DateFormat::load('html_time')->getPattern();
-    $default_value = isset($items[$delta]->value) ? DrupalDateTime::createFromTimestamp($items[$delta]->value) : '';
+    //$time_format = DateFormat::load('html_time')->getPattern();
+    $default_value = isset($items[$delta]->value) ? DrupalDateTime::createFromTimestamp($items[$delta]->value)->format($date_format) : '';
     $element['value'] = $element + [
-      '#type' => 'datetime',
+      '#type' => 'date',
       '#default_value' => $default_value,
       '#date_year_range' => '1902:2037',
+      '#date_date_format' => $date_format,
     ];
-    $element['value']['#description'] = $this->t('Format: %format. Leave blank to use the time of form submission.', ['%format' => Datetime::formatExample($date_format . ' ' . $time_format)]);
+    $element['value']['#description'] = $this->t('Format: %format. Leave blank to use the time of form submission.', ['%format' => Datetime::formatExample('m/d/Y')]);
 
     return $element;
   }
@@ -54,6 +55,12 @@ class TimestampDatetimeWidget extends WidgetBase {
       }
       if ($date instanceof DrupalDateTime) {
         $item['value'] = $date->getTimestamp();
+      }
+      elseif (!empty($item['value']) && is_string($item['value'])) {
+        $item['value'] = strtotime($item['value']);
+      }
+      else {
+        $item['value'] = NULL;
       }
     }
 
