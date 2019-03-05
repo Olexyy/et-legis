@@ -8,6 +8,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\court\Service\CourtApiService;
 use Drupal\court\Service\CourtApiServiceInterface;
 use Drupal\court\Data\RequestData;
@@ -61,10 +62,8 @@ class DecisionForm extends ContentEntityForm {
 
     /* @var $entity \Drupal\court\Entity\Decision */
     $entity = $form_state->getFormObject()->getEntity();
-    if ($number = $this->getRequest()->query->get('import')) {
-      $entity->setNumber($number);
-    }
-    if ($number = $entity->getNumber()) {
+    if (($number = $this->getRequest()->query->get('import')) &&
+      !$this->isSubmitting($form_state)) {
       $response = $this->courtApiService
         ->review(
           RequestData::create()->setRegNumber($number)
@@ -90,6 +89,13 @@ class DecisionForm extends ContentEntityForm {
     ];
 
     return $form;
+  }
+
+  protected function isSubmitting(FormStateInterface $formState) {
+
+    return (bool) $formState->getUserInput() ||
+      (isset($formState->getUserInput()['op']) &&
+        $formState->getUserInput()['op'] == $this->t('Import'));
   }
 
   /**
