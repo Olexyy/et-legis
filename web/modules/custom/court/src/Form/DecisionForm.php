@@ -91,6 +91,15 @@ class DecisionForm extends ContentEntityForm {
     return $form;
   }
 
+  /**
+   * Helper to define if form is submitting.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   *
+   * @return bool
+   *   Test result.
+   */
   protected function isSubmitting(FormStateInterface $formState) {
 
     return (bool) $formState->getUserInput() ||
@@ -133,7 +142,7 @@ class DecisionForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.decision.canonical', ['decision' => $entity->id()]);
+    $form_state->setRedirect('entity.decision.edit_form', ['decision' => $entity->id()]);
   }
 
 }

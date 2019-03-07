@@ -161,11 +161,9 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'author',
-        'weight' => 0,
       ])
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
         'settings' => [
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -187,15 +185,59 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
+
+    $fields['text'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Text'))
+      ->setDefaultValue('')
+      ->setDescription(t('Text of legal position.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['tags'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Tags'))
+      ->setDescription(t('Legal position tags.'))
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['legal_position_tags' => 'legal_position_tags'],
+        'auto_create' => TRUE,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['related'] = BaseFieldDefinition::create('entity_reference')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setLabel(t('Related Legal positions'))
+      ->setDescription(t('Related legal positions from another instances.'))
+      ->setSetting('target_type', 'legal_position')
+      ->setSetting('handler', 'default')
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['concurrent'] = BaseFieldDefinition::create('entity_reference')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setLabel(t('Concurrent Legal positions'))
+      ->setDescription(t('Concurrent legal positions from another instances.'))
+      ->setSetting('target_type', 'legal_position')
+      ->setSetting('handler', 'default')
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
@@ -203,7 +245,6 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
       ->setDefaultValue(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
-        'weight' => -3,
       ]);
 
     $fields['created'] = BaseFieldDefinition::create('created')
