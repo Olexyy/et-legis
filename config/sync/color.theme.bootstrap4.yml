@@ -10,9 +10,9 @@ palette:
   titleslogan: '#1b3650'
   text: '#3b3b3b'
   link: '#0071b3'
-logo: 'public://color/bootstrap4-4332865c/logo.svg'
+logo: 'public://color/bootstrap4-47616ab4/logo.svg'
 stylesheets:
-  - 'public://color/bootstrap4-4332865c/colors.css'
+  - 'public://color/bootstrap4-47616ab4/colors.css'
 files:
-  - 'public://color/bootstrap4-4332865c/logo.svg'
-  - 'public://color/bootstrap4-4332865c/colors.css'
+  - 'public://color/bootstrap4-47616ab4/logo.svg'
+  - 'public://color/bootstrap4-47616ab4/colors.css'
