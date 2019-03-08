@@ -2,6 +2,7 @@
 
 namespace Drupal\court\Service;
 
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\court\Data\RequestDataInterface;
 use Drupal\court\Parser\Parser;
 use Drupal\court\Data\ResponseData;
@@ -16,6 +17,8 @@ use Symfony\Component\DomCrawler\Crawler;
  * @package Drupal\court\Service
  */
 class CourtApiService implements CourtApiServiceInterface {
+
+  use LoggerChannelTrait;
 
   /**
    * Http client.
@@ -83,12 +86,13 @@ class CourtApiService implements CourtApiServiceInterface {
           ],
         ]);
         $html = $rawResponse->getBody()->getContents();
+        $this->getLogger('court')->info($html);
         $response->addParser(Parser::createReview($html));
 
         return $response;
       }
       catch (\Exception $exception) {
-
+        $this->getLogger('court')->error($exception->getMessage() . $exception->getTraceAsString());
         return $response;
       }
     }
@@ -126,12 +130,12 @@ class CourtApiService implements CourtApiServiceInterface {
       $headers = $response->getHeaders();
       // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
       $body = $response->getBody()->getContents();
-
+      $this->getLogger('court')->info($body);
       return ResponseData::create()
         ->addParser(Parser::createSearch($body));
     }
     catch (\Exception $exception) {
-
+      $this->getLogger('court')->error($exception->getMessage() . $exception->getTraceAsString());
       return ResponseData::createEmpty();
     }
   }
