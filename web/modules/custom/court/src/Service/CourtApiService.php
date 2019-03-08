@@ -71,6 +71,9 @@ class CourtApiService implements CourtApiServiceInterface {
     if (!$this->proxy) {
       $this->proxy = $this->proxyGenerator->getProxy();
     }
+    if (!$this->proxy) {
+      $this->getLogger('court')->info('Failed to obtain proxy.');
+    }
 
     return $this->proxy;
   }
