@@ -1,0 +1,19 @@
+court.settings:
+  type: config_object
+  label: 'Court Setting'
+  mapping:
+    proxy_provider:
+      type: string
+      label: 'Proxy provider'
+    proxy_key_ip:
+      type: string
+      label: 'Proxy key ip'
+    proxy_key_port:
+      type: string
+      label: 'Proxy key port'
+    proxy_key_type:
+      type: string
+      label: 'Proxy key type'
+    proxy_query:
+      type: string
+      label: 'Proxy query'

@@ -7,6 +7,7 @@ use Drupal\court\Data\RequestDataInterface;
 use Drupal\court\Parser\Parser;
 use Drupal\court\Data\ResponseData;
 use Drupal\court\UserAgent\Generator;
+use Drupal\court\Proxy\Generator as ProxyGenerator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DomCrawler\Crawler;
@@ -28,6 +29,20 @@ class CourtApiService implements CourtApiServiceInterface {
   protected $client;
 
   /**
+   * Proxy generator.
+   *
+   * @var \Drupal\court\Proxy\Generator
+   */
+  protected $proxyGenerator;
+
+  /**
+   * Proxy url.
+   *
+   * @var string|null
+   */
+  protected $proxy;
+
+  /**
    * CourtApiService constructor.
    *
    * @param \GuzzleHttp\Client $client
@@ -35,6 +50,29 @@ class CourtApiService implements CourtApiServiceInterface {
    */
   public function __construct(Client $client) {
     $this->client = $client;
+    $config = \Drupal::config('court.settings');
+    $this->proxyGenerator = ProxyGenerator::create([
+      'provider' => $config->get('proxy_provider'),
+      'query' => $config->get('proxy_query'),
+      'keyIp' => $config->get('proxy_key_ip'),
+      'keyPort' => $config->get('proxy_key_port'),
+      'keyType' => $config->get('proxy_key_type'),
+    ]);
+  }
+
+  /**
+   * Proxy getter.
+   *
+   * @return string|null
+   *   Url if any.
+   */
+  protected function getProxy() {
+
+    if (!$this->proxy) {
+      $this->proxy = $this->proxyGenerator->getProxy();
+    }
+
+    return $this->proxy;
   }
 
   /**
@@ -84,15 +122,17 @@ class CourtApiService implements CourtApiServiceInterface {
           'headers' => [
             'User-Agent' => Generator::create()->generate(),
           ],
+          'proxy' => $this->getProxy(),
         ]);
         $html = $rawResponse->getBody()->getContents();
-        $this->getLogger('court')->info($html);
+        //$html = $this->requestGet($this->getReviewUrl($number));
         $response->addParser(Parser::createReview($html));
 
         return $response;
       }
       catch (\Exception $exception) {
-        $this->getLogger('court')->error($exception->getMessage() . $exception->getTraceAsString());
+        $this->getLogger('court')
+          ->error($exception->getMessage());
         return $response;
       }
     }
@@ -118,26 +158,89 @@ class CourtApiService implements CourtApiServiceInterface {
         $requestData->getUrl(),
         [
           'headers' => [
-            'User-Agent' => Generator::create()->generate(),
+            //'User-Agent' => Generator::create()->generate(),
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Content-Length' => strlen($post),
           ],
           'connect_timeout' => 10,
           'body' => $post,
+          'proxy' => $this->getProxy(),
         ]
       );
       $code = $response->getStatusCode();
       $headers = $response->getHeaders();
       // how get sessid $headers['Set-Cookie'][0] = "ASP.NET_SessionId=4pwwovh10fuyzq1awl0jzjyj; path=/; HttpOnly";
       $body = $response->getBody()->getContents();
-      $this->getLogger('court')->info($body);
+
+      //$body = $this->requestPost($requestData->getUrl(),$post);
       return ResponseData::create()
         ->addParser(Parser::createSearch($body));
     }
     catch (\Exception $exception) {
-      $this->getLogger('court')->error($exception->getMessage() . $exception->getTraceAsString());
+      $this->getLogger('court')
+        ->error($exception->getMessage());
       return ResponseData::createEmpty();
     }
+  }
+
+  protected function requestGet($url) {
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_USERAGENT, Generator::create()->generate());
+    curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_PROXYPORT, '40329');
+    curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTPS');
+    curl_setopt($ch, CURLOPT_PROXY, '85.223.157.204');
+    $response = curl_exec($ch);
+    $curl_errno = curl_errno($ch);
+    $curl_error = curl_error($ch);
+    $this->getLogger('court')->info($response);
+    if ($curl_error) {
+      throw new \Exception($curl_error);
+    }
+    // close the connection, release resources used
+    curl_close($ch);
+
+    return $response;
+  }
+
+  protected function requestPost($url, $body) {
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_USERAGENT, Generator::create()->generate());
+    curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_PROXYPORT, '40329');
+    curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTPS');
+    curl_setopt($ch, CURLOPT_PROXY, '85.223.157.204');
+
+    //curl_setopt($ch, CURLOPT_HEADERFUNCTION, "HandleHeaderLine");
+    function HandleHeaderLine( $curl, $header_line ) {
+      echo "<br>YEAH: ".$header_line; // or do whatever
+      return strlen($header_line);
+    }
+    $response = curl_exec($ch);
+    $curl_errno = curl_errno($ch);
+    $curl_error = curl_error($ch);
+    $this->getLogger('court')->info($response);
+    if ($curl_error) {
+      throw new \Exception($curl_error);
+    }
+    // close the connection, release resources used
+    curl_close($ch);
+
+    return $response;
   }
 
 }

@@ -64,6 +64,7 @@ class DecisionForm extends ContentEntityForm {
     $entity = $form_state->getFormObject()->getEntity();
     if (($number = $this->getRequest()->query->get('import')) &&
       !$this->isSubmitting($form_state)) {
+      $entity->setNumber($number);
       $response = $this->courtApiService
         ->review(
           RequestData::create()->setRegNumber($number)
@@ -102,23 +103,22 @@ class DecisionForm extends ContentEntityForm {
    */
   protected function isSubmitting(FormStateInterface $formState) {
 
-    return (bool) $formState->getUserInput() ||
-      (isset($formState->getUserInput()['op']) &&
-        $formState->getUserInput()['op'] == $this->t('Import'));
+    return (bool) !empty($formState->getUserInput()['op']) &&
+        $formState->getUserInput()['op'] == $this->t('Save');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $formState) {
 
-    if ($form_state->getTriggeringElement()['#type'] == 'button') {
-      $form_state->setRedirect('<current>', [
-        'import' => $form_state->getValue('number')[0]['value'],
+    if (!$this->isSubmitting($formState)) {
+      $formState->setRedirect('<current>', [
+        'import' => $formState->getValue('number')[0]['value'],
       ]);
     }
     else {
-      parent::submitForm($form, $form_state);
+      parent::submitForm($form, $formState);
     }
   }
 

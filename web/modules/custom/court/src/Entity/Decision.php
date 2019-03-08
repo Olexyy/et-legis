@@ -422,7 +422,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getOptionsCategories() {
+  public static function getOptionsCategories() {
 
     return DecisionOptions::instance()->categories1();
   }
@@ -433,7 +433,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getAllowedValuesCategories() {
+  public static function getAllowedValuesCategories() {
 
     return array_keys(DecisionOptions::instance()->categories());
   }
@@ -444,7 +444,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getOptionsCourts() {
+  public static function getOptionsCourts() {
 
     return DecisionOptions::instance()->courts();
   }
@@ -455,7 +455,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getAllowedValuesCourts() {
+  public static function getAllowedValuesCourts() {
 
     return array_keys(DecisionOptions::instance()->courts());
   }
@@ -466,7 +466,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getOptionsInstances() {
+  public static function getOptionsInstances() {
 
     return DecisionOptions::instance()->instances();
   }
@@ -477,7 +477,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
    * @return array
    *   Options.
    */
-  public function getAllowedValuesInstances() {
+  public static function getAllowedValuesInstances() {
 
     return array_keys(DecisionOptions::instance()->instances());
   }

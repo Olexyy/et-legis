@@ -1,0 +1,5 @@
+proxy_provider: http://pubproxy.com/api/proxy
+proxy_query: format=json&country=UA&post=true&type=http&count=1&cookies=true&referer=true&user_agent=true&google=true
+proxy_key_ip: data.0.ip
+proxy_key_port: data.0.port
+proxy_key_type: data.0.type
