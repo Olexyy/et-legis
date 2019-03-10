@@ -3,6 +3,7 @@
 namespace Drupal\court\Proxy;
 
 use GuzzleHttp\Client;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Class Generator.
@@ -96,23 +97,6 @@ class Generator {
   }
 
   /**
-   * Getter for proxy ip:post.
-   *
-   * @return string|null
-   *   Proxy if any.
-   */
-  public function getProxy() {
-
-    $data = $this->getApiData();
-    $type = $this->getValue($this->keyType, $data);
-    $ip = $this->getValue($this->keyIp, $data);
-    $port = $this->getValue($this->keyPort, $data);
-    $url = $type ? "$type://$ip" : $ip;
-
-    return $port ? "$url:$port" : $url;
-  }
-
-  /**
    * Value getter, supports dot notation.
    *
    * @param string $key
@@ -150,21 +134,115 @@ class Generator {
    * @return array|string[]
    *   Values.
    */
-  public function getApiData() {
+  public function getProxy() {
 
     $url = $this->query ?
       $this->provider . '?' . $this->query : $this->provider;
+    $url = 'https://www.proxynova.com/proxy-server-list/country-ua/';
+    $response = $this->client->get($url, [
+      'User-Agent' => \Drupal\court\UserAgent\Generator::create()->generate(),
+      'connect_timeout' => 5,
+      ]);
+    $content = $response->getBody()->getContents();
+    // This will return null if none match or parse error.
     try {
-      $response = $this->client->get($url);
-      $content = $response->getBody()->getContents();
-      if ($json = json_decode($content, TRUE)) {
-        return $json;
-      }
-      return [];
+      $proxies = $this->parse($content);
+      return $this->findLive($proxies);
     }
     catch (\Exception $exception) {
-      return [];
+      return NULL;
     }
+  }
+
+  /**
+   * @param $content
+   *
+   * @return array
+   * @throws \Exception
+   */
+  public function parse($content) {
+
+    $crawler = new Crawler($content);
+    $rows = [];
+
+    if ($crawler->filter('table#tbl_proxy_list tbody tr')->count()) {
+      foreach ($crawler->filter('table#tbl_proxy_list tbody tr')->getIterator() as $i => $node) {
+        if ($row = $this->processRow($node->textContent)) {
+          $rows[] = $row;
+        }
+      }
+    }
+
+    return $rows;
+  }
+
+  /**
+   * @param $row
+   *
+   * @return \Drupal\court\Proxy\Proxy
+   * @throws \Exception
+   */
+  public function processRow($row) {
+
+    $elements = preg_split('~\R~', $row);
+    foreach ($elements as &$element) {
+      $element = trim($element);
+    }
+    $elements = array_values(array_filter($elements));
+    $matches = [];
+    if (count($elements) > 7) {
+      if ($parsed = preg_match("@document\.write\(\'(.*)\'\.substr\(8\) \+ \'(.*)\'\);@", $elements[0], $matches)) {
+        $ip = substr($matches[1], 8, strlen($matches[1])) . $matches[2];
+        $port = $elements[1];
+        $speed = (int) $elements[2];
+        $uptime = (int) $elements[3];
+        $proxy = new Proxy('http', $ip, $port);
+        $proxy->upTime = $uptime;
+        $proxy->speed = $speed;
+
+        return $proxy;
+      }
+    }
+
+    return NULL;
+  }
+
+  public function ping(Proxy $proxy) {
+
+    try {
+      return (bool) $this->client->get('https://www.google.com/', [
+        'connect_timeout' => 5,
+        'proxy' => $proxy->toString(),
+      ]);
+    }
+    catch (\Exception $exception) {
+      return FALSE;
+    }
+  }
+
+  /**
+   * @param array|\Drupal\court\Proxy\Proxy[] $proxies
+   *
+   * @return \Drupal\court\Proxy\Proxy|mixed|null
+   */
+  public function findLive(array $proxies) {
+
+    foreach ($proxies as $proxy) {
+      if ($proxy->upTime > 80) {
+        if ($this->ping($proxy)) {
+          return $proxy;
+        }
+      }
+    }
+    foreach ($proxies as $proxy) {
+      if ($proxy->upTime > 50) {
+        if ($this->ping($proxy)) {
+          return $proxy;
+        }
+      }
+    }
+
+    return NULL;
   }
 
 }

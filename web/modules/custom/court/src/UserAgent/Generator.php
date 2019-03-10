@@ -16,14 +16,35 @@ class Generator {
   const SAFARI = 'safari';
 
   /**
+   * One of types above.
+   *
+   * @var null|string
+   */
+  protected $type;
+
+  /**
    * Inline constructor.
+   *
+   * @param null|string $type
+   *   Browser type.
    *
    * @return $this
    *   Instance.
    */
-  public static function create() {
+  public static function create($type = NULL) {
 
-    return new static();
+    return new static($type);
+  }
+
+  /**
+   * Generator constructor.
+   *
+   * @param null|string $type
+   *   Browser type.
+   */
+  public function __construct($type = NULL) {
+
+    $this->type = $type;
   }
 
   /**
@@ -32,7 +53,7 @@ class Generator {
    * @return array|string[]
    *   Browsers list.
    */
-  protected function getBrowsers() {
+  public function getBrowsers() {
 
     return [
       static::CHROME, static::EXPLORER, static::FIREFOX, static::OPERA, static::SAFARI,
@@ -42,14 +63,12 @@ class Generator {
   /**
    * Generator.
    *
-   * @param null|string $browser
-   *   Browser, defined as constant.
-   *
    * @return string|null
    *   User agent if any.
    */
-  public function generate($browser = NULL) {
+  public function generate() {
 
+    $browser = $this->type;
     if (!$browser || !in_array($browser, $this->getBrowsers())) {
       $browser = $this->getBrowsers()[mt_rand(0, count($this->getBrowsers()) - 1)];
     }
