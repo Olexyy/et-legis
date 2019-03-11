@@ -8,6 +8,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\court\Plugin\Field\TextFieldItemList;
+use Drupal\court\Plugin\Field\RegisterReferenceItemList;
 use Drupal\user\UserInterface;
 
 /**
@@ -368,8 +369,28 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
+    $fields['reference'] = BaseFieldDefinition::create('string')
+      ->setComputed(TRUE)
+      ->setInternal(FALSE)
+      ->setReadOnly(TRUE)
+      ->setClass(RegisterReferenceItemList::class)
+      ->setLabel(t('Reference'))
+      ->setDescription(t('Reference to register.'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return string|null
+   *   Value.
+   */
+  public function getReference() {
+
+    return $this->get('reference')->value;
   }
 
   /**

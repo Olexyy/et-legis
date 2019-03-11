@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "7.*",
+        "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -32,7 +33,9 @@
         "drupal/core": "^8.6.0",
         "drupal/ctools": "^3.0",
         "drupal/devel": "^1.2",
+        "drupal/embed": "^1.0",
         "drupal/entity_browser": "^2.0",
+        "drupal/entity_embed": "^1.0@beta",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/module_filter": "^3.1",
         "drupal/restui": "^1.16",
@@ -41,8 +44,7 @@
         "symfony/dom-crawler": "~3.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3",
-        "ext-curl": "*"
+        "webmozart/path-util": "^2.3"
     },
     "require-dev": {
         "webflo/drupal-core-require-dev": "^8.6.0"

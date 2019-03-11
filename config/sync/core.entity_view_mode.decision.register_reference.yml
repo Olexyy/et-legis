@@ -1,0 +1,10 @@
+uuid: 0ea5b8a7-78f8-480c-bbbf-97f099ea04de
+langcode: uk
+status: true
+dependencies:
+  module:
+    - court
+id: decision.register_reference
+label: 'Register reference'
+targetEntityType: decision
+cache: true

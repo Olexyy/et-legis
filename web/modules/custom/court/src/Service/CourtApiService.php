@@ -50,14 +50,18 @@ class CourtApiService implements CourtApiServiceInterface {
    */
   public function __construct(Client $client) {
     $this->client = $client;
-    $config = \Drupal::config('court.settings');
-    $this->proxyGenerator = ProxyGenerator::create([
-      'provider' => $config->get('proxy_provider'),
-      'query' => $config->get('proxy_query'),
-      'keyIp' => $config->get('proxy_key_ip'),
-      'keyPort' => $config->get('proxy_key_port'),
-      'keyType' => $config->get('proxy_key_type'),
-    ]);
+    $this->proxyGenerator = ProxyGenerator::create([]);
+  }
+
+  /**
+   * Static container call.
+   *
+   * @return $this
+   *   This service.
+   */
+  public static function service() {
+
+    return \Drupal::service(static::ID);
   }
 
   /**
@@ -68,11 +72,32 @@ class CourtApiService implements CourtApiServiceInterface {
    */
   protected function getProxy() {
 
+    if ($this->proxy) {
+
+      return $this->proxy;
+    }
+    $cacheProxy = \Drupal::cache()->get('court_proxy');
+    if ($cacheProxy && $cacheProxy->data) {
+      if ($this->proxyGenerator->ping($cacheProxy->data)) {
+        $this->proxy = $cacheProxy->data;
+
+        return $this->proxy;
+      }
+    }
+    $cacheProxies = \Drupal::cache()->get('court_proxies');
+    if ($cacheProxies && $cacheProxies->data) {
+      $this->proxyGenerator->setProxies($cacheProxies->data);
+      $this->proxy = $this->proxyGenerator->findLive();
+    }
     if (!$this->proxy) {
-      $this->proxy = $this->proxyGenerator->getProxy();
+      $this->proxy = $this->proxyGenerator->generate()->findLive();
     }
     if (!$this->proxy) {
       $this->getLogger('court')->info('Failed to obtain proxy.');
+    }
+    else {
+      \Drupal::cache()->set('court_proxies', $this->proxyGenerator->getProxies());
+      \Drupal::cache()->set('court_proxy', $this->proxy);
     }
 
     return $this->proxy;
@@ -83,7 +108,7 @@ class CourtApiService implements CourtApiServiceInterface {
    */
   public function getReviewUrl($number) {
 
-    return implode('/', [static::BASE_URL, static::REVIEW_PREFIX, $number]);
+    return implode('/', [static::BASE_URL . static::REVIEW_PREFIX, $number]);
   }
 
   /**

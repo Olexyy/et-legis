@@ -25,16 +25,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-    label: hidden
-  comment:
-    type: comment_default
-    weight: 110
-    region: content
-    label: above
-    settings:
-      view_mode: default
-      pager_id: 0
-    third_party_settings: {  }
+    label: 'hidden}'
   field_image:
     type: image
     weight: -1

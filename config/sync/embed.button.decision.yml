@@ -1,0 +1,21 @@
+uuid: 6c3ec5fa-2948-426f-b381-f6a1714e3da3
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'file:file:23ca3606-cd39-4168-b1f4-6c5fdd45600d'
+  module:
+    - court
+    - entity_embed
+label: Decision
+id: decision
+type_id: entity
+type_settings:
+  entity_type: decision
+  bundles: {  }
+  display_plugins:
+    - 'view_mode:decision.register_reference'
+  entity_browser: decisions_iframe_
+  entity_browser_settings:
+    display_review: false
+icon_uuid: 23ca3606-cd39-4168-b1f4-6c5fdd45600d

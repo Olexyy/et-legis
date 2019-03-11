@@ -40,26 +40,11 @@ class Generator {
    */
   protected $options;
 
-  /**
-   * Key of url.
-   *
-   * @var string
-   */
-  protected $keyIp;
+  protected $connectTimeout;
 
-  /**
-   * Key of url.
-   *
-   * @var string
-   */
-  protected $keyPort;
+  protected $proxies;
 
-  /**
-   * Key of url.
-   *
-   * @var string
-   */
-  protected $keyType;
+  protected $proxy;
 
   /**
    * Factory method.
@@ -88,77 +73,66 @@ class Generator {
   public function __construct(array $options, Client $client = NULL) {
 
     $this->client = $client ? $client : new Client();
-    $this->provider = !empty($options['provider']) ? $options['provider'] : '';
-    $this->query = !empty($options['query']) ? $options['query'] : '';
-    $this->keyIp = !empty($options['keyIp']) ? $options['keyIp'] : '';
-    $this->keyPort = !empty($options['keyPort']) ? $options['keyPort'] : '';
-    $this->keyType = !empty($options['keyType']) ? $options['keyType'] : '';
+    $this->connectTimeout = !empty($options['connectTimeout']) ? $options['connectTimeout'] : 3;
     $this->options = $options;
-  }
-
-  /**
-   * Value getter, supports dot notation.
-   *
-   * @param string $key
-   *   Key.
-   * @param array|null $array
-   *   Given array.
-   *
-   * @return mixed
-   *   Value.
-   */
-  protected function getValue($key, array $array = NULL) {
-
-    if ($array) {
-      if (strpos($key, '.') === FALSE) {
-
-        return isset($array[$key]) ? $array[$key] : NULL;
-      }
-      foreach (explode('.', $key) as $segment) {
-        if (is_array($array) && isset($array[$segment])) {
-          $array = $array[$segment];
-        }
-        else {
-          return NULL;
-        }
-      }
-      return $array;
-    }
-
-    return NULL;
   }
 
   /**
    * Getter for fresh structure.
    *
-   * @return array|string[]
+   * @return $this
    *   Values.
    */
-  public function getProxy() {
+  public function generate() {
 
-    $url = $this->query ?
-      $this->provider . '?' . $this->query : $this->provider;
     $url = 'https://www.proxynova.com/proxy-server-list/country-ua/';
     $response = $this->client->get($url, [
       'User-Agent' => \Drupal\court\UserAgent\Generator::create()->generate(),
-      'connect_timeout' => 5,
-      ]);
+      'connect_timeout' => $this->connectTimeout,
+    ]);
     $content = $response->getBody()->getContents();
-    // This will return null if none match or parse error.
-    try {
-      $proxies = $this->parse($content);
-      return $this->findLive($proxies);
-    }
-    catch (\Exception $exception) {
-      return NULL;
-    }
+    $this->proxies = $this->parse($content);
+
+    return $this;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return Proxy[]
+   *   Proxy list.
+   */
+  public function getProxies() {
+
+    return $this->proxies;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return Proxy[]
+   *   Proxy list.
+   */
+  public function getProxy() {
+
+    return $this->proxy;
+  }
+
+  /**
+   * Proxies setter.
+   *
+   * @param Proxy[]|array $proxies
+   *   Proxies.
+   */
+  public function setProxies($proxies) {
+
+    $this->proxies = $proxies;
   }
 
   /**
    * @param $content
    *
-   * @return array
-   * @throws \Exception
+   * @return array|\Drupal\court\Proxy\Proxy[]
    */
   public function parse($content) {
 
@@ -180,7 +154,6 @@ class Generator {
    * @param $row
    *
    * @return \Drupal\court\Proxy\Proxy
-   * @throws \Exception
    */
   public function processRow($row) {
 
@@ -211,7 +184,7 @@ class Generator {
 
     try {
       return (bool) $this->client->get('https://www.google.com/', [
-        'connect_timeout' => 2,
+        'connect_timeout' => $this->connectTimeout,
         'proxy' => $proxy->toString(),
       ]);
     }
@@ -225,26 +198,35 @@ class Generator {
    *
    * @return \Drupal\court\Proxy\Proxy|mixed|null
    */
-  public function findLive(array $proxies) {
+  public function findLive() {
 
-    foreach ($proxies as $proxy) {
+    foreach ($this->proxies as $index => $proxy) {
       if ($proxy->upTime >= 80) {
         if ($this->ping($proxy)) {
           return $proxy;
         }
+        else {
+          unset($this->proxies[$index]);
+        }
       }
     }
-    foreach ($proxies as $proxy) {
+    foreach ($this->proxies as $index => $proxy) {
       if ($proxy->upTime >= 50 && $proxy->upTime < 80) {
         if ($this->ping($proxy)) {
           return $proxy;
         }
+        else {
+          unset($this->proxies[$index]);
+        }
       }
     }
-    foreach ($proxies as $proxy) {
+    foreach ($this->proxies as $index => $proxy) {
       if ($proxy->upTime < 50) {
         if ($this->ping($proxy)) {
           return $proxy;
+        }
+        else {
+          unset($this->proxies[$index]);
         }
       }
     }

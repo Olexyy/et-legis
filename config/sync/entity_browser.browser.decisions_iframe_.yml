@@ -1,31 +1,31 @@
-uuid: 3ee8cc85-f3eb-469b-a5bc-c5ccac4cd544
+uuid: e7460135-72c7-42d2-8890-70fa9197a8bb
 langcode: uk
 status: true
 dependencies:
   config:
-    - views.view.legal_position_browser
+    - views.view.decision_browser
   module:
     - views
-name: legal_positions
-label: 'Legal positions'
-display: modal
+name: decisions_iframe_
+label: 'Decisions (iFrame)'
+display: iframe
 display_configuration:
-  width: '800'
-  height: '600'
+  width: '650'
+  height: '500'
   link_text: 'Select entities'
   auto_open: false
 selection_display: no_display
 selection_display_configuration: {  }
-widget_selector: single
+widget_selector: tabs
 widget_selector_configuration: {  }
 widgets:
-  63401c8b-471c-4b0b-9b4f-3ebb20976f2d:
+  27fc86b0-f1d7-4142-a390-2418a62f478b:
     settings:
-      view: legal_position_browser
+      view: decision_browser
       view_display: entity_browser_1
       submit_text: 'Select entities'
       auto_select: false
-    uuid: 63401c8b-471c-4b0b-9b4f-3ebb20976f2d
+    uuid: 27fc86b0-f1d7-4142-a390-2418a62f478b
     weight: 1
     label: view
     id: view
