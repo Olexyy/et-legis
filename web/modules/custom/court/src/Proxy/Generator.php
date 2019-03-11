@@ -211,7 +211,7 @@ class Generator {
 
     try {
       return (bool) $this->client->get('https://www.google.com/', [
-        'connect_timeout' => 5,
+        'connect_timeout' => 2,
         'proxy' => $proxy->toString(),
       ]);
     }
@@ -228,14 +228,21 @@ class Generator {
   public function findLive(array $proxies) {
 
     foreach ($proxies as $proxy) {
-      if ($proxy->upTime > 80) {
+      if ($proxy->upTime >= 80) {
         if ($this->ping($proxy)) {
           return $proxy;
         }
       }
     }
     foreach ($proxies as $proxy) {
-      if ($proxy->upTime > 50) {
+      if ($proxy->upTime >= 50 && $proxy->upTime < 80) {
+        if ($this->ping($proxy)) {
+          return $proxy;
+        }
+      }
+    }
+    foreach ($proxies as $proxy) {
+      if ($proxy->upTime < 50) {
         if ($this->ping($proxy)) {
           return $proxy;
         }
