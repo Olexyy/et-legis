@@ -322,6 +322,7 @@ class Decision extends ContentEntityBase implements DecisionInterface {
     $fields['tags'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Tags'))
       ->setDescription(t('Decision tags.'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setSetting('target_type', 'taxonomy_term')
       ->setSetting('handler', 'default:taxonomy_term')
       ->setSetting('handler_settings', [

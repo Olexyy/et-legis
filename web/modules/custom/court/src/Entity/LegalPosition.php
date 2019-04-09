@@ -203,6 +203,7 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
     $fields['tags'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Tags'))
       ->setDescription(t('Legal position tags.'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setSetting('target_type', 'taxonomy_term')
       ->setSetting('handler', 'default:taxonomy_term')
       ->setSetting('handler_settings', [
