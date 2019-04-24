@@ -7,6 +7,8 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\court\Plugin\Field\IncludeParentTermItemList;
+use Drupal\taxonomy\TermInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -68,6 +70,105 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
     $values += [
       'user_id' => \Drupal::currentUser()->id(),
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+
+    parent::preSave($storage);
+    if ($this->getIncludeParentTags()) {
+      foreach ($this->getTags() as $tag) {
+        foreach (static::getTermStorage()->loadAllParents($tag->id()) as $parent) {
+          if (!$this->hasTag($parent)) {
+            $this->addTag($parent);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Term storage.
+   *
+   * @return \Drupal\taxonomy\TermStorageInterface
+   *   Term storage.
+   */
+  public static function getTermStorage() {
+
+    return \Drupal::service('entity_type.manager')
+      ->getStorage('taxonomy_term');
+  }
+
+  public function getIncludeParentTags() {
+
+    return $this->get('include_parent_tags')->value;
+  }
+
+  public function setIncludeParentTags($includeParentTags) {
+
+    $this->set('include_parent_tags', $includeParentTags);
+    return $this;
+  }
+
+  public function getTags() {
+
+    if (isset($this->tags)) {
+      return $this->tags->referencedEntities();
+    }
+
+    return [];
+  }
+
+  public function getTagsIds() {
+
+    if (isset($this->tags)) {
+      $values = $this->tags->getValue();
+
+      return array_column($values, 'target_id');
+    }
+
+    return [];
+  }
+
+  public function setTags(array $tags) {
+
+    $this->set('tags', $tags);
+
+    return $this;
+  }
+
+  /**
+   * Predicate to define if entity has tag.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term.
+   *
+   * @return bool
+   *   Result.
+   */
+  public function hasTag(TermInterface $term) {
+
+    return in_array($term->id(), $this->getTagsIds());
+  }
+
+  /**
+   * Adds given tag.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term to add.
+   *
+   * @return $this
+   *   Chaining.
+   */
+  public function addTag(TermInterface $term) {
+
+    if (isset($this->tags)) {
+      $this->tags[] = $term;
+    }
+
+    return $this;
   }
 
   /**
@@ -255,6 +356,18 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
+
+    $fields['include_parent_tags'] = BaseFieldDefinition::create('boolean')
+      ->setComputed(TRUE)
+      ->setDefaultValue(TRUE)
+      ->setClass(IncludeParentTermItemList::class)
+      ->setLabel(t('Include parent terms'))
+      ->setDescription(t('Include parent terms if not set.'))
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

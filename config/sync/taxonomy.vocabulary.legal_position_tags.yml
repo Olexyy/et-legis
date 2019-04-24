@@ -7,5 +7,5 @@ _core:
 name: 'Legal position tags'
 vid: legal_position_tags
 description: 'Legal position tags.'
-hierarchy: 0
+hierarchy: 1
 weight: 0
