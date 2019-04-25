@@ -301,6 +301,20 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['reference_number'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Reference'))
+      ->setDefaultValue('')
+      ->setDescription(t('Reference number in court register.'))
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'court_link',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['tags'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Tags'))
       ->setDescription(t('Legal position tags.'))

@@ -1,6 +1,6 @@
 uuid: 9fe0b1ad-f38a-40f5-ae08-4a44e2ff4352
 langcode: uk
-status: true
+status: false
 dependencies:
   theme:
     - bootstrap4

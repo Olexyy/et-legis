@@ -5,7 +5,7 @@ slogan: 'Узагальнення, огляд та аналіз судової �
 page:
   403: ''
   404: ''
-  front: /node
+  front: /latest
 admin_compact_mode: false
 weight_select_max: 100
 langcode: uk

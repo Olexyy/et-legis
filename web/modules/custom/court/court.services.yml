@@ -1,4 +1,9 @@
 services:
   court.api:
     class: Drupal\court\Service\CourtApiService
-    arguments: ['@http_client']
+    arguments: []
+  court.path_processor:
+    class: Drupal\court\PathProcessor\CourtPathProcessor
+    tags:
+      - { name: path_processor_inbound, priority: 200 }
+      - { name: path_processor_outbound, priority: 200 }
