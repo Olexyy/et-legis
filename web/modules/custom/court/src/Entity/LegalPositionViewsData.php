@@ -15,6 +15,9 @@ class LegalPositionViewsData extends EntityViewsData {
   public function getViewsData() {
 
     $data = parent::getViewsData();
+    // Treat 'data_status' as select list.
+    $data['legal_position']['tags']['filter']['id'] = 'list_field';
+    $data['legal_position']['tags']['filter']['field_name'] = 'tags';
     $data['taxonomy_term_field_data']['reverse__legal_position__tags']['relationship'] = [
       'title' => t('Legal positions'),
       'label' => t('Legal positions'),

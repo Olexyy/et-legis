@@ -286,6 +286,7 @@ display:
       arguments: {  }
       display_extenders: {  }
       group_by: true
+      title: Категорії
     cache_metadata:
       max-age: -1
       contexts:

@@ -294,7 +294,7 @@ class LegalPosition extends ContentEntityBase implements LegalPositionInterface 
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
 
-    $fields['text'] = BaseFieldDefinition::create('text_long')
+    $fields['text'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Text'))
       ->setDefaultValue('')
       ->setDescription(t('Text of legal position.'))
