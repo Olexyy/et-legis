@@ -1,0 +1,48 @@
+uuid: f8821f92-8e7f-455d-99d5-4f10a5e99144
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.field.node.legal_position.body
+    - field.field.node.legal_position.field_case_number
+    - field.field.node.legal_position.field_category
+    - node.type.legal_position
+  module:
+    - legal_position
+    - text
+    - user
+id: node.legal_position.default
+targetEntityType: node
+bundle: legal_position
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_case_number:
+    weight: 103
+    label: above
+    settings:
+      base_url: 'http://reyestr.court.gov.ua/Review/'
+    third_party_settings: {  }
+    type: court_link
+    region: content
+  field_category:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

@@ -4,8 +4,7 @@ status: true
 dependencies: {  }
 _core:
   default_config_hash: ahWK8XxUQWStqI8lHmuGmzejF4F2clbFvG93_-l5ONE
-name: 'Legal position tags'
+name: 'Категорії правових позицій'
 vid: legal_position_tags
-description: 'Legal position tags.'
-hierarchy: 1
+description: 'Категорії правових позицій.'
 weight: 0

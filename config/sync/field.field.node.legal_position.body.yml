@@ -1,0 +1,22 @@
+uuid: bf806074-38e8-4165-b236-802b8fd3b000
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.legal_position
+  module:
+    - text
+id: node.legal_position.body
+field_name: body
+entity_type: node
+bundle: legal_position
+label: Текст
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

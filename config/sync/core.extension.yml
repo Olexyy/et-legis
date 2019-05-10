@@ -12,7 +12,6 @@ module:
   config_translation: 0
   contact: 0
   contextual: 0
-  court: 0
   ctools: 0
   datetime: 0
   dblog: 0
@@ -33,6 +32,7 @@ module:
   image: 0
   inline_entity_form: 0
   language: 0
+  legal_position: 0
   link: 0
   locale: 0
   media: 0

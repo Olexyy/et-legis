@@ -1,0 +1,18 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\legal_position\Decorator\LegalPosition;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * {@inheritdoc}
+ */
+function legal_position_node_presave(EntityInterface $entity) {
+
+  if (LegalPosition::applies($entity)) {
+    LegalPosition::create($entity)
+      ->preSave();
+  }
+
+}

@@ -1,0 +1,11 @@
+uuid: eed76c5e-3b84-4ac4-a2eb-a5b837233b97
+langcode: uk
+status: true
+dependencies:
+  config:
+    - node.type.legal_position
+id: node.legal_position
+target_entity_type_id: node
+target_bundle: legal_position
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,24 @@
+uuid: 4bb94e40-aedb-42e0-9829-92b592fec76b
+langcode: uk
+status: true
+dependencies:
+  config:
+    - views.view.legal_positions_categories
+  module:
+    - views
+  theme:
+    - bootstrap4
+id: views_block__legal_positions_categories_block_1
+theme: bootstrap4
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_block:legal_positions_categories-block_1'
+settings:
+  id: 'views_block:legal_positions_categories-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }
