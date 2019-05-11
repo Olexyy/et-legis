@@ -291,6 +291,9 @@ display:
     display_options:
       path: node
       display_extenders: {  }
+      title: 'Останні додані правові позиції'
+      defaults:
+        title: false
     display_plugin: page
     display_title: Сторінка
     id: page_1
