@@ -476,7 +476,7 @@ display:
             nid: nid
           separator: '   '
           hide_empty: false
-      path: categories
+      path: legal_position/categories
       menu:
         type: normal
         title: Категорії
