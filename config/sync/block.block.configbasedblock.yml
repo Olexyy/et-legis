@@ -1,0 +1,21 @@
+uuid: ce660132-82fc-412c-bf62-a962d4ad26c2
+langcode: uk
+status: true
+dependencies:
+  module:
+    - legal_position
+  theme:
+    - bootstrap4
+id: configbasedblock
+theme: bootstrap4
+region: footer_first
+weight: 0
+provider: null
+plugin: config_based_block
+settings:
+  id: config_based_block
+  label: 'Config based block'
+  provider: legal_position
+  label_display: '0'
+  content: '2019 | Усі права застережено'
+visibility: {  }
