@@ -1,0 +1,110 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/11?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags\/parent": [
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/10?_format=hal_json"
+            }
+        ]
+    },
+    "tid": [
+        {
+            "value": 11
+        }
+    ],
+    "uuid": [
+        {
+            "value": "d4abe42f-1458-49e0-87db-8db4d333ed20"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": 11
+        }
+    ],
+    "langcode": [
+        {
+            "value": "uk",
+            "lang": "uk"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "legal_position_tags"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2019-05-10T20:13:49+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "status": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "name": [
+        {
+            "value": "\u0414\u043e\u0433\u043e\u0432\u0456\u0440\u043d\u0456 \u0441\u043f\u043e\u0440\u0438",
+            "lang": "uk"
+        }
+    ],
+    "weight": [
+        {
+            "value": 0
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags\/parent": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/10?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "072071cb-0083-41a1-ab18-23bc0490ccd3"
+                    }
+                ]
+            }
+        ]
+    },
+    "changed": [
+        {
+            "value": "2019-05-10T20:14:05+00:00",
+            "lang": "uk",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "uk",
+            "lang": "uk"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+name: Legal position sync
+description: 'Legal position sync extension.'
+type: module
+package: custom
+core: 8.x
+dependencies: { }
