@@ -1,19 +1,19 @@
-uuid: 7364b933-7b1a-4ef1-9362-589f76137e0f
+uuid: f2b13079-7324-44a3-baad-687762a5544d
 langcode: uk
 status: true
 dependencies:
   module:
     - node
     - taxonomy
-id: node.field_category
-field_name: field_category
+id: node.field_category_map
+field_name: field_category_map
 entity_type: node
 type: entity_reference
 settings:
   target_type: taxonomy_term
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

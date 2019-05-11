@@ -1,17 +1,17 @@
-uuid: b9af695b-7da7-4e86-a7d3-13df8cc7e89c
+uuid: e89af4ea-3c14-412f-a832-917dd1bf591f
 langcode: uk
 status: true
 dependencies:
   config:
-    - field.storage.node.field_category
+    - field.storage.node.field_category_map
     - node.type.legal_position
     - taxonomy.vocabulary.legal_position_tags
-id: node.legal_position.field_category
-field_name: field_category
+id: node.legal_position.field_category_map
+field_name: field_category_map
 entity_type: node
 bundle: legal_position
-label: Категорія
-description: 'Категорія правової позиції.'
+label: 'Карта категорій'
+description: 'Карта категорій використовуєтся для імплеметнації перегляду специфічних категорій.'
 required: false
 translatable: false
 default_value: {  }
@@ -24,6 +24,6 @@ settings:
     sort:
       field: name
       direction: asc
-    auto_create: true
+    auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

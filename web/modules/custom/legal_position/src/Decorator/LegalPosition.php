@@ -53,27 +53,17 @@ class LegalPosition {
 
   /**
    * Pre save handler.
+   *
+   * Fill category map.
    */
   public function preSave() {
 
-    foreach ($this->getCategories() as $category) {
+    if ($category = $this->getCategory()) {
+      $this->setCategoryMap([]);
       foreach (static::getTermStorage()->loadAllParents($category->id()) as $parent) {
-        if (!$this->hasCategory($parent)) {
-          $this->addCategory($parent);
-        }
+        $this->addCategoryMap($parent);
       }
     }
-  }
-
-  public function getCategories() {
-
-    $entity = $this->entity;
-    if (isset($entity->field_category)) {
-
-      return $entity->field_category->referencedEntities();
-    }
-
-    return [];
   }
 
   /**
@@ -88,11 +78,22 @@ class LegalPosition {
       ->getStorage('taxonomy_term');
   }
 
-  public function getCategoryIds() {
+  public function getCategoryMap() {
 
     $entity = $this->entity;
-    if (isset($entity->field_category)) {
-      $values = $entity->field_category->getValue();
+    if (isset($entity->field_category_map)) {
+
+      return $entity->field_category_map->referencedEntities();
+    }
+
+    return [];
+  }
+
+  public function getCategoryMapIds() {
+
+    $entity = $this->entity;
+    if (isset($entity->field_category_map)) {
+      $values = $entity->field_category_map->getValue();
 
       return array_column($values, 'target_id');
     }
@@ -100,11 +101,11 @@ class LegalPosition {
     return [];
   }
 
-  public function setCategory(array $categories) {
+  public function setCategoryMap(array $categories) {
 
     $entity = $this->entity;
-    if (isset($entity->field_category)) {
-      $entity->field_category = $categories;
+    if (isset($entity->field_category_map)) {
+      $entity->field_category_map = $categories;
     }
 
     return $this;
@@ -119,9 +120,9 @@ class LegalPosition {
    * @return bool
    *   Result.
    */
-  public function hasCategory(TermInterface $category) {
+  public function hasCategoryMap(TermInterface $category) {
 
-    return in_array($category->id(), $this->getCategoryIds());
+    return in_array($category->id(), $this->getCategoryMapIds());
   }
 
   /**
@@ -133,14 +134,50 @@ class LegalPosition {
    * @return $this
    *   Chaining.
    */
-  public function addCategory(TermInterface $category) {
+  public function addCategoryMap(TermInterface $category) {
 
     $entity = $this->entity;
-    if (isset($entity->field_category)) {
-      $entity->field_category[] = $category;
+    if (isset($entity->field_category_map)) {
+      $entity->field_category_map[] = $category;
     }
 
     return $this;
+  }
+
+
+  /**
+   * Adds given tag.
+   *
+   * @param \Drupal\taxonomy\TermInterface $category
+   *   Term to add.
+   *
+   * @return $this
+   *   Chaining.
+   */
+  public function setCategory(TermInterface $category) {
+
+    $entity = $this->entity;
+    if (isset($entity->field_category)) {
+      $entity->field_category = $category;
+    }
+
+    return $this;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return \Drupal\taxonomy\TermInterface|null
+   *   Value if any.
+   */
+  public function getCategory() {
+
+    $entity = $this->entity;
+    if (isset($entity->field_category)) {
+      return $entity->field_category->entity;
+    }
+
+    return NULL;
   }
 
 }
