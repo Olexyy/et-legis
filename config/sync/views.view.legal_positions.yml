@@ -16,9 +16,9 @@ dependencies:
     - text
     - user
 id: legal_positions
-label: 'Правові позиції'
+label: 'Пошук правових позицій'
 module: views
-description: ''
+description: 'Пошук правових позицій.'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -464,7 +464,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: 'Правові позиції: пошук'
+      title: 'Пошук правових позицій'
       header: {  }
       footer: {  }
       empty: {  }
