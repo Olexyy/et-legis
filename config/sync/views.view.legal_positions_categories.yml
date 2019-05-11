@@ -3,6 +3,7 @@ langcode: uk
 status: true
 dependencies:
   config:
+    - system.menu.main
     - taxonomy.vocabulary.legal_position_tags
   module:
     - node
@@ -70,9 +71,9 @@ display:
       style:
         type: tree
         options:
-          row_class: ''
+          row_class: list-group-item
           default_row_class: true
-          type: ol
+          type: ul
           main_field: tid
           parent_field: tid_1
           collapsible_tree: '0'
@@ -398,6 +399,93 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+        - user.permissions
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 2
+    display_options:
+      display_extenders: {  }
+      style:
+        type: tree_table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: 1
+          sticky: 0
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            name: name
+            nid: nid
+            tid: tid
+            tid_1: tid_1
+          info:
+            name:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            nid:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            tid:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            tid_1:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+          default: '-1'
+          empty_table: 0
+          main_field: tid
+          parent_field: tid_1
+          display_hierarchy_column: name
+      defaults:
+        style: false
+        row: false
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name: name
+            nid: nid
+          separator: '   '
+          hide_empty: false
+      path: categories
+      menu:
+        type: normal
+        title: Категорії
+        description: ''
+        expanded: false
+        parent: ''
+        weight: 0
+        context: '0'
+        menu_name: main
     cache_metadata:
       max-age: -1
       contexts:

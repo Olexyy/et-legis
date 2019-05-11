@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.legal_positions_categories
   module:
+    - system
     - views
   theme:
     - bootstrap4
@@ -21,4 +22,9 @@ settings:
   label_display: visible
   views_label: ''
   items_per_page: none
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: /categories
+    negate: true
+    context_mapping: {  }
