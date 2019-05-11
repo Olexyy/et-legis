@@ -464,7 +464,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: 'Правові позиції'
+      title: 'Правові позиції: пошук'
       header: {  }
       footer: {  }
       empty: {  }

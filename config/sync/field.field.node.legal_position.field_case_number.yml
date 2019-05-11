@@ -10,7 +10,7 @@ field_name: field_case_number
 entity_type: node
 bundle: legal_position
 label: Посилання
-description: ''
+description: 'Номер в реєстрі судових рішень.'
 required: false
 translatable: false
 default_value: {  }

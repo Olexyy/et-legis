@@ -9,9 +9,9 @@ dependencies:
     - node
     - user
 id: latest_legal_positions
-label: 'Останні додані правові позиції'
+label: 'Останні правові позиції'
 module: views
-description: ''
+description: 'Останні додані правові позиції.'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -240,7 +240,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: 'Останні додані правові позиції'
+      title: 'Останні правові позиції'
       header: {  }
       footer: {  }
       empty: {  }
