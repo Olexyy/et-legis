@@ -1,0 +1,94 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/21?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags_ext"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags_ext\/parent": [
+            null
+        ]
+    },
+    "tid": [
+        {
+            "value": 21
+        }
+    ],
+    "uuid": [
+        {
+            "value": "7ab5fd8d-21c3-4d0d-9c57-5dca12729dd2"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": 21
+        }
+    ],
+    "langcode": [
+        {
+            "value": "uk",
+            "lang": "uk"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "legal_position_tags_ext"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2019-05-12T15:58:31+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "status": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "name": [
+        {
+            "value": "\u0406\u043d\u0442\u0435\u043b\u0435\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u0430 \u0432\u043b\u0430\u0441\u043d\u0456\u0441\u0442\u044c",
+            "lang": "uk"
+        }
+    ],
+    "weight": [
+        {
+            "value": 0
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags_ext\/parent": [
+            null
+        ]
+    },
+    "changed": [
+        {
+            "value": "2019-05-12T15:58:31+00:00",
+            "lang": "uk",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "uk",
+            "lang": "uk"
+        }
+    ]
+}

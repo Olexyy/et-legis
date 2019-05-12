@@ -1,0 +1,94 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/taxonomy\/term\/20?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags_ext"
+        },
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags_ext\/parent": [
+            null
+        ]
+    },
+    "tid": [
+        {
+            "value": 20
+        }
+    ],
+    "uuid": [
+        {
+            "value": "3f894f26-3b89-4f35-9cf6-6fe1eea2d7b8"
+        }
+    ],
+    "revision_id": [
+        {
+            "value": 20
+        }
+    ],
+    "langcode": [
+        {
+            "value": "uk",
+            "lang": "uk"
+        }
+    ],
+    "vid": [
+        {
+            "target_id": "legal_position_tags_ext"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2019-05-12T15:58:25+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "status": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "name": [
+        {
+            "value": "\u0426\u0456\u043d\u043d\u0456 \u043f\u0430\u043f\u0435\u0440\u0438",
+            "lang": "uk"
+        }
+    ],
+    "weight": [
+        {
+            "value": 0
+        }
+    ],
+    "_embedded": {
+        "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags_ext\/parent": [
+            null
+        ]
+    },
+    "changed": [
+        {
+            "value": "2019-05-12T15:58:25+00:00",
+            "lang": "uk",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true,
+            "lang": "uk"
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "uk",
+            "lang": "uk"
+        }
+    ]
+}
