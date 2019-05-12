@@ -263,7 +263,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Теги
           exclude: false
           alter:
             alter_text: false
@@ -296,7 +296,7 @@ display:
           element_class: small
           element_label_type: span
           element_label_class: small
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true

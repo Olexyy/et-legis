@@ -1,6 +1,6 @@
 uuid: 0f51d895-3494-4f97-8e22-338d87e1d044
 langcode: uk
-status: true
+status: false
 dependencies:
   module:
     - node
