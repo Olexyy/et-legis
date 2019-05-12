@@ -5,8 +5,10 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.storage.node.body
+    - field.storage.node.field_case_number
     - field.storage.node.field_category
   module:
+    - legal_position
     - node
     - taxonomy
     - text
@@ -56,10 +58,13 @@ display:
       pager:
         type: mini
         options:
-          items_per_page: 10
+          items_per_page: 20
           offset: 0
           id: 0
           total_pages: 0
+          tags:
+            previous: ‹‹
+            next: ››
           expose:
             items_per_page: false
             items_per_page_label: 'Елементів на сторінку'
@@ -68,9 +73,6 @@ display:
             items_per_page_options_all_label: '- Усе -'
             offset: false
             offset_label: Зміщення
-          tags:
-            previous: ‹‹
-            next: ››
       sorts:
         sticky:
           id: sticky
@@ -241,7 +243,20 @@ display:
           bypass_access: false
           plugin_id: entity
       footer: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: 'Список не містить жодного елемента.'
+            format: full_html
+          plugin_id: text
       relationships: {  }
       fields: {  }
       display_extenders: {  }
@@ -286,6 +301,7 @@ display:
           relationship: none
           view_mode: default
       display_extenders: {  }
+      enabled: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'
@@ -390,6 +406,69 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
+        field_case_number:
+          id: field_case_number
+          table: node__field_case_number
+          field: field_case_number
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Посилання
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: span
+          element_class: small
+          element_label_type: span
+          element_label_class: small
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: court_link
+          settings:
+            base_url: 'http://reyestr.court.gov.ua/Review/'
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         field_category:
           id: field_category
           table: node__field_category
@@ -426,9 +505,9 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: ''
+          element_type: span
           element_class: small
-          element_label_type: h6
+          element_label_type: span
           element_label_class: small
           element_label_colon: true
           element_wrapper_type: ''
@@ -649,4 +728,5 @@ display:
       max-age: -1
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_case_number'
         - 'config:field.storage.node.field_category'
