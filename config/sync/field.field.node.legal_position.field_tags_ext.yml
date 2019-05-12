@@ -1,0 +1,29 @@
+uuid: 3d21b70c-b05b-46b0-bf1c-fa1df733319e
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tags_ext
+    - node.type.legal_position
+    - taxonomy.vocabulary.legal_position_tags_ext
+id: node.legal_position.field_tags_ext
+field_name: field_tags_ext
+entity_type: node
+bundle: legal_position
+label: Теги
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      legal_position_tags_ext: legal_position_tags_ext
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,11 @@
+uuid: 9aa3c572-77d3-419d-8ac5-746d14563723
+langcode: uk
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.legal_position_tags_ext
+id: taxonomy_term.legal_position_tags_ext
+target_entity_type_id: taxonomy_term
+target_bundle: legal_position_tags_ext
+default_langcode: site_default
+language_alterable: false

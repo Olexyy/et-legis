@@ -1,0 +1,8 @@
+uuid: 54df72bc-91c2-4f73-b6dd-e381d9bf1baa
+langcode: uk
+status: true
+dependencies: {  }
+name: 'Теги правових позицій'
+vid: legal_position_tags_ext
+description: 'Теги схожих правових позицій поза категоріями.'
+weight: 0
