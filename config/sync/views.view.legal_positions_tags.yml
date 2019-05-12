@@ -3,11 +3,13 @@ langcode: uk
 status: true
 dependencies:
   config:
+    - system.menu.main
     - taxonomy.vocabulary.legal_position_tags_ext
   module:
     - node
     - taxonomy
     - user
+    - views_tree
 id: legal_positions_tags
 label: 'Теги правових позицій'
 module: views
@@ -51,7 +53,7 @@ display:
       pager:
         type: some
         options:
-          items_per_page: 10
+          items_per_page: 20
           offset: 0
       style:
         type: html_list
@@ -185,6 +187,138 @@ display:
           entity_type: node
           entity_field: uuid
           plugin_id: field
+        tid:
+          id: tid
+          table: taxonomy_term_field_data
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'ID терміна'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: taxonomy_term
+          entity_field: tid
+          plugin_id: field
+        tid_1:
+          id: tid_1
+          table: taxonomy_term_field_data
+          field: tid
+          relationship: parent_target_id
+          group_type: group
+          admin_label: ''
+          label: 'ID терміна'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: taxonomy_term
+          entity_field: tid
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -221,6 +355,17 @@ display:
           admin_label: матеріал
           required: false
           plugin_id: standard
+        parent_target_id:
+          id: parent_target_id
+          table: taxonomy_term__parent
+          field: parent_target_id
+          relationship: none
+          group_type: group
+          admin_label: Батько
+          required: false
+          entity_type: taxonomy_term
+          entity_field: parent
+          plugin_id: standard
       arguments: {  }
       display_extenders: {  }
       group_by: true
@@ -238,6 +383,91 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - user.permissions
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Сторінка
+    position: 2
+    display_options:
+      display_extenders: {  }
+      path: tags
+      menu:
+        type: normal
+        title: Теги
+        description: ''
+        expanded: false
+        parent: ''
+        weight: 0
+        context: '0'
+        menu_name: main
+      style:
+        type: tree_table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: 1
+          sticky: 0
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            name: name
+            uuid: uuid
+            tid: tid
+            tid_1: tid_1
+          info:
+            name:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            uuid:
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            tid:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+            tid_1:
+              sortable: 0
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: 0
+              responsive: ''
+          default: '-1'
+          empty_table: 0
+          main_field: tid
+          parent_field: tid_1
+          display_hierarchy_column: name
+      defaults:
+        style: false
+        row: false
+        fields: true
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name: name
+            uuid: uuid
+          separator: '   '
+          hide_empty: false
     cache_metadata:
       max-age: -1
       contexts:
