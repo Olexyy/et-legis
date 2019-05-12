@@ -1,28 +1,30 @@
 {
     "_links": {
         "self": {
-            "href": "http:\/\/default\/taxonomy\/term\/8?_format=hal_json"
+            "href": "http:\/\/default\/taxonomy\/term\/22?_format=hal_json"
         },
         "type": {
             "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags"
         },
         "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags\/parent": [
-            null
+            {
+                "href": "http:\/\/default\/taxonomy\/term\/9?_format=hal_json"
+            }
         ]
     },
     "tid": [
         {
-            "value": 8
+            "value": 22
         }
     ],
     "uuid": [
         {
-            "value": "8cb5640e-2176-46aa-8b59-6ec7715d09bf"
+            "value": "68b41fe5-6509-44b8-95c8-1a4c47e0bd95"
         }
     ],
     "revision_id": [
         {
-            "value": 8
+            "value": 22
         }
     ],
     "langcode": [
@@ -38,7 +40,7 @@
     ],
     "revision_created": [
         {
-            "value": "2019-05-10T17:37:31+00:00",
+            "value": "2019-05-12T19:21:00+00:00",
             "format": "Y-m-d\\TH:i:sP"
         }
     ],
@@ -50,18 +52,32 @@
     ],
     "name": [
         {
-            "value": "\u041f\u0440\u043e\u0446\u0435\u0441\u0443\u0430\u043b\u044c\u043d\u0456 \u043f\u0438\u0442\u0430\u043d\u043d\u044f",
+            "value": "\u0414\u0435\u0440\u0436\u0430\u0432\u043d\u0430 \u0441\u043b\u0443\u0436\u0431\u0430",
             "lang": "uk"
         }
     ],
     "weight": [
         {
-            "value": 6
+            "value": 0
         }
     ],
     "_embedded": {
         "http:\/\/drupal.org\/rest\/relation\/taxonomy_term\/legal_position_tags\/parent": [
-            null
+            {
+                "_links": {
+                    "self": {
+                        "href": "http:\/\/default\/taxonomy\/term\/9?_format=hal_json"
+                    },
+                    "type": {
+                        "href": "http:\/\/drupal.org\/rest\/type\/taxonomy_term\/legal_position_tags"
+                    }
+                },
+                "uuid": [
+                    {
+                        "value": "cacf4c12-2bd7-442b-ac09-bcbd8cae98b8"
+                    }
+                ]
+            }
         ]
     },
     "changed": [

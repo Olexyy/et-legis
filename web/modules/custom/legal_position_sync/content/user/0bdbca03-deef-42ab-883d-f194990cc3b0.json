@@ -1,7 +1,7 @@
 {
     "_links": {
         "self": {
-            "href": "http:\/\/default\/en\/user\/1?_format=hal_json"
+            "href": "http:\/\/default\/en\/user\/2?_format=hal_json"
         },
         "type": {
             "href": "http:\/\/drupal.org\/rest\/type\/user\/user"
@@ -9,7 +9,7 @@
     },
     "uid": [
         {
-            "value": 1
+            "value": 2
         }
     ],
     "uuid": [
@@ -30,12 +30,12 @@
     ],
     "name": [
         {
-            "value": "admin"
+            "value": "example"
         }
     ],
     "mail": [
         {
-            "value": "admin@example.com"
+            "value": "example@example.com"
         }
     ],
     "timezone": [
@@ -63,7 +63,7 @@
     ],
     "access": [
         {
-            "value": "2019-05-12T15:58:46+00:00",
+            "value": "2019-05-12T19:24:01+00:00",
             "format": "Y-m-d\\TH:i:sP"
         }
     ],
@@ -75,7 +75,7 @@
     ],
     "init": [
         {
-            "value": "admin@example.com"
+            "value": "example@example.com"
         }
     ],
     "default_langcode": [
