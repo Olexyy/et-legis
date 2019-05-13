@@ -9,7 +9,7 @@ _core:
 id: bootstrap4_page_title
 theme: bootstrap4
 region: breadcrumb
-weight: -5
+weight: -4
 provider: null
 plugin: page_title_block
 settings:

@@ -11,7 +11,7 @@ _core:
 id: bootstrap4_breadcrumbs
 theme: bootstrap4
 region: breadcrumb
-weight: -6
+weight: -5
 provider: null
 plugin: system_breadcrumb_block
 settings:
