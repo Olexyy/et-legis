@@ -1,5 +1,6 @@
 ul {
-  padding-inline-start: 10px; }
+  padding-inline-start: 10px;
+  list-style: none; }
 
 .form-inline.navbar-form.float-right {
   flex-grow: 10 !important;
