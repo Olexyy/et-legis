@@ -17,7 +17,7 @@ class LegalPosition {
   /**
    * Wrapped entity.
    *
-   * @var \Drupal\Core\Entity\ContentEntityInterface|\Drupal\Core\Entity\EntityInterface
+   * @var \Drupal\Core\Entity\ContentEntityInterface|\Drupal\Core\Entity\EntityInterface|\Drupal\node\NodeInterface
    */
   protected $entity;
 
@@ -58,6 +58,8 @@ class LegalPosition {
    */
   public function preSave() {
 
+    // Set default title.
+    $this->entity->setTitle('');
     if ($category = $this->getCategory()) {
       $this->setCategoryMap([]);
       foreach (static::getTermStorage()->loadAllParents($category->id()) as $parent) {

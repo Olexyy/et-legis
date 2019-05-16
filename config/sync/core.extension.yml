@@ -34,7 +34,6 @@ module:
   inline_entity_form: 0
   language: 0
   legal_position: 0
-  legal_position_sync: 0
   link: 0
   locale: 0
   media: 0

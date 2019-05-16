@@ -16,3 +16,14 @@ function legal_position_node_presave(EntityInterface $entity) {
   }
 
 }
+
+function legal_position_block_view_views_block_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+
+  if ($block instanceof \Drupal\views\Plugin\Block\ViewsBlock) {
+    $view = $block->getViewExecutable();
+    if ($view->id() == 'legal_position_categories') {
+
+    }
+  }
+  $a = 1;
+}

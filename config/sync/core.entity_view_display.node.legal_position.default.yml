@@ -19,7 +19,7 @@ bundle: legal_position
 mode: default
 content:
   body:
-    label: hidden
+    label: above
     type: text_default
     weight: 1
     settings: {  }
