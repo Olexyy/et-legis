@@ -86,43 +86,4 @@ class PatternOutputFormatter extends FormatterBase {
     return $element;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function view(FieldItemListInterface $items, $langcode = NULL) {
-    // Default the language to the current content language.
-    if (empty($langcode)) {
-      $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
-    }
-    $elements = $this->viewElements($items, $langcode);
-
-    // If there are actual renderable children, use #theme => field, otherwise,
-    // let access cacheability metadata pass through for correct bubbling.
-    if (Element::children($elements)) {
-      $entity = $items->getEntity();
-      $entity_type = $entity->getEntityTypeId();
-      $field_name = $this->fieldDefinition->getName();
-      $info = [
-        '#theme' => 'field',
-        '#title' => $this->fieldDefinition->getLabel(),
-        '#label_display' => $this->label,
-        '#view_mode' => $this->viewMode,
-        '#language' => $items->getLangcode(),
-        '#field_name' => $field_name,
-        '#field_type' => $this->fieldDefinition->getType(),
-        '#field_translatable' => $this->fieldDefinition->isTranslatable(),
-        '#entity_type' => $entity_type,
-        '#bundle' => $entity->bundle(),
-        '#object' => $entity,
-        '#items' => $items,
-        '#formatter' => $this->getPluginId(),
-        '#is_multiple' => $this->fieldDefinition->getFieldStorageDefinition()->isMultiple(),
-      ];
-
-      $elements = array_merge($info, $elements);
-    }
-
-    return $elements;
-  }
-
 }
