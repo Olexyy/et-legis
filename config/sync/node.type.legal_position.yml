@@ -10,7 +10,7 @@ third_party_settings:
     parent: ''
 name: 'Правові позиції'
 type: legal_position
-description: 'Матеріал <em>правові позиції </em>.'
+description: 'Матеріал <em>правові позиції</em>.'
 help: ''
 new_revision: false
 preview_mode: 1
