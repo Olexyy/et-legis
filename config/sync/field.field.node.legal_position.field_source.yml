@@ -10,7 +10,7 @@ id: node.legal_position.field_source
 field_name: field_source
 entity_type: node
 bundle: legal_position
-label: Позиція
+label: Джерело
 description: 'Джерело правової позиції (орган що прийняв).'
 required: false
 translatable: false

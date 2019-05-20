@@ -27,12 +27,12 @@ content:
     type: pattern_output
     weight: 1
     settings:
-      pattern: '<h5><b>{value}</b></h5>'
+      pattern: '<h5><b>''''{value}''''</b></h5>'
     third_party_settings: {  }
     region: content
   field_category:
     weight: 4
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
@@ -40,7 +40,7 @@ content:
     region: content
   field_decision_link:
     weight: 2
-    label: above
+    label: inline
     settings:
       trim_length: 80
       url_only: false
@@ -78,7 +78,7 @@ content:
     region: content
   field_source_link:
     weight: 3
-    label: above
+    label: inline
     settings:
       trim_length: 80
       url_only: false
@@ -90,7 +90,7 @@ content:
     region: content
   field_tags_ext:
     weight: 5
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
