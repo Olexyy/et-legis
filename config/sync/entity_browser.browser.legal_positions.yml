@@ -1,0 +1,31 @@
+uuid: 424e13e6-d621-4703-9198-daa91f39522c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.legal_positions
+  module:
+    - views
+name: legal_positions
+label: 'Правові позиції'
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: Обрати
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  009cdfda-7aae-47e4-b109-ab0b53973981:
+    settings:
+      view: legal_positions
+      view_display: entity_browser_1
+      submit_text: 'Select entities'
+      auto_select: false
+    uuid: 009cdfda-7aae-47e4-b109-ab0b53973981
+    weight: 1
+    label: view
+    id: view

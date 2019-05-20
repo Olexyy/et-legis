@@ -3,13 +3,19 @@ langcode: uk
 status: true
 dependencies:
   config:
+    - entity_browser.browser.legal_positions
     - field.field.node.legal_position.body
-    - field.field.node.legal_position.field_case_number
     - field.field.node.legal_position.field_category
     - field.field.node.legal_position.field_category_map
+    - field.field.node.legal_position.field_decision_link
+    - field.field.node.legal_position.field_latest_version
+    - field.field.node.legal_position.field_previous_version
+    - field.field.node.legal_position.field_source_link
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
   module:
+    - entity_browser
+    - link
     - path
     - text
 id: node.legal_position.default
@@ -28,20 +34,12 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 4
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_case_number:
-    weight: 1
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_category:
-    weight: 2
+    weight: 1
     settings:
       match_operator: CONTAINS
       size: 60
@@ -49,8 +47,39 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_tags_ext:
+  field_decision_link:
     weight: 3
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_previous_version:
+    weight: 5
+    settings:
+      entity_browser: legal_positions
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: posilannya
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_source_link:
+    weight: 4
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_tags_ext:
+    weight: 2
     settings:
       match_operator: CONTAINS
       size: 60
@@ -60,14 +89,14 @@ content:
     region: content
   langcode:
     type: language_select
-    weight: 9
+    weight: 10
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -75,26 +104,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 5
+    weight: 7
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 8
+    weight: 11
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 6
+    weight: 8
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 12
     settings:
       match_operator: CONTAINS
       size: 60
@@ -103,4 +132,5 @@ content:
     third_party_settings: {  }
 hidden:
   field_category_map: true
+  field_latest_version: true
   title: true

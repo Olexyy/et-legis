@@ -1,15 +1,13 @@
 uuid: 57eb30c4-1205-4f05-8a96-7eca856a5277
 langcode: uk
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.storage.node.body
-    - field.storage.node.field_case_number
     - field.storage.node.field_category
     - field.storage.node.field_tags_ext
   module:
-    - legal_position
     - node
     - taxonomy
     - text
@@ -17,9 +15,9 @@ dependencies:
 _core:
   default_config_hash: Gy5PaLdfFhtFSRqJxV-DBTF5AocKgNA2CsCNNEbvx4c
 id: taxonomy_term
-label: 'Термін таксономії'
+label: 'Taxonomy term'
 module: taxonomy
-description: 'Матеріали, що стосуються певного терміну таксономії.'
+description: 'Content belonging to a certain taxonomy term.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -27,7 +25,7 @@ core: '8'
 display:
   default:
     id: default
-    display_title: Головне
+    display_title: Master
     display_plugin: default
     position: 0
     display_options:
@@ -49,13 +47,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Застосувати
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Скинути
-          exposed_sorts_label: 'Впорядкувати за'
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
-          sort_asc_label: Зрост
-          sort_desc_label: Спад
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: mini
         options:
@@ -68,12 +66,12 @@ display:
             next: ››
           expose:
             items_per_page: false
-            items_per_page_label: 'Елементів на сторінку'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Усе -'
+            items_per_page_options_all_label: '- All -'
             offset: false
-            offset_label: Зміщення
+            offset_label: Offset
       sorts:
         sticky:
           id: sticky
@@ -112,7 +110,7 @@ display:
           exception:
             value: ''
             title_enable: false
-            title: Все
+            title: All
           title_enable: true
           title: '{{ arguments.tid }}'
           default_argument_type: fixed
@@ -274,7 +272,7 @@ display:
       tags: {  }
   feed_1:
     id: feed_1
-    display_title: Потік
+    display_title: Feed
     display_plugin: feed
     position: 2
     display_options:
@@ -313,7 +311,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Сторінка
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:
@@ -460,69 +458,6 @@ display:
           type: text_summary_or_trimmed
           settings:
             trim_length: 400
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
-        field_case_number:
-          id: field_case_number
-          table: node__field_case_number
-          field: field_case_number
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Посилання
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: span
-          element_class: small
-          element_label_type: span
-          element_label_class: small
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: court_link
-          settings:
-            base_url: 'http://reyestr.court.gov.ua/Review/'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -793,6 +728,5 @@ display:
       max-age: -1
       tags:
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_case_number'
         - 'config:field.storage.node.field_category'
         - 'config:field.storage.node.field_tags_ext'

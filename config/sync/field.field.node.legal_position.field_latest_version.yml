@@ -1,0 +1,27 @@
+uuid: 34be88db-5782-428a-9990-6a2fbf8d9d8a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_latest_version
+    - node.type.legal_position
+id: node.legal_position.field_latest_version
+field_name: field_latest_version
+entity_type: node
+bundle: legal_position
+label: 'Остання версія'
+description: 'Остання версія поточної правової позиції.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      legal_position: legal_position
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

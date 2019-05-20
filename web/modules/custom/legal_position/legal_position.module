@@ -14,16 +14,30 @@ function legal_position_node_presave(EntityInterface $entity) {
     LegalPosition::create($entity)
       ->preSave();
   }
-
 }
 
-function legal_position_block_view_views_block_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+/**
+ * Implements hook_node_update().
+ *
+ * {@inheritdoc}
+ */
+function legal_position_node_update(EntityInterface $entity) {
 
-  if ($block instanceof \Drupal\views\Plugin\Block\ViewsBlock) {
-    $view = $block->getViewExecutable();
-    if ($view->id() == 'legal_position_categories') {
-
-    }
+  if (LegalPosition::applies($entity)) {
+    LegalPosition::create($entity)
+      ->postSave();
   }
-  $a = 1;
+}
+
+/**
+ * Implements hook_node_insert().
+ *
+ * {@inheritdoc}
+ */
+function legal_position_node_insert(EntityInterface $entity) {
+
+  if (LegalPosition::applies($entity)) {
+    LegalPosition::create($entity)
+      ->postSave();
+  }
 }

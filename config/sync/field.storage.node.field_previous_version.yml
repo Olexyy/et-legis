@@ -1,17 +1,15 @@
-uuid: 1073c67b-b953-498f-b880-08ea91f53619
-langcode: uk
+uuid: 7ea88be3-34a0-4674-8dd9-072eeb35e19d
+langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_case_number
-field_name: field_case_number
+id: node.field_previous_version
+field_name: field_previous_version
 entity_type: node
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  target_type: node
 module: core
 locked: false
 cardinality: 1

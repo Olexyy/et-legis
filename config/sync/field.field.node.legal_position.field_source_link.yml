@@ -1,0 +1,23 @@
+uuid: c57f660c-0f25-408b-8d57-ccbc7732f523
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_source_link
+    - node.type.legal_position
+  module:
+    - link
+id: node.legal_position.field_source_link
+field_name: field_source_link
+entity_type: node
+bundle: legal_position
+label: 'Посилання на джерело'
+description: 'Посилання на джерело правової позиції.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

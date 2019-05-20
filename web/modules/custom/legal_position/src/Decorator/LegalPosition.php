@@ -3,6 +3,7 @@
 namespace Drupal\legal_position\Decorator;
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 
 /**
@@ -46,6 +47,11 @@ class LegalPosition {
     return new static($entity);
   }
 
+  /**
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *
+   * @return bool
+   */
   public static function applies(EntityInterface $entity) {
 
     return $entity->bundle() == static::BUNDLE;
@@ -59,13 +65,54 @@ class LegalPosition {
   public function preSave() {
 
     // Set default title.
-    $this->entity->setTitle('');
+    $this->entity->setTitle(' ');
+    // Handle category map.
     if ($category = $this->getCategory()) {
       $this->setCategoryMap([]);
       foreach (static::getTermStorage()->loadAllParents($category->id()) as $parent) {
         $this->addCategoryMap($parent);
       }
     }
+
+  }
+
+  /**
+   *
+   */
+  public function postSave() {
+
+    // Handle attach latest to previous.
+    if ($previous = $this->getPrevious()) {
+      if ($legalPosition = static::create($previous)) {
+        if ($legalPosition->getLatestId() != $this->entity->id()) {
+          $legalPosition->setLatestId($this->entity->id())->save();
+        }
+      }
+    }
+    // Handle detach latest from previous.
+    else {
+      if ($original = $this->getOriginal()) {
+        if ($legalPosition = static::create($original)) {
+          if ($previous = $legalPosition->getPrevious()) {
+            $legalPosition->setPreviousId(NULL)->save();
+          }
+        }
+      }
+    }
+
+  }
+
+  /**
+   * @return \Drupal\Core\Entity\ContentEntityInterface|\Drupal\node\NodeInterface|null
+   */
+  public function getOriginal() {
+
+    $entity = $this->entity;
+    if (isset($entity->original)) {
+      return $entity->original;
+    }
+
+    return NULL;
   }
 
   /**
@@ -180,6 +227,133 @@ class LegalPosition {
     }
 
     return NULL;
+  }
+
+  /**
+   * Related logic is not active due to missing field.
+   * Replaced with field_previous_version.
+   * And field_latest_version.
+   *
+   * @return array
+   */
+  public function getPreviousId() {
+
+    return $this->entity->get('field_previous_version')->target_id;
+  }
+
+  public function getPrevious() {
+
+    return $this->entity->get('field_previous_version')->entity;
+  }
+
+  public function setPreviousId($id) {
+
+    $this->entity->set('field_previous_version', $id);
+
+    return $this;
+  }
+
+  public function setPrevious(EntityInterface $entity) {
+
+    return $this->entity->set('field_previous_version', $entity->id());
+  }
+
+  public function getLatestId() {
+
+    return $this->entity->get('field_latest_version')->target_id;
+  }
+
+  public function getLatest() {
+
+    return $this->entity->get('field_latest_version')->entity;
+  }
+
+  public function setLatestId($id) {
+
+    $this->entity->set('field_latest_version', $id);
+
+    return $this;
+  }
+
+  public function setLatest(EntityInterface $entity) {
+
+    return $this->entity->set('field_latest_version', $entity->id());
+  }
+
+  public function save() {
+
+    $this->entity->save();
+
+    return $this;
+  }
+
+  /**
+   * Related logic is not active due to missing field.
+   * Replaced with field_previous_version.
+   * And field_latest_version.
+   *
+   * @return array
+   */
+  public function getRelated() {
+
+    $entity = $this->entity;
+    if (isset($entity->field_related)) {
+
+      return $entity->field_related->referencedEntities();
+    }
+
+    return [];
+  }
+
+  public function getRelatedIds() {
+
+    $entity = $this->entity;
+    if (isset($entity->field_related)) {
+      if ($value = $entity->field_related->getValue()) {
+
+        return array_column($value, 'target_id');
+      }
+    }
+
+    return [];
+  }
+
+  public function hasRelatedId($id) {
+
+    return in_array($id, $this->getRelatedIds());
+  }
+
+  public function addRelatedId($id) {
+
+    $entity = $this->entity;
+    if (isset($entity->field_related)) {
+      $entity->field_related[] = $id;
+    }
+
+    return $this;
+  }
+
+  public function removeRelatedId($id) {
+
+    $entity = $this->entity;
+    if (isset($entity->field_related)) {
+      $key = array_search($id, $this->getRelatedIds());
+      if ($key !== FALSE) {
+        $entity->field_related->removeItem($key);
+      }
+    }
+
+    return $this;
+  }
+
+  public function setRelatedIds(array $ids) {
+
+    $entity = $this->entity;
+    if (isset($entity->field_related)) {
+      $entity->field_related = $ids;
+    }
+
+    return $this;
   }
 
 }

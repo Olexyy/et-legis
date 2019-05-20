@@ -5,8 +5,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.legal_position.body
-    - field.field.node.legal_position.field_case_number
     - field.field.node.legal_position.field_category
+    - field.field.node.legal_position.field_category_map
+    - field.field.node.legal_position.field_decision_link
+    - field.field.node.legal_position.field_source_link
+    - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
   module:
     - user
@@ -30,5 +33,8 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
-  field_case_number: true
+  field_category_map: true
+  field_decision_link: true
+  field_source_link: true
+  field_tags_ext: true
   langcode: true
