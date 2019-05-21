@@ -3,7 +3,6 @@
 namespace Drupal\legal_position\Decorator;
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 
 /**
@@ -13,7 +12,13 @@ use Drupal\taxonomy\TermInterface;
  */
 class LegalPosition {
 
+  /**
+   * Definitions.
+   *
+   * @var string
+   */
   const BUNDLE = 'legal_position';
+  const TYPE = 'node';
 
   /**
    * Wrapped entity.
@@ -48,19 +53,22 @@ class LegalPosition {
   }
 
   /**
+   * Predicate to define if given wrapper applies to entity.
+   *
    * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Given entity.
    *
    * @return bool
+   *   Test result.
    */
   public static function applies(EntityInterface $entity) {
 
-    return $entity->bundle() == static::BUNDLE;
+    return $entity->getEntityType() == static::TYPE &&
+      $entity->bundle() == static::BUNDLE;
   }
 
   /**
-   * Pre save handler.
-   *
-   * Fill category map.
+   * Pre-save handler.
    */
   public function preSave() {
 
@@ -73,11 +81,19 @@ class LegalPosition {
         $this->addCategoryMap($parent);
       }
     }
-
+    // Define `is latest` logic.
+    if ($this->getLatestId()) {
+      $this->setIsLatest(FALSE);
+    }
+    else {
+      $this->setIsLatest(TRUE);
+    }
   }
 
   /**
+   * Post-save handler.
    *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function postSave() {
 
@@ -85,7 +101,10 @@ class LegalPosition {
     if ($previous = $this->getPrevious()) {
       if ($legalPosition = static::create($previous)) {
         if ($legalPosition->getLatestId() != $this->entity->id()) {
-          $legalPosition->setLatestId($this->entity->id())->save();
+          $legalPosition
+            ->setLatestId($this->entity->id())
+            ->setIsLatest(FALSE)
+            ->save();
         }
       }
     }
@@ -94,16 +113,20 @@ class LegalPosition {
       if ($original = $this->getOriginal()) {
         if ($legalPosition = static::create($original)) {
           if ($previous = $legalPosition->getPrevious()) {
-            $legalPosition->setPreviousId(NULL)->save();
+            $legalPosition->setPreviousId(NULL)
+              ->setIsLatest(TRUE)
+              ->save();
           }
         }
       }
     }
-
   }
 
   /**
+   * Extracts original entity if any.
+   *
    * @return \Drupal\Core\Entity\ContentEntityInterface|\Drupal\node\NodeInterface|null
+   *   Original entity.
    */
   public function getOriginal() {
 
@@ -127,6 +150,12 @@ class LegalPosition {
       ->getStorage('taxonomy_term');
   }
 
+  /**
+   * Category map.
+   *
+   * @return array|\Drupal\taxonomy\TermInterface[]
+   *   Entities.
+   */
   public function getCategoryMap() {
 
     $entity = $this->entity;
@@ -138,6 +167,12 @@ class LegalPosition {
     return [];
   }
 
+  /**
+   * Getter for category map ids.
+   *
+   * @return array|string[]
+   *   Ids.
+   */
   public function getCategoryMapIds() {
 
     $entity = $this->entity;
@@ -150,6 +185,15 @@ class LegalPosition {
     return [];
   }
 
+  /**
+   * Setter for category map ids.
+   *
+   * @param array $categories
+   *   Categories.
+   *
+   * @return $this
+   *   Chaining.
+   */
   public function setCategoryMap(array $categories) {
 
     $entity = $this->entity;
@@ -193,9 +237,8 @@ class LegalPosition {
     return $this;
   }
 
-
   /**
-   * Adds given tag.
+   * Adds given category.
    *
    * @param \Drupal\taxonomy\TermInterface $category
    *   Term to add.
@@ -214,7 +257,7 @@ class LegalPosition {
   }
 
   /**
-   * Getter.
+   * Getter for category.
    *
    * @return \Drupal\taxonomy\TermInterface|null
    *   Value if any.
@@ -230,22 +273,36 @@ class LegalPosition {
   }
 
   /**
-   * Related logic is not active due to missing field.
-   * Replaced with field_previous_version.
-   * And field_latest_version.
+   * Getter for previous id.
    *
-   * @return array
+   * @return string|null
+   *   Id if any.
    */
   public function getPreviousId() {
 
     return $this->entity->get('field_previous_version')->target_id;
   }
 
+  /**
+   * Getter for previous.
+   *
+   * @return null|\Drupal\node\NodeInterface
+   *   Entity if any.
+   */
   public function getPrevious() {
 
     return $this->entity->get('field_previous_version')->entity;
   }
 
+  /**
+   * Setter for previous.
+   *
+   * @param string|null $id
+   *   Id.
+   *
+   * @return $this
+   *   Chaining.
+   */
   public function setPreviousId($id) {
 
     $this->entity->set('field_previous_version', $id);
@@ -253,21 +310,51 @@ class LegalPosition {
     return $this;
   }
 
+  /**
+   * Setter for previous.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Id.
+   *
+   * @return $this
+   *   Chaining.
+   */
   public function setPrevious(EntityInterface $entity) {
 
     return $this->entity->set('field_previous_version', $entity->id());
   }
 
+  /**
+   * Getter for latest id.
+   *
+   * @return string|null
+   *   Id if any.
+   */
   public function getLatestId() {
 
     return $this->entity->get('field_latest_version')->target_id;
   }
 
+  /**
+   * Getter for latest.
+   *
+   * @return null|\Drupal\node\NodeInterface
+   *   Entity if any.
+   */
   public function getLatest() {
 
     return $this->entity->get('field_latest_version')->entity;
   }
 
+  /**
+   * Setter for latest.
+   *
+   * @param string|null $id
+   *   Id.
+   *
+   * @return $this
+   *   Chaining.
+   */
   public function setLatestId($id) {
 
     $this->entity->set('field_latest_version', $id);
@@ -275,11 +362,28 @@ class LegalPosition {
     return $this;
   }
 
+  /**
+   * Setter for latest.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Id.
+   *
+   * @return $this
+   *   Chaining.
+   */
   public function setLatest(EntityInterface $entity) {
 
     return $this->entity->set('field_latest_version', $entity->id());
   }
 
+  /**
+   * Save handler.
+   *
+   * @return $this
+   *   Chaining.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   public function save() {
 
     $this->entity->save();
@@ -288,72 +392,30 @@ class LegalPosition {
   }
 
   /**
-   * Related logic is not active due to missing field.
-   * Replaced with field_previous_version.
-   * And field_latest_version.
+   * Setter for latest.
    *
-   * @return array
+   * @param bool $value
+   *   Given value.
+   *
+   * @return $this
+   *   Chaining.
    */
-  public function getRelated() {
+  public function setIsLatest($value) {
 
-    $entity = $this->entity;
-    if (isset($entity->field_related)) {
-
-      return $entity->field_related->referencedEntities();
-    }
-
-    return [];
-  }
-
-  public function getRelatedIds() {
-
-    $entity = $this->entity;
-    if (isset($entity->field_related)) {
-      if ($value = $entity->field_related->getValue()) {
-
-        return array_column($value, 'target_id');
-      }
-    }
-
-    return [];
-  }
-
-  public function hasRelatedId($id) {
-
-    return in_array($id, $this->getRelatedIds());
-  }
-
-  public function addRelatedId($id) {
-
-    $entity = $this->entity;
-    if (isset($entity->field_related)) {
-      $entity->field_related[] = $id;
-    }
+    $this->entity->setSticky($value);
 
     return $this;
   }
 
-  public function removeRelatedId($id) {
+  /**
+   * Getter for latest.
+   *
+   * @return bool
+   *   Value.
+   */
+  public function getIsLatest() {
 
-    $entity = $this->entity;
-    if (isset($entity->field_related)) {
-      $key = array_search($id, $this->getRelatedIds());
-      if ($key !== FALSE) {
-        $entity->field_related->removeItem($key);
-      }
-    }
-
-    return $this;
-  }
-
-  public function setRelatedIds(array $ids) {
-
-    $entity = $this->entity;
-    if (isset($entity->field_related)) {
-      $entity->field_related = $ids;
-    }
-
-    return $this;
+    return $this->entity->isSticky();
   }
 
 }

@@ -2,7 +2,7 @@ uuid: 57022081-20c9-4330-bc0d-ffd80ec01584
 langcode: uk
 status: true
 dependencies: {  }
-id: kontent
+id: content
 label: Контент
 description: 'Перегляд контенту.'
 use_admin_theme: false

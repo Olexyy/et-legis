@@ -17,7 +17,7 @@ dependencies:
     - link
     - node
     - user
-id: pravova_poziciya
+id: legal_position
 label: 'Правова позиція'
 module: views
 description: ''

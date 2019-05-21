@@ -3,17 +3,17 @@ langcode: uk
 status: true
 dependencies:
   config:
-    - page_manager.page.kontent
-    - views.view.pravova_poziciya
+    - page_manager.page.content
+    - views.view.legal_position
   module:
     - views
-id: kontent-http_status_code-0
+id: content-http_status_code-0
 label: 'Код стану HTTP'
 variant: block_display
 variant_settings:
   blocks:
     f20eadff-92ef-4c62-bcc7-8141f1409dec:
-      id: 'views_block:pravova_poziciya-block_1'
+      id: 'views_block:legal_position-block_1'
       label: ''
       provider: views
       label_display: '0'
@@ -31,7 +31,7 @@ variant_settings:
   status_code: '404'
   redirect_location: ''
   page_title: ''
-page: kontent
+page: content
 weight: 0
 selection_criteria: {  }
 selection_logic: and

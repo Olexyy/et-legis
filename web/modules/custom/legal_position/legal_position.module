@@ -20,6 +20,8 @@ function legal_position_node_presave(EntityInterface $entity) {
  * Implements hook_node_update().
  *
  * {@inheritdoc}
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
  */
 function legal_position_node_update(EntityInterface $entity) {
 
@@ -33,6 +35,8 @@ function legal_position_node_update(EntityInterface $entity) {
  * Implements hook_node_insert().
  *
  * {@inheritdoc}
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
  */
 function legal_position_node_insert(EntityInterface $entity) {
 
