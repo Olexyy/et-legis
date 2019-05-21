@@ -15,7 +15,6 @@ dependencies:
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
   module:
-    - link
     - text
     - user
 id: node.legal_position.teaser
@@ -31,14 +30,6 @@ content:
     settings:
       trim_length: 80
     third_party_settings: {  }
-  field_category:
-    type: entity_reference_label
-    weight: 3
-    region: content
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
   field_source:
     type: entity_reference_label
     weight: 0
@@ -47,30 +38,13 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-  field_source_link:
-    type: link
-    weight: 2
-    region: content
-    label: inline
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-  field_tags_ext:
-    type: entity_reference_label
-    weight: 4
-    region: content
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
 hidden:
+  field_category: true
   field_category_map: true
   field_decision_link: true
   field_latest_version: true
   field_previous_version: true
+  field_source_link: true
+  field_tags_ext: true
   langcode: true
   links: true
