@@ -1,0 +1,38 @@
+uuid: 759f0d74-3d64-4aa1-ad17-56baa04e8dc5
+langcode: uk
+status: true
+dependencies:
+  config:
+    - page_manager.page.kontent
+    - views.view.pravova_poziciya
+  module:
+    - views
+id: kontent-http_status_code-0
+label: 'Код стану HTTP'
+variant: block_display
+variant_settings:
+  blocks:
+    f20eadff-92ef-4c62-bcc7-8141f1409dec:
+      id: 'views_block:pravova_poziciya-block_1'
+      label: ''
+      provider: views
+      label_display: '0'
+      views_label: ''
+      items_per_page: none
+      region: top
+      weight: -9
+      uuid: f20eadff-92ef-4c62-bcc7-8141f1409dec
+      context_mapping:
+        nid: node
+  id: block_display
+  label: null
+  uuid: 49346898-4000-43ee-87a0-15446cbf0124
+  weight: 0
+  status_code: '404'
+  redirect_location: ''
+  page_title: ''
+page: kontent
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }
