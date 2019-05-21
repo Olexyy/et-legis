@@ -930,6 +930,7 @@ display:
         weight: 10
         context: '0'
         menu_name: main
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:

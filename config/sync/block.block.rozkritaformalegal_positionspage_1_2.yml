@@ -1,0 +1,29 @@
+uuid: 1cdb4a3b-155e-4fd2-8e94-3ac93e907877
+langcode: uk
+status: true
+dependencies:
+  config:
+    - views.view.legal_positions
+  module:
+    - system
+    - views
+  theme:
+    - bootstrap4
+id: rozkritaformalegal_positionspage_1_2
+theme: bootstrap4
+region: content
+weight: -7
+provider: null
+plugin: 'views_exposed_filter_block:legal_positions-page_1'
+settings:
+  id: 'views_exposed_filter_block:legal_positions-page_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /legal_position/search
+    negate: false
+    context_mapping: {  }

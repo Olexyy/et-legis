@@ -1,30 +1,29 @@
-uuid: 74921575-eb04-4e76-908f-1173069437a9
+uuid: 23dfa8d3-27a4-46fa-baca-47cbd3fb2e17
 langcode: uk
 status: true
 dependencies:
   config:
-    - views.view.legal_positions_tags
+    - views.view.legal_positions
   module:
     - system
     - views
   theme:
     - bootstrap4
-id: views_block__legal_positions_tags_block_1
+id: rozkritaformalegal_positionspage_1
 theme: bootstrap4
 region: sidebar_second
-weight: -5
+weight: -4
 provider: null
-plugin: 'views_block:legal_positions_tags-block_1'
+plugin: 'views_exposed_filter_block:legal_positions-page_1'
 settings:
-  id: 'views_block:legal_positions_tags-block_1'
+  id: 'views_exposed_filter_block:legal_positions-page_1'
   label: ''
   provider: views
   label_display: visible
-  views_label: ''
-  items_per_page: none
+  views_label: Пошук
 visibility:
   request_path:
     id: request_path
-    pages: /tags
+    pages: /legal_position/search
     negate: true
     context_mapping: {  }

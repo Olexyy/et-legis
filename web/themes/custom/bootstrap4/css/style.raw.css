@@ -2,6 +2,9 @@ ul {
   padding-inline-start: 10px;
   list-style: none; }
 
+#block-rozkritaformalegal-positionspage-1 .form-row {
+  display: block !important; }
+
 .form-inline.navbar-form.float-right {
   flex-grow: 10 !important;
   justify-content: flex-end; }
