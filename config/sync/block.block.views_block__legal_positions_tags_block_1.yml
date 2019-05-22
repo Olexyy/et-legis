@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: /tags
+    pages: "/tags\r\n/legal_position/search"
     negate: true
     context_mapping: {  }

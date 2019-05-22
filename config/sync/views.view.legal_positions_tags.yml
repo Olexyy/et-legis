@@ -353,7 +353,7 @@ display:
           exposed: true
           expose:
             operator_id: name_op
-            label: 'Теги, пошук по назві'
+            label: 'Пошук по тегах'
             description: ''
             use_operator: false
             operator: name_op
@@ -440,6 +440,7 @@ display:
         style: false
         row: false
         fields: false
+        css_class: false
       row:
         type: fields
         options:
@@ -720,6 +721,7 @@ display:
           entity_type: taxonomy_term
           entity_field: tid
           plugin_id: field
+      css_class: my-3
     cache_metadata:
       max-age: -1
       contexts:
