@@ -11,7 +11,7 @@ dependencies:
     - bootstrap4
 id: views_block__legal_positions_tags_block_1
 theme: bootstrap4
-region: sidebar_second
+region: content
 weight: -5
 provider: null
 plugin: 'views_block:legal_positions_tags-block_1'
@@ -19,7 +19,7 @@ settings:
   id: 'views_block:legal_positions_tags-block_1'
   label: ''
   provider: views
-  label_display: visible
+  label_display: '0'
   views_label: ''
   items_per_page: none
 visibility:

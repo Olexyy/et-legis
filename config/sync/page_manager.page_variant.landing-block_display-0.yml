@@ -1,0 +1,35 @@
+uuid: 57b61970-2ede-4673-a485-21a014ddec9f
+langcode: uk
+status: true
+dependencies:
+  config:
+    - page_manager.page.landing
+    - views.view.latest_legal_positions
+  module:
+    - views
+id: landing-block_display-0
+label: Головна
+variant: block_display
+variant_settings:
+  blocks:
+    f71e7257-ff0b-42b2-9c2a-06b078b3af92:
+      id: 'views_block:latest_legal_positions-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: top
+      weight: 0
+      uuid: f71e7257-ff0b-42b2-9c2a-06b078b3af92
+      context_mapping: {  }
+  id: block_display
+  uuid: 751e5543-41b5-44b6-8c2e-7b0f4054a422
+  label: null
+  weight: 0
+  page_title: ''
+page: landing
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

@@ -1,0 +1,55 @@
+diff --git a/modules/ctools_block/config/schema/ctools_block.schema.yml b/modules/ctools_block/config/schema/ctools_block.schema.yml
+index 6b1520a..43b7c05 100644
+--- a/modules/ctools_block/config/schema/ctools_block.schema.yml
++++ b/modules/ctools_block/config/schema/ctools_block.schema.yml
+@@ -26,3 +26,6 @@ block.settings.entity_field:*:*:
+           label: 'Third party settings'
+           sequence:
+             type: field.formatter.third_party.[%key]
++    css_classes:
++      type: string
++      label: 'Custom CSS classes'
+diff --git a/modules/ctools_block/src/Plugin/Block/EntityField.php b/modules/ctools_block/src/Plugin/Block/EntityField.php
+index 14cf6ac..ec6bb06 100644
+--- a/modules/ctools_block/src/Plugin/Block/EntityField.php
++++ b/modules/ctools_block/src/Plugin/Block/EntityField.php
+@@ -146,6 +146,10 @@ class EntityField extends BlockBase implements ContextAwarePluginInterface, Cont
+     $build['#cache']['tags'] = $this->getCacheTags();
+     $build['#cache']['max-age'] = $this->getCacheMaxAge();
+ 
++    if ($this->configuration['css_classes']) {
++      $build['#attributes']['class'][] = $this->configuration['css_classes'];
++    }
++
+     return $build;
+   }
+ 
+@@ -194,6 +198,7 @@ class EntityField extends BlockBase implements ContextAwarePluginInterface, Cont
+         'third_party_settings' => [],
+         'weight' => 0,
+       ],
++      'css_classes' => '',
+     ];
+   }
+ 
+@@ -238,6 +243,12 @@ class EntityField extends BlockBase implements ContextAwarePluginInterface, Cont
+       // The settings from the formatter plugin will be added in the
+       // ::formatterSettingsProcessCallback method.
+     ];
++    $form['css_classes'] = [
++      '#type' => 'textfield',
++      '#title' => $this->t('CSS classes'),
++      '#default_value' => $this->configuration['css_classes'],
++      '#description' => $this->t('Enter additional whitespace separated CSS classes.'),
++    ];
+ 
+     return $form;
+   }
+@@ -289,6 +300,7 @@ class EntityField extends BlockBase implements ContextAwarePluginInterface, Cont
+     // @todo Remove this manual cast after https://www.drupal.org/node/2635236
+     //   is resolved.
+     $this->configuration['formatter']['settings'] = (array) $form_state->getValue('formatter_settings');
++    $this->configuration['css_classes'] = $form_state->getValue('css_classes');
+   }
+ 
+   /**

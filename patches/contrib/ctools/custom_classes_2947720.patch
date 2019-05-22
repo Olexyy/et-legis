@@ -1,0 +1,62 @@
+diff --git a/config/schema/ctools.schema.yml b/config/schema/ctools.schema.yml
+index 596c3fd..3c42b34 100644
+--- a/config/schema/ctools.schema.yml
++++ b/config/schema/ctools.schema.yml
+@@ -61,3 +61,14 @@ ctools.block_display_variant:
+       label: 'Blocks'
+       sequence:
+         - type: ctools.block_plugin.[id]
++
++block.settings.entity_view:
++  type: block_settings
++  label: 'Entity view block'
++  mapping:
++    view_mode:
++      type: string
++      label: 'View mode'
++    css_classes:
++      type: string
++      label: 'Custom CSS classes'
+\ No newline at end of file
+diff --git a/src/Plugin/Block/EntityView.php b/src/Plugin/Block/EntityView.php
+index 51342d0..9f21f08 100644
+--- a/src/Plugin/Block/EntityView.php
++++ b/src/Plugin/Block/EntityView.php
+@@ -63,6 +63,7 @@ class EntityView extends BlockBase implements ContextAwarePluginInterface, Conta
+   public function defaultConfiguration() {
+     return [
+       'view_mode' => 'default',
++      'css_classes' => '',
+     ];
+   }
+ 
+@@ -76,6 +77,11 @@ class EntityView extends BlockBase implements ContextAwarePluginInterface, Conta
+       '#title' => $this->t('View mode'),
+       '#default_value' => $this->configuration['view_mode'],
+     ];
++    $form['css_classes'] = [
++      '#type' => 'textfield',
++      '#title' => $this->t('CSS classes'),
++      '#default_value' => $this->configuration['css_classes'],
++    ];
+     return $form;
+   }
+ 
+@@ -84,6 +90,7 @@ class EntityView extends BlockBase implements ContextAwarePluginInterface, Conta
+    */
+   public function blockSubmit($form, FormStateInterface $form_state) {
+     $this->configuration['view_mode'] = $form_state->getValue('view_mode');
++    $this->configuration['css_classes'] = $form_state->getValue('css_classes');
+   }
+ 
+   /**
+@@ -98,6 +105,9 @@ class EntityView extends BlockBase implements ContextAwarePluginInterface, Conta
+ 
+     CacheableMetadata::createFromObject($this->getContext('entity'))
+       ->applyTo($build);
++    if ($this->configuration['css_classes']) {
++      $build['#attributes']['class'][] = $this->configuration['css_classes'];
++    }
+ 
+     return $build;
+   }

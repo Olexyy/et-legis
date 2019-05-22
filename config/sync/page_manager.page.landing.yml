@@ -1,0 +1,12 @@
+uuid: c6beceec-a53b-476f-b39d-5a1f5e36ec60
+langcode: uk
+status: true
+dependencies: {  }
+id: landing
+label: Головна
+description: ''
+use_admin_theme: false
+path: /<front>
+access_logic: and
+access_conditions: {  }
+parameters: {  }

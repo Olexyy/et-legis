@@ -59,10 +59,10 @@ display:
         type: html_list
         options:
           grouping: {  }
-          row_class: ''
+          row_class: d-inline
           default_row_class: true
           type: ul
-          wrapper_class: item-list
+          wrapper_class: 'item-list py-2 px-2'
           class: ''
       row:
         type: fields
@@ -340,6 +340,47 @@ display:
           entity_type: taxonomy_term
           entity_field: vid
           plugin_id: bundle
+        name:
+          id: name
+          table: taxonomy_term_field_data
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_op
+            label: 'Теги, пошук по назві'
+            description: ''
+            use_operator: false
+            operator: name_op
+            identifier: name
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: taxonomy_term
+          entity_field: name
+          plugin_id: string
       sorts: {  }
       title: Теги
       header: {  }
@@ -369,11 +410,14 @@ display:
       arguments: {  }
       display_extenders: {  }
       group_by: true
+      use_ajax: true
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - user.permissions
       tags: {  }
   block_1:
@@ -383,11 +427,33 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+      style:
+        type: html_list
+        options:
+          grouping: {  }
+          row_class: d-inline
+          default_row_class: true
+          type: ul
+          wrapper_class: 'item-list card px-2 py-2'
+          class: ''
+      defaults:
+        style: false
+        row: false
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name: name
+            uuid: uuid
+          separator: '   '
+          hide_empty: false
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - user.permissions
       tags: {  }
   page_1:
@@ -473,5 +539,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - user.permissions
       tags: {  }
