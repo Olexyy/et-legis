@@ -20,7 +20,7 @@ dependencies:
 id: legal_position
 label: 'Правова позиція'
 module: views
-description: ''
+description: 'Канонічний вид правової позиції.'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -141,7 +141,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: 'Наявна остання версія'
+            text: 'Існує остання версія'
             make_link: true
             path: '/node/{{ field_latest_version__target_id }}'
             absolute: false
@@ -527,7 +527,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: 'Наявна попередня версія'
+            text: 'Існує попередня версія'
             make_link: true
             path: '/node/{{ field_previous_version__target_id }}'
             absolute: false

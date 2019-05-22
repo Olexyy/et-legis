@@ -13,7 +13,7 @@ dependencies:
 id: legal_positions_categories
 label: 'Категорії правових позицій'
 module: views
-description: ''
+description: 'Категорії правових позицій згідно вкладеності.'
 tag: ''
 base_table: taxonomy_term_field_data
 base_field: tid

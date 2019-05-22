@@ -140,6 +140,11 @@
             {% endif %}
           </div>
         </div>
+        {% if page.under_content %}
+            <div id="under_content" class="{{ container }}">
+                {{ page.under_content }}
+            </div>
+        {% endif %}
 {% endblock %}
 
 {% block footer %}
