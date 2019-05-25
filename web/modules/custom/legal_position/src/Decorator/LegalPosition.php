@@ -53,6 +53,14 @@ class LegalPosition {
   }
 
   /**
+   * Pre create handler.
+   */
+  public function preCreate() {
+
+    $this->entity->setTitle(' ');
+  }
+
+  /**
    * Predicate to define if given wrapper applies to entity.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
