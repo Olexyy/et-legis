@@ -71,7 +71,7 @@ class LegalPosition {
    */
   public static function applies(EntityInterface $entity) {
 
-    return $entity->getEntityType() == static::TYPE &&
+    return $entity->getEntityTypeId() == static::TYPE &&
       $entity->bundle() == static::BUNDLE;
   }
 
