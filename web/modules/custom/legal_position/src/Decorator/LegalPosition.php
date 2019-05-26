@@ -82,6 +82,12 @@ class LegalPosition {
 
     // Set default title.
     $this->entity->setTitle(' ');
+    // Process body to save only `allowed tags`.
+    $body = (string) $this->entity->get('body')->value;
+    // Replace copy paste symbol.
+    $body = str_replace('&nbsp;', ' ', $body);
+    $body = strip_tags($body, '<p><a><em><strong><sup><sub>');
+    $this->entity->get('body')->value = $body;
     // Handle category map.
     if ($category = $this->getCategory()) {
       $this->setCategoryMap([]);

@@ -31,6 +31,7 @@ class PatternOutputFormatter extends FormatterBase {
   public static function defaultSettings() {
     return [
       'pattern' => '<h5><b>{value}</b></h5>',
+      'allowed_tags' => '<a><em><strong><sup><sub>',
     ] + parent::defaultSettings();
   }
 
@@ -38,10 +39,16 @@ class PatternOutputFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
+
     $elements['pattern'] = [
       '#type' => 'textfield',
       '#title' => t('Pattern for this field'),
       '#default_value' => $this->getSetting('pattern'),
+    ];
+    $elements['allowed_tags'] = [
+      '#type' => 'textfield',
+      '#title' => t('Allowed tags'),
+      '#default_value' => $this->getSetting('allowed_tags'),
     ];
 
     return $elements;
@@ -56,9 +63,11 @@ class PatternOutputFormatter extends FormatterBase {
 
     if (!empty($settings['pattern'])) {
       $summary[] = t('Pattern: @pattern', ['@pattern' => $settings['pattern']]);
+      $summary[] = t('Allowed tags: @allowed_tags', ['@allowed_tags' => $settings['allowed_tags']]);
     }
     else {
       $summary[] = t('Pattern not set.');
+      $summary[] = t('Allowed tags: @allowed_tags', ['@allowed_tags' => $settings['allowed_tags']]);
     }
 
     return $summary;
@@ -71,10 +80,11 @@ class PatternOutputFormatter extends FormatterBase {
 
     $element = [];
     $pattern = $this->getSetting('pattern');
+    $allowed_tags = $this->getSetting('allowed_tags');
     foreach ($items as $delta => $item) {
       $element[$delta] = [
         '#type' => 'markup',
-        '#markup' => str_replace('{value}', strip_tags($item->value), $pattern),
+        '#markup' => str_replace('{value}', strip_tags($item->value, $allowed_tags), $pattern),
       ];
       if (!empty($item->_attributes)) {
         $element[$delta]['#options'] += ['attributes' => []];
