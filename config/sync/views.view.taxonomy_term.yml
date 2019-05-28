@@ -324,9 +324,9 @@ display:
       style:
         type: default
         options:
-          row_class: 'card w-100 my-2 px-2 py-3'
+          grouping: {  }
+          row_class: 'card w-100 my-2 px-2 py-2'
           default_row_class: true
-          uses_fields: false
       defaults:
         style: false
         row: false

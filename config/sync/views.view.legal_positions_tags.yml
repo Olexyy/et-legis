@@ -737,7 +737,7 @@ display:
     position: 2
     display_options:
       display_extenders: {  }
-      path: tags
+      path: legal_position/tags
       menu:
         type: normal
         title: Теги
