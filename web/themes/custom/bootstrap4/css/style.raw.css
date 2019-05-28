@@ -5,6 +5,9 @@ ul {
 #block-rozkritaformalegal-positionspage-1 .form-row {
   display: block !important; }
 
+.nav-link.is-active {
+  color: #fff !important; }
+
 .form-inline.navbar-form.float-right {
   flex-grow: 10 !important;
   justify-content: flex-end; }
