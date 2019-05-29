@@ -48,6 +48,10 @@ module:
   path: 0
   quickedit: 0
   rdf: 0
+  schema_article: 0
+  schema_metatag: 0
+  schema_web_page: 0
+  schema_web_site: 0
   serialization: 0
   shortcut: 0
   simple_sitemap: 0

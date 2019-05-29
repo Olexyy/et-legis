@@ -8,4 +8,9 @@ id: global
 label: Global
 tags:
   canonical_url: '[current-page:url]'
+  description: 'Правові позиції, узагальнення, судова практика, пошук судових рішень.'
+  content_language: uk
   title: '[current-page:title] | [site:name]'
+  schema_web_page_id: '[current-page:url]'
+  schema_web_site_id: '[current-page:url]'
+  schema_web_site_url: '[current-page:url]'
