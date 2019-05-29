@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: /legal_position/categories
+    pages: /legal-position/category
     negate: true
     context_mapping: {  }

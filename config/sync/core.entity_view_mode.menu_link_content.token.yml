@@ -1,0 +1,10 @@
+uuid: 99213123-6444-4a12-9ddc-ac3cd49a120c
+langcode: uk
+status: true
+dependencies:
+  module:
+    - menu_link_content
+id: menu_link_content.token
+label: Замінник
+targetEntityType: menu_link_content
+cache: true

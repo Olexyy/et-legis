@@ -1,0 +1,23 @@
+uuid: 68f65860-c10a-406a-a3b1-4c75a4f949e1
+langcode: uk
+status: true
+dependencies:
+  module:
+    - ctools
+    - taxonomy
+id: pravovi_pozicii_tegi
+label: 'Правові позиції теги'
+type: 'canonical_entities:taxonomy_term'
+pattern: 'legal-position/tag/[term:tid]-[term:name]'
+selection_criteria:
+  9a635798-97a9-4c52-a9dd-234f832b4484:
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      legal_position_tags_ext: legal_position_tags_ext
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    uuid: 9a635798-97a9-4c52-a9dd-234f832b4484
+selection_logic: and
+weight: -5
+relationships: {  }

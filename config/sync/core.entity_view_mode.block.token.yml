@@ -1,0 +1,10 @@
+uuid: 150a7533-9889-4f64-bee8-1f0ee1a8217e
+langcode: uk
+status: true
+dependencies:
+  module:
+    - block
+id: block.token
+label: Замінник
+targetEntityType: block
+cache: true

@@ -1,0 +1,10 @@
+uuid: be75acb5-c98d-47c3-bad6-c921c64eb71d
+langcode: uk
+status: true
+dependencies:
+  module:
+    - node
+id: node.token
+label: Замінник
+targetEntityType: node
+cache: true

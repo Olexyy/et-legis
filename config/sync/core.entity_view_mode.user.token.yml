@@ -1,0 +1,10 @@
+uuid: bcbcd09b-bd2d-492f-bd9b-4cd2137a78bc
+langcode: uk
+status: true
+dependencies:
+  module:
+    - user
+id: user.token
+label: Замінник
+targetEntityType: user
+cache: true

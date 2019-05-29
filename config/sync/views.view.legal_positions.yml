@@ -994,7 +994,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: legal_position/search
+      path: legal-position/search
       menu:
         type: normal
         title: Пошук

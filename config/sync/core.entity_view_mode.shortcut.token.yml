@@ -1,0 +1,10 @@
+uuid: 1a8f433e-b567-4530-b659-f2eeb92d6279
+langcode: uk
+status: true
+dependencies:
+  module:
+    - shortcut
+id: shortcut.token
+label: Замінник
+targetEntityType: shortcut
+cache: true

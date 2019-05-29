@@ -1,0 +1,12 @@
+uuid: cd4681ec-34a4-4617-9b7e-98a0ef1cfa5c
+langcode: uk
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rpwvgyEURXLz_JjgMCrkS1rUv-0k3L79BpO-ReN7fDI
+id: node
+label: Content
+tags:
+  title: '[node:title] | [site:name]'
+  description: '[node:summary]'
+  canonical_url: '[node:url]'

@@ -1,0 +1,10 @@
+uuid: c05cde1b-4be0-4516-956e-5c1f48b42f1e
+langcode: uk
+status: true
+dependencies:
+  module:
+    - file
+id: file.token
+label: Замінник
+targetEntityType: file
+cache: true
