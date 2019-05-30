@@ -1,0 +1,20 @@
+uuid: 660300c4-2269-4dcb-a4d4-2263257af476
+langcode: uk
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_judge_speaker
+field_name: field_judge_speaker
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

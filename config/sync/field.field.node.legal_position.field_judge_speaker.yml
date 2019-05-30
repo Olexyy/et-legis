@@ -1,0 +1,29 @@
+uuid: cf7aaa51-659f-46b3-a244-ee0c3d2eccc5
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_judge_speaker
+    - node.type.legal_position
+    - taxonomy.vocabulary.legal_position_judge_speakers
+id: node.legal_position.field_judge_speaker
+field_name: field_judge_speaker
+entity_type: node
+bundle: legal_position
+label: Суддя-доповідач
+description: 'Суддя доповідач у справі.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      legal_position_judge_speakers: legal_position_judge_speakers
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

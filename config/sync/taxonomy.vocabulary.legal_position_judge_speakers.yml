@@ -1,0 +1,8 @@
+uuid: ed3d593e-7b97-4a3c-982c-c696ac92f6ae
+langcode: uk
+status: true
+dependencies: {  }
+name: 'Судді-доповідачі правових позицій'
+vid: legal_position_judge_speakers
+description: 'Судді-доповідачі правових позицій.'
+weight: 0

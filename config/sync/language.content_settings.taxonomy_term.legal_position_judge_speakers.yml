@@ -1,0 +1,11 @@
+uuid: bb8ce3ed-311b-4825-864a-d30972b7ed8c
+langcode: uk
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.legal_position_judge_speakers
+id: taxonomy_term.legal_position_judge_speakers
+target_entity_type_id: taxonomy_term
+target_bundle: legal_position_judge_speakers
+default_langcode: site_default
+language_alterable: false
