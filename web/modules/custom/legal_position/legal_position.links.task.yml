@@ -1,0 +1,5 @@
+
+legal_position_admin.unpublished_tab:
+  route_name: view.legal_position_admin.unpublished
+  title: 'Неопубліковані правові позиції'
+  base_route: system.admin_content

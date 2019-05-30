@@ -76,18 +76,58 @@ class LegalPosition {
   }
 
   /**
+   * Parses body.
+   *
+   * @param string $body
+   *   Body.
+   *
+   * @return string
+   *   Title.
+   */
+  protected function parseToBody($body) {
+    // Replace copy paste symbol.
+    $body = str_replace('&nbsp;', ' ', $body);
+    $bodyClean = strip_tags($body, '<p><a><em><strong><sup><sub>');
+
+    return $bodyClean;
+  }
+
+  /**
+   * Parses body to title.
+   *
+   * @param string $body
+   *   Body.
+   *
+   * @return string
+   *   Title.
+   */
+  protected function parseToTitle($body) {
+
+    $bodyClean = strip_tags($body);
+    if ($bodyClean) {
+      if (mb_strlen($bodyClean) > 120) {
+        $bodyClean = mb_substr($bodyClean, 0, 117) . '...';
+      }
+    }
+    else {
+      // Set default title.
+      $bodyClean = ' ';
+    }
+
+    return $bodyClean;
+  }
+
+  /**
    * Pre-save handler.
    */
   public function preSave() {
 
-    // Set default title.
-    $this->entity->setTitle(' ');
-    // Process body to save only `allowed tags`.
+    // Process and save body.
     $body = (string) $this->entity->get('body')->value;
-    // Replace copy paste symbol.
-    $body = str_replace('&nbsp;', ' ', $body);
-    $body = strip_tags($body, '<p><a><em><strong><sup><sub>');
-    $this->entity->get('body')->value = $body;
+    $bodyClean = $this->parseToBody($body);
+    $this->entity->get('body')->value = $bodyClean;
+    // Handle title generation.
+    $this->entity->setTitle($this->parseToTitle($bodyClean));
     // Handle category map.
     if ($category = $this->getCategory()) {
       $this->setCategoryMap([]);

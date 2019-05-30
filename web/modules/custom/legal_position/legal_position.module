@@ -5,6 +5,8 @@ use Drupal\legal_position\Decorator\LegalPosition;
 
 /**
  * Implements hook_node_create().
+ *
+ * {@inheritdoc}
  */
 function legal_position_node_create(EntityInterface $entity) {
 

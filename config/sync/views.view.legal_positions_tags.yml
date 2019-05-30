@@ -53,7 +53,7 @@ display:
       pager:
         type: some
         options:
-          items_per_page: 20
+          items_per_page: 100
           offset: 0
       style:
         type: html_list
@@ -126,7 +126,7 @@ display:
           id: uuid
           table: node
           field: uuid
-          relationship: nid
+          relationship: reverse__node__field_tags_ext
           group_type: count_distinct
           admin_label: ''
           label: ''
@@ -170,6 +170,14 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ', '
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQD
+          prefix: ''
+          suffix: ''
           click_sort_column: value
           type: string
           settings:
@@ -182,7 +190,6 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
           field_api_classes: false
           entity_type: node
           entity_field: uuid
@@ -381,21 +388,50 @@ display:
           entity_type: taxonomy_term
           entity_field: name
           plugin_id: string
+        status_1:
+          id: status_1
+          table: node_field_data
+          field: status
+          relationship: reverse__node__field_tags_ext
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
       sorts: {  }
       title: Теги
       header: {  }
       footer: {  }
       empty: {  }
       relationships:
-        nid:
-          id: nid
-          table: taxonomy_index
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: матеріал
-          required: false
-          plugin_id: standard
         parent_target_id:
           id: parent_target_id
           table: taxonomy_term__parent
@@ -407,6 +443,16 @@ display:
           entity_type: taxonomy_term
           entity_field: parent
           plugin_id: standard
+        reverse__node__field_tags_ext:
+          id: reverse__node__field_tags_ext
+          table: taxonomy_term_field_data
+          field: reverse__node__field_tags_ext
+          relationship: none
+          group_type: group
+          admin_label: field_tags_ext
+          required: false
+          entity_type: taxonomy_term
+          plugin_id: entity_reverse
       arguments: {  }
       display_extenders: {  }
       group_by: true
@@ -521,7 +567,7 @@ display:
           id: uuid
           table: node
           field: uuid
-          relationship: nid
+          relationship: reverse__node__field_tags_ext
           group_type: count_distinct
           admin_label: ''
           label: ''
@@ -801,6 +847,7 @@ display:
         fields: true
         filters: false
         filter_groups: false
+        pager: false
       row:
         type: fields
         options:
@@ -876,11 +923,30 @@ display:
         operator: AND
         groups:
           1: AND
+      pager:
+        type: mini
+        options:
+          items_per_page: 30
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Елементів на сторінку'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- Усе -'
+            offset: false
+            offset_label: Зміщення
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - user.permissions
       tags: {  }

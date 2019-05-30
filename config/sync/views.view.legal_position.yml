@@ -8,7 +8,6 @@ dependencies:
     - field.storage.node.field_decision_link
     - field.storage.node.field_latest_version
     - field.storage.node.field_previous_version
-    - field.storage.node.field_source
     - field.storage.node.field_source_link
     - field.storage.node.field_tags_ext
     - node.type.legal_position
@@ -67,69 +66,6 @@ display:
       row:
         type: fields
       fields:
-        field_source:
-          id: field_source
-          table: node__field_source
-          field: field_source
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: 'Позиція  '
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: span
-          element_class: small
-          element_label_type: span
-          element_label_class: small
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: true
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
         field_latest_version:
           id: field_latest_version
           table: node__field_latest_version
@@ -244,7 +180,8 @@ display:
           click_sort_column: value
           type: pattern_output
           settings:
-            pattern: '<h5><b>''''{value}''''</b></h5>'
+            pattern: '<div class="jumbotron"><h5><b>{value}</b></h5></div>'
+            allowed_tags: '<a><em><strong><sup><sub>'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -580,17 +517,6 @@ display:
           field_api_classes: false
           plugin_id: field
       filters:
-        status:
-          value: '1'
-          table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
-          group: 1
         type:
           id: type
           table: node_field_data
@@ -679,7 +605,6 @@ display:
         - 'config:field.storage.node.field_decision_link'
         - 'config:field.storage.node.field_latest_version'
         - 'config:field.storage.node.field_previous_version'
-        - 'config:field.storage.node.field_source'
         - 'config:field.storage.node.field_source_link'
         - 'config:field.storage.node.field_tags_ext'
   block_1:
@@ -703,6 +628,5 @@ display:
         - 'config:field.storage.node.field_decision_link'
         - 'config:field.storage.node.field_latest_version'
         - 'config:field.storage.node.field_previous_version'
-        - 'config:field.storage.node.field_source'
         - 'config:field.storage.node.field_source_link'
         - 'config:field.storage.node.field_tags_ext'

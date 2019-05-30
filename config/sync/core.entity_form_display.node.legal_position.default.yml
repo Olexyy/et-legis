@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.legal_position.field_decision_link
     - field.field.node.legal_position.field_latest_version
     - field.field.node.legal_position.field_previous_version
-    - field.field.node.legal_position.field_source
     - field.field.node.legal_position.field_source_link
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
@@ -70,15 +69,6 @@ content:
       open: false
     third_party_settings: {  }
     type: entity_browser_entity_reference
-    region: content
-  field_source:
-    weight: 1
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
   field_source_link:
     weight: 5

@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.legal_position.field_decision_link
     - field.field.node.legal_position.field_latest_version
     - field.field.node.legal_position.field_previous_version
-    - field.field.node.legal_position.field_source
     - field.field.node.legal_position.field_source_link
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
@@ -25,13 +24,14 @@ content:
   body:
     label: hidden
     type: pattern_output
-    weight: 1
+    weight: 0
     settings:
       pattern: '<h5><b>''''{value}''''</b></h5>'
+      allowed_tags: '<a><em><strong><sup><sub>'
     third_party_settings: {  }
     region: content
   field_category:
-    weight: 4
+    weight: 3
     label: inline
     settings:
       link: true
@@ -39,7 +39,7 @@ content:
     type: entity_reference_label
     region: content
   field_decision_link:
-    weight: 2
+    weight: 1
     label: inline
     settings:
       trim_length: 80
@@ -51,7 +51,7 @@ content:
     type: link
     region: content
   field_latest_version:
-    weight: 6
+    weight: 5
     label: above
     settings:
       view_mode: teaser
@@ -60,7 +60,7 @@ content:
     type: entity_reference_entity_view
     region: content
   field_previous_version:
-    weight: 7
+    weight: 6
     label: above
     settings:
       view_mode: teaser
@@ -68,16 +68,8 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  field_source:
-    weight: 0
-    label: inline
-    settings:
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_source_link:
-    weight: 3
+    weight: 2
     label: inline
     settings:
       trim_length: 80
@@ -89,7 +81,7 @@ content:
     type: link
     region: content
   field_tags_ext:
-    weight: 5
+    weight: 4
     label: inline
     settings:
       link: true
