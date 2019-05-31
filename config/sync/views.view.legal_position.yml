@@ -20,10 +20,10 @@ dependencies:
     - text
     - user
 id: legal_position
-label: 'Правова позиція'
+label: '(+) Правова позиція'
 module: views
 description: 'Канонічний вид правової позиції.'
-tag: ''
+tag: 'правові позиції'
 base_table: node_field_data
 base_field: nid
 core: 8.x

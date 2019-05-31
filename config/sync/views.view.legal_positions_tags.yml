@@ -11,10 +11,10 @@ dependencies:
     - user
     - views_tree
 id: legal_positions_tags
-label: 'Теги правових позицій'
+label: '(+) Теги правових позицій'
 module: views
 description: 'Теги схожих правових позицій поза категоріями.'
-tag: ''
+tag: 'правові позиції'
 base_table: taxonomy_term_field_data
 base_field: tid
 core: 8.x

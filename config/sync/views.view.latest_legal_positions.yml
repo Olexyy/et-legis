@@ -12,10 +12,10 @@ dependencies:
     - text
     - user
 id: latest_legal_positions
-label: 'Останні правові позиції'
+label: '(+) Останні правові позиції'
 module: views
 description: 'Останні додані правові позиції.'
-tag: ''
+tag: 'правові позиції'
 base_table: node_field_data
 base_field: nid
 core: 8.x
