@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.body
     - field.storage.node.field_category
     - field.storage.node.field_decision_link
+    - field.storage.node.field_judge_speaker
     - field.storage.node.field_latest_version
     - field.storage.node.field_previous_version
     - field.storage.node.field_source_link
@@ -453,6 +454,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_judge_speaker:
+          id: field_judge_speaker
+          table: node__field_judge_speaker
+          field: field_judge_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Суддя-доповідач
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: span
+          element_class: small
+          element_label_type: span
+          element_label_class: 'small font-italic'
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         field_previous_version:
           id: field_previous_version
           table: node__field_previous_version
@@ -603,6 +667,7 @@ display:
         - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_category'
         - 'config:field.storage.node.field_decision_link'
+        - 'config:field.storage.node.field_judge_speaker'
         - 'config:field.storage.node.field_latest_version'
         - 'config:field.storage.node.field_previous_version'
         - 'config:field.storage.node.field_source_link'
@@ -626,6 +691,7 @@ display:
         - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_category'
         - 'config:field.storage.node.field_decision_link'
+        - 'config:field.storage.node.field_judge_speaker'
         - 'config:field.storage.node.field_latest_version'
         - 'config:field.storage.node.field_previous_version'
         - 'config:field.storage.node.field_source_link'
