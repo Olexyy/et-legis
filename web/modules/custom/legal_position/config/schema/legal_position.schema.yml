@@ -1,0 +1,19 @@
+block.settings.config_based_block:
+  type: mapping
+  label: 'Block settings'
+  mapping:
+    id:
+      type: string
+      label: 'Id of concrete block'
+    label:
+      type: label
+      label: 'Label of concrete block'
+    provider:
+      type: string
+      label: 'Provider module'
+    label_display:
+      type: string
+      label: 'Flag to display label'
+    content:
+      type: text
+      label: 'Concrete content, translatable'
