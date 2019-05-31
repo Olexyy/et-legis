@@ -1,6 +1,6 @@
 uuid: 57eb30c4-1205-4f05-8a96-7eca856a5277
 langcode: uk
-status: false
+status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
@@ -269,6 +269,22 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       max-age: -1
+      tags: {  }
+  block_1:
+    display_plugin: block
+    id: block_1
+    display_title: Блок
+    position: 3
+    display_options:
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   feed_1:
     id: feed_1
@@ -717,6 +733,7 @@ display:
         operator: AND
         groups:
           1: AND
+      enabled: false
     cache_metadata:
       contexts:
         - 'languages:language_content'

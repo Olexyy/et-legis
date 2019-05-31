@@ -1,0 +1,36 @@
+uuid: c3ab2d74-1e6b-4be4-ae8b-82da6d145873
+langcode: uk
+status: true
+dependencies:
+  config:
+    - page_manager.page.taxonomy_term
+    - views.view.taxonomy_term
+  module:
+    - views
+id: taxonomy_term-block_display-2
+label: 'За замовчуванням'
+variant: block_display
+variant_settings:
+  blocks:
+    6acf7b2c-c92c-448c-8c15-f72f27389bd2:
+      id: 'views_block:taxonomy_term-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: top
+      weight: 0
+      uuid: 6acf7b2c-c92c-448c-8c15-f72f27389bd2
+      context_mapping:
+        tid: taxonomy_term
+  id: block_display
+  uuid: 02a2c3b7-0dd8-4e61-82dc-8caf505ae814
+  label: null
+  weight: 0
+  page_title: ''
+page: taxonomy_term
+weight: -8
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }
