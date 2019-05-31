@@ -1,0 +1,12 @@
+uuid: fe0480b2-80fe-4e76-b1a4-64bb784d246d
+langcode: uk
+status: true
+dependencies: {  }
+id: terms_and_conditions
+label: 'Terms and conditions'
+description: 'Terms and conditions.'
+use_admin_theme: false
+path: /terms-and-conditions
+access_logic: and
+access_conditions: {  }
+parameters: {  }
