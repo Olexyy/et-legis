@@ -8,31 +8,25 @@ dependencies:
     - field.field.node.legal_position.field_category
     - field.field.node.legal_position.field_category_map
     - field.field.node.legal_position.field_decision_link
+    - field.field.node.legal_position.field_judge_speaker
     - field.field.node.legal_position.field_latest_version
     - field.field.node.legal_position.field_previous_version
     - field.field.node.legal_position.field_source_link
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
   module:
-    - text
     - user
 id: node.legal_position.teaser
 targetEntityType: node
 bundle: legal_position
 mode: teaser
-content:
-  body:
-    type: text_summary_or_trimmed
-    weight: 0
-    region: content
-    label: inline
-    settings:
-      trim_length: 80
-    third_party_settings: {  }
+content: {  }
 hidden:
+  body: true
   field_category: true
   field_category_map: true
   field_decision_link: true
+  field_judge_speaker: true
   field_latest_version: true
   field_previous_version: true
   field_source_link: true

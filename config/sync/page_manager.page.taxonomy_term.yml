@@ -1,0 +1,12 @@
+uuid: 3293571d-a4bc-489d-9d81-93f0c7c660ea
+langcode: uk
+status: true
+dependencies: {  }
+id: taxonomy_term
+label: 'Термін таксономії'
+description: 'Сторінка термінів таксономії.'
+use_admin_theme: false
+path: '/taxonomy/term/{taxonomy_term}'
+access_logic: and
+access_conditions: {  }
+parameters: {  }

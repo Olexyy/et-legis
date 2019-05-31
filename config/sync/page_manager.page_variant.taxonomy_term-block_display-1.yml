@@ -1,0 +1,44 @@
+uuid: bb775611-0c77-478b-a6b6-caf774a71e9a
+langcode: uk
+status: true
+dependencies:
+  config:
+    - page_manager.page.taxonomy_term
+    - views.view.legal_positions
+  module:
+    - ctools
+    - views
+id: taxonomy_term-block_display-1
+label: 'Категорія правової позиції'
+variant: block_display
+variant_settings:
+  blocks:
+    6460a4bb-33c4-4251-8922-602e64c368d7:
+      id: 'views_block:legal_positions-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: top
+      weight: 0
+      uuid: 6460a4bb-33c4-4251-8922-602e64c368d7
+      context_mapping:
+        field_category_map_target_id: taxonomy_term
+  id: block_display
+  uuid: ff5dd94c-ea75-447d-a893-66dc90aefee1
+  label: null
+  weight: 0
+  page_title: ''
+page: taxonomy_term
+weight: 0
+selection_criteria:
+  -
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      legal_position_tags: legal_position_tags
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+selection_logic: and
+static_context: {  }

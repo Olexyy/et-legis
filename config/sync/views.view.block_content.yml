@@ -1,6 +1,6 @@
 uuid: edc4086a-7a3b-45bc-9003-cd15f74980fd
 langcode: uk
-status: true
+status: false
 dependencies:
   module:
     - block_content
