@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.legal_position.field_category
     - field.field.node.legal_position.field_category_map
     - field.field.node.legal_position.field_decision_link
+    - field.field.node.legal_position.field_extract
     - field.field.node.legal_position.field_judge_speaker
     - field.field.node.legal_position.field_latest_version
     - field.field.node.legal_position.field_previous_version
@@ -16,6 +17,7 @@ dependencies:
   module:
     - legal_position
     - link
+    - text
     - user
 id: node.legal_position.default
 targetEntityType: node
@@ -50,6 +52,13 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
+    region: content
+  field_extract:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
     region: content
   field_judge_speaker:
     weight: 5

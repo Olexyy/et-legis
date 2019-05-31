@@ -1,0 +1,21 @@
+uuid: 1d79d3b0-058b-433d-9e9a-c232328c494c
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_extract
+    - node.type.legal_position
+  module:
+    - text
+id: node.legal_position.field_extract
+field_name: field_extract
+entity_type: node
+bundle: legal_position
+label: Витяг
+description: 'Витяг з судового рішення.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
