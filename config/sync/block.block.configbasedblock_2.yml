@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - legal_position
+    - system
   theme:
     - bootstrap4
 id: configbasedblock_2
@@ -18,4 +19,9 @@ settings:
   provider: legal_position
   label_display: '0'
   content: '<a href="/" title="Головна" rel="home" class="navbar-brand">Огляд та узагальнення судової практики</a>'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

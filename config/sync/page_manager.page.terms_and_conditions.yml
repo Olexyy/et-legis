@@ -3,8 +3,8 @@ langcode: uk
 status: true
 dependencies: {  }
 id: terms_and_conditions
-label: 'Terms and conditions'
-description: 'Terms and conditions.'
+label: 'Правила використання матеріалів'
+description: 'Правила використання матеріалів.'
 use_admin_theme: false
 path: /terms-and-conditions
 access_logic: and

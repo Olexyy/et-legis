@@ -2,6 +2,7 @@
 
 namespace Drupal\legal_position\Plugin\Block;
 
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -23,7 +24,11 @@ class ConfigBasedBlock extends BlockBase {
   public function build() {
 
     return [
-      '#markup' => $this->configuration['content'],
+      '#type' => 'inline_template',
+      '#template' => '{{ content | raw }}',
+      '#context' => [
+        'content' => $this->configuration['content'],
+      ],
     ];
   }
 

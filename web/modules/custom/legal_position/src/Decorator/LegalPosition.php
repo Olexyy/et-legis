@@ -4,6 +4,7 @@ namespace Drupal\legal_position\Decorator;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\TermInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Class LegalPosition.
@@ -141,6 +142,10 @@ class LegalPosition {
     }
     else {
       $this->setIsLatest(TRUE);
+    }
+    // Manage reviewer. Set if content is published and none set.
+    if ($this->entity->isPublished() && !$this->getReviewerId()) {
+      $this->setReviewerId(\Drupal::currentUser()->id());
     }
   }
 
@@ -470,6 +475,28 @@ class LegalPosition {
   public function getIsLatest() {
 
     return $this->entity->isSticky();
+  }
+
+  public function getReviewerId() {
+
+    return $this->entity->get('field_reviewer')->target_id;
+  }
+
+  public function getReviewer() {
+
+    return $this->entity->get('field_reviewer')->entity;
+  }
+
+  public function setReviewerId($id) {
+
+    $this->entity->get('field_reviewer')->target_id = $id;
+
+    return $this;
+  }
+
+  public function setReviewer(UserInterface $user) {
+
+    return $this->setReviewerId($user->id());
   }
 
 }

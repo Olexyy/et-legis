@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.legal_position.field_judge_speaker
     - field.field.node.legal_position.field_latest_version
     - field.field.node.legal_position.field_previous_version
+    - field.field.node.legal_position.field_reviewer
     - field.field.node.legal_position.field_source_link
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
@@ -108,5 +109,6 @@ content:
     region: content
 hidden:
   field_category_map: true
+  field_reviewer: true
   langcode: true
   links: true
