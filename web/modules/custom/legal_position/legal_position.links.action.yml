@@ -1,0 +1,8 @@
+
+legal_position.add_form:
+  route_name: node.add
+  title: 'Додати правову позицію'
+  route_parameters:
+    node_type: legal_position
+  appears_on:
+    - view.legal_position_admin.collection
