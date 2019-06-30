@@ -11,8 +11,8 @@ id: node.legal_position.field_source_link
 field_name: field_source_link
 entity_type: node
 bundle: legal_position
-label: 'Посилання на джерело'
-description: 'Посилання на джерело правової позиції.'
+label: 'Посилання на джерело (лінк)'
+description: 'Посилання на джерело правової позиції, лінк.'
 required: false
 translatable: false
 default_value: {  }

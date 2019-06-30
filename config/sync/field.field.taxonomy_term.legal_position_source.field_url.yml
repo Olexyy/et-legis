@@ -1,0 +1,23 @@
+uuid: 82a81add-7355-4bfb-9b05-96f232a8b1e6
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_url
+    - taxonomy.vocabulary.legal_position_source
+  module:
+    - link
+id: taxonomy_term.legal_position_source.field_url
+field_name: field_url
+entity_type: taxonomy_term
+bundle: legal_position_source
+label: Посилання
+description: 'Посилання на джерело.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

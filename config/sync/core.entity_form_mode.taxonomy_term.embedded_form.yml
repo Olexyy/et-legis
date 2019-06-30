@@ -1,0 +1,10 @@
+uuid: 9a927c52-fa52-41f6-ab60-86e65d8b9d3b
+langcode: uk
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.embedded_form
+label: 'Вбудована форма'
+targetEntityType: taxonomy_term
+cache: true

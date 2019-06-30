@@ -1,0 +1,19 @@
+uuid: 2a76414d-4467-40a7-ae5e-0980c222325d
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_source_page
+    - node.type.legal_position
+id: node.legal_position.field_source_page
+field_name: field_source_page
+entity_type: node
+bundle: legal_position
+label: 'Сторінка джерела'
+description: 'Сторінка джерела правової позиції, якщо така є.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

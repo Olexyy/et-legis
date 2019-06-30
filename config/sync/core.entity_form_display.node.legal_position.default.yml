@@ -3,6 +3,7 @@ langcode: uk
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.taxonomy_term.embedded_form
     - entity_browser.browser.legal_positions
     - field.field.node.legal_position.body
     - field.field.node.legal_position.field_category
@@ -14,10 +15,14 @@ dependencies:
     - field.field.node.legal_position.field_previous_version
     - field.field.node.legal_position.field_reviewer
     - field.field.node.legal_position.field_source_link
+    - field.field.node.legal_position.field_source_page
+    - field.field.node.legal_position.field_source_reference
     - field.field.node.legal_position.field_tags_ext
     - node.type.legal_position
   module:
     - entity_browser
+    - entity_browser_entity_form
+    - inline_entity_form
     - link
     - path
     - text
@@ -37,7 +42,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 8
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -67,7 +72,7 @@ content:
     type: text_textarea
     region: content
   field_judge_speaker:
-    weight: 6
+    weight: 8
     settings:
       match_operator: CONTAINS
       size: 60
@@ -76,7 +81,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_previous_version:
-    weight: 7
+    weight: 9
     settings:
       entity_browser: legal_positions
       field_widget_display: rendered_entity
@@ -91,7 +96,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_reviewer:
-    weight: 15
+    weight: 17
     settings:
       match_operator: CONTAINS
       size: 60
@@ -107,6 +112,32 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
+  field_source_page:
+    weight: 7
+    settings:
+      size: 10
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_source_reference:
+    weight: 6
+    settings:
+      form_mode: embedded_form
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
+    third_party_settings:
+      entity_browser_entity_form:
+        entity_browser_id: _none
+    type: inline_entity_form_complex
+    region: content
   field_tags_ext:
     weight: 3
     settings:
@@ -118,14 +149,14 @@ content:
     region: content
   langcode:
     type: language_select
-    weight: 12
+    weight: 14
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   path:
     type: path
-    weight: 11
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -133,26 +164,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 9
+    weight: 11
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 15
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 10
+    weight: 12
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 14
+    weight: 16
     settings:
       match_operator: CONTAINS
       size: 60

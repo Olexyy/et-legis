@@ -1,0 +1,8 @@
+uuid: e8ffa96f-1daa-4ed6-9464-3eb4a4deb54c
+langcode: uk
+status: true
+dependencies: {  }
+name: 'Джерело правової позиції'
+vid: legal_position_source
+description: 'Джерело правової позиції.'
+weight: 0

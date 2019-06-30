@@ -1,0 +1,35 @@
+uuid: 0e24e43b-2b06-49dc-85d7-3908f4711563
+langcode: uk
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.taxonomy_term.embedded_form
+    - field.field.taxonomy_term.legal_position_source.field_url
+    - taxonomy.vocabulary.legal_position_source
+  module:
+    - link
+id: taxonomy_term.legal_position_source.embedded_form
+targetEntityType: taxonomy_term
+bundle: legal_position_source
+mode: embedded_form
+content:
+  field_url:
+    weight: 1
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true
