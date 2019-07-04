@@ -1,5 +1,6 @@
 ignored_config_entities:
-  - color.theme.bootstrap4
+  0: color.theme.bootstrap4
+  1: 'legal_position.settings:processes_fid'
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 langcode: uk
