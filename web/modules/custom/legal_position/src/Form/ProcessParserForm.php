@@ -107,6 +107,8 @@ class ProcessParserForm extends FormBase {
       $file = current($file);
       $file = File::load($file);
       $url = $file->getFileUri();
+      $url = \Drupal::service('file_system')
+        ->realpath($url);
       if ($existing != $file->id()) {
         // Delete existing.
         if ($existing && ($existing = File::load($existing))) {

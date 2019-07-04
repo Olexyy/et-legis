@@ -117,13 +117,8 @@ class ProcessParserClient {
   public function processXml() {
 
     $this->counter = 0;
-    unlink('buffer.xml');
-    $fh = fopen('buffer.xml', 'w');
-    $contents = file_get_contents($this->url);
-    fwrite($fh, $contents);
-    fclose($fh);
     $reader = new Reader();
-    $reader->open('buffer.xml');
+    $reader->open($this->url);
     foreach ($reader as $row) {
       $this->processRow($row);
       if ($this->limit && $this->counter == $this->limit) {
