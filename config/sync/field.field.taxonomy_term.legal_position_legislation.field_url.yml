@@ -1,0 +1,23 @@
+uuid: b6501fe8-36b8-4234-8522-8252ceb5c842
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_url
+    - taxonomy.vocabulary.legal_position_legislation
+  module:
+    - link
+id: taxonomy_term.legal_position_legislation.field_url
+field_name: field_url
+entity_type: taxonomy_term
+bundle: legal_position_legislation
+label: Посилання
+description: 'Посилання на законодавчий акт.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

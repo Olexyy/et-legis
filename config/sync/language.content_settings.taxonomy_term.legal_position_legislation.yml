@@ -1,0 +1,11 @@
+uuid: 11c06eeb-35e7-4217-b946-f3ca9598b402
+langcode: uk
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.legal_position_legislation
+id: taxonomy_term.legal_position_legislation
+target_entity_type_id: taxonomy_term
+target_bundle: legal_position_legislation
+default_langcode: site_default
+language_alterable: false

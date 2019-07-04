@@ -12,6 +12,8 @@ dependencies:
     - field.field.node.legal_position.field_extract
     - field.field.node.legal_position.field_judge_speaker
     - field.field.node.legal_position.field_latest_version
+    - field.field.node.legal_position.field_legislation
+    - field.field.node.legal_position.field_legislation_paragraph
     - field.field.node.legal_position.field_previous_version
     - field.field.node.legal_position.field_reviewer
     - field.field.node.legal_position.field_source_link
@@ -42,7 +44,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -80,8 +82,34 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_previous_version:
+  field_legislation:
     weight: 9
+    settings:
+      form_mode: embedded_form
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
+    third_party_settings:
+      entity_browser_entity_form:
+        entity_browser_id: _none
+    type: inline_entity_form_complex
+    region: content
+  field_legislation_paragraph:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_previous_version:
+    weight: 11
     settings:
       entity_browser: legal_positions
       field_widget_display: rendered_entity
@@ -96,7 +124,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_reviewer:
-    weight: 17
+    weight: 19
     settings:
       match_operator: CONTAINS
       size: 60
@@ -149,14 +177,14 @@ content:
     region: content
   langcode:
     type: language_select
-    weight: 14
+    weight: 16
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   path:
     type: path
-    weight: 13
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -164,26 +192,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 11
+    weight: 13
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 17
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 12
+    weight: 14
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 16
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60

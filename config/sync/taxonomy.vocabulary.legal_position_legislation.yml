@@ -1,0 +1,8 @@
+uuid: 232e406a-0bfd-4ebe-9944-f3ae320f932e
+langcode: uk
+status: true
+dependencies: {  }
+name: 'Законодавство правової позиції'
+vid: legal_position_legislation
+description: 'Норма закону, якої стосується правова позиція.'
+weight: 0

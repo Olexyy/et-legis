@@ -1,0 +1,19 @@
+uuid: 8bfe066f-3fd7-4e00-9809-3a0870a7d099
+langcode: uk
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_legislation_paragraph
+    - node.type.legal_position
+id: node.legal_position.field_legislation_paragraph
+field_name: field_legislation_paragraph
+entity_type: node
+bundle: legal_position
+label: 'Стаття законодавства'
+description: 'Стаття законодавчого акту, за наявності.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
