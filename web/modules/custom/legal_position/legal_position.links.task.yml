@@ -8,3 +8,8 @@ legal_position_admin.unpublished_tab:
   route_name: view.legal_position_admin.unpublished
   title: 'Правові позиції (неопублковані)'
   base_route: system.admin_content
+
+legal_position_admin.process_parser_form:
+  route_name: legal_position.process_parser
+  title: 'Імпорт судової практики'
+  base_route: system.admin_content

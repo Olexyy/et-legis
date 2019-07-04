@@ -48,8 +48,13 @@ class LegalPosition {
    * @return $this
    *   Instance.
    */
-  public static function create(EntityInterface $entity) {
+  public static function create(EntityInterface $entity = NULL) {
 
+    if (!$entity) {
+      $entity = static::getNodeStorage()->create([
+        'type' => static::BUNDLE,
+      ]);
+    }
     return new static($entity);
   }
 
@@ -207,6 +212,18 @@ class LegalPosition {
 
     return \Drupal::service('entity_type.manager')
       ->getStorage('taxonomy_term');
+  }
+
+  /**
+   * Node storage.
+   *
+   * @return \Drupal\node\NodeStorageInterface
+   *   Node storage.
+   */
+  public static function getNodeStorage() {
+
+    return \Drupal::service('entity_type.manager')
+      ->getStorage('node');
   }
 
   /**
@@ -497,6 +514,86 @@ class LegalPosition {
   public function setReviewer(UserInterface $user) {
 
     return $this->setReviewerId($user->id());
+  }
+
+  /**
+   * Entity accessor.
+   *
+   * @return \Drupal\Core\Entity\ContentEntityInterface|\Drupal\Core\Entity\EntityInterface|\Drupal\node\NodeInterface
+   *   Node.
+   */
+  public function getEntity() {
+
+    return $this->entity;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return string|null
+   *   Value.
+   */
+  public function getBody() {
+
+    return $this->entity->get('body')->value;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param string|null $body
+   *   Body.
+   *
+   * @return $this
+   *   Chaining.
+   */
+  public function setBody($body) {
+
+    $this->entity->get('body')->value = $body;
+
+    return $this;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param array $link
+   *   Link with 'title' and 'uri'.
+   *
+   * @return $this
+   *   Chaining.
+   */
+  public function setDecisionLink(array $link) {
+
+    $this->entity->set('field_decision_link', $link);
+
+    return $this;
+  }
+
+  /**
+   * @param array $conditions
+   *
+   * @return \Drupal\Core\Entity\EntityInterface|mixed|null
+   */
+  public static function loadSingle(array $conditions) {
+
+    $conditions['type'] = static::BUNDLE;
+    $results = static::getNodeStorage()
+      ->loadByProperties($conditions);
+
+    return $results ? current($results) : NULL;
+  }
+
+  /**
+   * @param $url
+   *
+   * @return \Drupal\Core\Entity\EntityInterface|mixed|null
+   */
+  public static function loadByCourtLink($url) {
+
+    return static::loadSingle([
+      'field_decision_link.uri' => $url,
+    ]);
   }
 
 }

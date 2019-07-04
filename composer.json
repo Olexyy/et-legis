@@ -23,6 +23,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",
+        "aspera/xlsx-reader": "^0.7.4",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",

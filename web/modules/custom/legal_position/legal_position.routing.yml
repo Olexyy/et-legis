@@ -1,0 +1,7 @@
+legal_position.process_parser:
+  path: '/admin/content/process-parser'
+  defaults:
+    _form: '\Drupal\legal_position\Form\ProcessParserForm'
+    _title: 'Імпорт судової практики'
+  requirements:
+    _permission: 'administer site configuration'
