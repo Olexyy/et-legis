@@ -4,6 +4,7 @@ namespace Drupal\legal_position\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
 use Drupal\legal_position\ProcessParser\ProcessParserClient;
 
 /**
@@ -41,15 +42,22 @@ class ProcessParserForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
+    $fid = $this->configFactory()
+      ->get('legal_position.settings')
+      ->get('processes_fid');
     $types = [
       'ВВ' => 'ВВ',
       'ВП' => 'ВП',
       'Ю' => 'Ю',
     ];
-    $form['url'] = [
-      '#type' => 'textfield',
-      '#default_value' => 'https://supreme.court.gov.ua/userfiles/media/2019_06_27_zvid2019_27_06_2019.xlsx',
-      '#title' => $this->t('Link'),
+    $form['file'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('File'),
+      '#upload_location' => 'public://process',
+      '#upload_validators' => [
+        'file_validate_extensions' => ['xlsx'],
+      ],
+      '#default_value' => $fid ? [$fid] : NULL,
       '#required' => TRUE,
     ];
     $form['type'] = [
@@ -84,28 +92,49 @@ class ProcessParserForm extends FormBase {
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
+    $config = $this->configFactory()
+      ->getEditable('legal_position.settings');
+    $existing = $config->get('processes_fid');
     $limit = $form_state->getValue('limit');
-    $url = $form_state->getValue('url');
     $type = $form_state->getValue('type');
-    try {
-      $count = ProcessParserClient::instance()
-        ->setType($type)
-        ->setLimit($limit)
-        ->setUrl($url)
-        ->processXml();
-      $this->messenger()->addStatus(
-        $this->t("Created :count items.", [
-          ':count' => $count,
-        ])
-      );
-    }
-    catch (\Exception $exception) {
-      $this->messenger()->addError(
-        $this->t('Incorrect input data or service unavailable.')
-      );
+    $file = $form_state->getValue('file', []);
+    if ($file) {
+      $file = current($file);
+      $file = File::load($file);
+      $url = $file->getFileUri();
+      if ($existing != $file->id()) {
+        // Delete existing.
+        if ($existing && ($existing = File::load($existing))) {
+          $existing->delete();
+        }
+        // Set permanent status.
+        $config->set('processes_fid', $file->id())
+          ->save(TRUE);
+        $file->setPermanent();
+        $file->save();
+      }
+      try {
+        $count = ProcessParserClient::instance()
+          ->setType($type)
+          ->setLimit($limit)
+          ->setUrl($url)
+          ->processXml();
+        $this->messenger()->addStatus(
+          $this->t("Created :count items.", [
+            ':count' => $count,
+          ])
+        );
+      }
+      catch (\Exception $exception) {
+        $this->messenger()->addError(
+          $this->t('Incorrect input data or service unavailable.')
+        );
+      }
     }
   }
 

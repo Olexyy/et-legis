@@ -19,22 +19,53 @@ class ProcessParserClient {
    */
   protected $item;
 
+  /**
+   * Counter.
+   *
+   * @var int
+   */
   protected $counter;
 
+  /**
+   * Limit.
+   *
+   * @var int
+   */
   protected $limit;
 
+  /**
+   * Url.
+   *
+   * @var string
+   */
   protected $url;
 
+  /**
+   * Type.
+   *
+   * @var string
+   */
   protected $type;
 
+  /**
+   * Static factory.
+   *
+   * @return $this
+   *   Instance.
+   */
   public static function instance() {
+
     return new static();
   }
 
   /**
-   * @param $type
+   * Setter.
+   *
+   * @param string $type
+   *   Url or path.
    *
    * @return $this
+   *   Chaining.
    */
   public function setType($type) {
 
@@ -44,9 +75,13 @@ class ProcessParserClient {
   }
 
   /**
-   * @param $url
+   * Setter.
+   *
+   * @param string $url
+   *   Url or path.
    *
    * @return $this
+   *   Chaining.
    */
   public function setUrl($url) {
 
@@ -56,9 +91,13 @@ class ProcessParserClient {
   }
 
   /**
-   * @param $limit
+   * Setter.
+   *
+   * @param int $limit
+   *   Limit created items.
    *
    * @return $this
+   *   Chaining.
    */
   public function setLimit($limit) {
 
@@ -67,6 +106,14 @@ class ProcessParserClient {
     return $this;
   }
 
+  /**
+   * Executes process func.
+   *
+   * @return int
+   *   Count of created items.
+   *
+   * @throws \Exception
+   */
   public function processXml() {
 
     $this->counter = 0;
@@ -87,12 +134,28 @@ class ProcessParserClient {
     return $this->counter;
   }
 
+  /**
+   * Explodes string.
+   *
+   * @param string $data
+   *   Data.
+   *
+   * @return array|string[]
+   *   Exploded string.
+   */
   protected function explode($data) {
 
     $data = preg_split('~\R~', $data);
+
     return array_map('trim', $data);
   }
 
+  /**
+   * Internal helper.
+   *
+   * @param bool $refresh
+   *   Flag.
+   */
   protected function ensureItem($refresh = FALSE) {
 
     if ($refresh) {
@@ -103,6 +166,11 @@ class ProcessParserClient {
     }
   }
 
+  /**
+   * Internal helper.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   protected function finalizeItem() {
 
     if ($this->item) {
