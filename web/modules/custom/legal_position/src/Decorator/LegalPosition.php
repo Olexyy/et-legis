@@ -589,7 +589,7 @@ class LegalPosition {
    *
    * @return \Drupal\Core\Entity\EntityInterface|mixed|null
    */
-  public static function loadByCourtLink($url) {
+  public static function loadByDecisionLink($url) {
 
     return static::loadSingle([
       'field_decision_link.uri' => $url,

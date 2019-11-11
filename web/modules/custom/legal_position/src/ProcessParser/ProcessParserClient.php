@@ -174,7 +174,7 @@ class ProcessParserClient {
         // If there is final link.
         if ($this->item->getLinkCount() == 2) {
           // If no legal position with court link exists.
-          if (!LegalPosition::loadByCourtLink($this->item->getLastLink())) {
+          if (!LegalPosition::loadByDecisionLink($this->item->getLastLink())) {
             $legalPosition = LegalPosition::create();
             $legalPosition->getEntity()->setOwnerId(1);
             $legalPosition->getEntity()->setPublished(FALSE);
