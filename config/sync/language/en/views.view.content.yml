@@ -18,6 +18,8 @@ display:
             first: '« First'
             last: 'Last »'
       fields:
+        title:
+          label: Title
         type:
           label: 'Content type'
           separator: ', '
